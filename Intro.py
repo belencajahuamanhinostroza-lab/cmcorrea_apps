@@ -1,6 +1,6 @@
 import os
+import base64
 import streamlit as st
-from PIL import Image
 
 
 # ============================================================
@@ -8,35 +8,34 @@ from PIL import Image
 # ============================================================
 
 st.set_page_config(
-    page_title="Aplicaciones de Inteligencia Artificial",
+    page_title="Mi Portafolio — Belen Cajahuaman",
     page_icon="✦",
     layout="wide",
-    initial_sidebar_state="expanded",
+    initial_sidebar_state="collapsed",
 )
 
 
 # ============================================================
-# ESTILO — inspirado en la referencia
+# ESTILOS
 # ============================================================
 
 st.markdown(
     """
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+    @import url(
+        'https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap'
+    );
 
     :root {
-        --bg: #e9eaf0;
-        --panel: #f6f6f8;
+        --ink: #171820;
+        --muted: #686b75;
+        --blue: #3f52e5;
+        --lime: #baff19;
+        --cream: #f7f7f5;
+        --line: #d8d9de;
         --white: #ffffff;
-        --ink: #1b1a23;
-        --muted: #686b76;
-        --blue: #4158e8;
-        --blue-dark: #2936b5;
-        --lime: #b7ff18;
-        --lime-soft: #ddff7a;
-        --purple: #7168ff;
-        --orange: #ff7435;
-        --line: #d7d9e1;
+        --red: #e85b49;
     }
 
     html, body, [class*="css"] {
@@ -45,403 +44,451 @@ st.markdown(
 
     .stApp {
         background:
-            radial-gradient(circle at 90% 0%, rgba(113,104,255,.10), transparent 25%),
-            radial-gradient(circle at 0% 10%, rgba(183,255,24,.08), transparent 20%),
-            var(--bg);
+            radial-gradient(
+                circle at 10% 5%,
+                rgba(64,84,229,.09),
+                transparent 23%
+            ),
+            radial-gradient(
+                circle at 90% 70%,
+                rgba(186,255,25,.07),
+                transparent 22%
+            ),
+            #eef0f4;
+
         color: var(--ink);
+    }
+
+    #MainMenu,
+    footer {
+        visibility: hidden;
     }
 
     header[data-testid="stHeader"] {
         background: transparent !important;
     }
 
-    #MainMenu, footer {
-        visibility: hidden;
-    }
-
     .block-container {
-        max-width: 1400px !important;
-        padding-top: 1.4rem !important;
+        max-width: 1280px !important;
+        padding-top: 1.2rem !important;
         padding-bottom: 3rem !important;
     }
 
     h1, h2, h3, h4 {
         font-family: "Space Grotesk", sans-serif !important;
         color: var(--ink) !important;
-        letter-spacing: -0.8px !important;
     }
 
-    p {
-        color: #4e505b !important;
-    }
 
-    /* ---------- ENCABEZADO ---------- */
+    /* ========================================================
+       CABECERA
+       ======================================================== */
 
-    .topbar {
+    .nav {
         display: flex;
-        align-items: center;
         justify-content: space-between;
-        gap: 20px;
-        margin-bottom: 18px;
-    }
-
-    .brand {
-        display: flex;
         align-items: center;
-        gap: 12px;
+        padding: 8px 4px 18px;
     }
 
-    .brand-mark {
-        width: 46px;
-        height: 46px;
-        border-radius: 15px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: var(--lime);
-        color: var(--blue-dark);
+    .nav-left {
         font-family: "Space Grotesk", sans-serif;
-        font-size: 1.35rem;
         font-weight: 700;
-        box-shadow: 4px 4px 0 rgba(41,54,181,.15);
+        font-size: .92rem;
     }
 
-    .brand-name {
-        font-family: "Space Grotesk", sans-serif;
-        font-size: 1.05rem;
+    .nav-right {
+        color: #777984;
+        font-size: .72rem;
         font-weight: 700;
-        line-height: 1;
+        text-transform: uppercase;
+        letter-spacing: 1px;
     }
 
-    .brand-sub {
-        color: #7a7c86;
-        font-size: .74rem;
-        margin-top: 5px;
-    }
 
-    .top-tag {
-        padding: 9px 14px;
-        border: 1px solid #cfd2dc;
-        background: rgba(255,255,255,.55);
-        border-radius: 999px;
-        color: #474956;
-        font-size: .75rem;
-        font-weight: 700;
-    }
-
-    /* ---------- HERO ---------- */
+    /* ========================================================
+       HERO
+       ======================================================== */
 
     .hero {
         position: relative;
         overflow: hidden;
-        min-height: 220px;
-        padding: 34px 38px;
-        border-radius: 26px;
-        margin-bottom: 26px;
+
+        min-height: 345px;
+
+        border-radius: 6px;
+
+        padding: 42px 48px;
 
         background:
-            radial-gradient(circle at 88% 12%, rgba(255,255,255,.28), transparent 22%),
-            linear-gradient(135deg, #edf2ff 0%, #f8f8fb 100%);
+            linear-gradient(
+                120deg,
+                rgba(255,255,255,.96),
+                rgba(244,245,249,.96)
+            );
 
-        border: 1px solid #d6d8e1;
-        box-shadow: 0 12px 32px rgba(40,43,60,.08);
+        border: 1px solid #d4d6dd;
+
+        box-shadow:
+            0 16px 35px rgba(33,37,52,.08);
+
+        margin-bottom: 34px;
     }
 
     .hero:before {
         content: "";
+
         position: absolute;
-        width: 360px;
-        height: 220px;
-        right: -80px;
-        top: -95px;
-        border-radius: 50%;
-        background: var(--lime);
-        transform: rotate(-10deg);
-        opacity: .95;
+
+        width: 370px;
+        height: 210px;
+
+        right: -75px;
+        top: -75px;
+
+        background: var(--blue);
+
+        transform: rotate(-11deg);
+
+        border-radius: 12px;
     }
 
     .hero:after {
         content: "";
+
         position: absolute;
-        width: 240px;
-        height: 90px;
-        right: 80px;
-        bottom: -40px;
-        border-radius: 50%;
-        background: var(--blue);
-        transform: rotate(-14deg);
-        opacity: .90;
+
+        width: 250px;
+        height: 125px;
+
+        right: 95px;
+        bottom: -48px;
+
+        background: var(--lime);
+
+        transform: rotate(-16deg);
+
+        border-radius: 6px;
     }
 
-    .hero-inner {
+    .hero-content {
         position: relative;
         z-index: 2;
-        max-width: 760px;
+
+        max-width: 780px;
     }
 
     .hero-kicker {
-        color: var(--blue-dark);
-        font-size: .78rem;
-        font-weight: 700;
+        font-size: .75rem;
+
         text-transform: uppercase;
-        letter-spacing: 1.3px;
+
+        letter-spacing: 1.4px;
+
+        font-weight: 700;
+
+        color: var(--blue);
+
+        margin-bottom: 10px;
     }
 
     .hero-title {
-        margin-top: 8px;
+        font-family: "Space Grotesk", sans-serif;
+
+        font-size: clamp(
+            3.2rem,
+            7vw,
+            6.8rem
+        );
+
+        line-height: .86;
+
+        letter-spacing: -5px;
+
+        font-weight: 700;
+
         color: var(--ink);
+    }
+
+    .hero-title .red {
+        color: var(--red);
+    }
+
+    .hero-name {
+        margin-top: 20px;
+
         font-family: "Space Grotesk", sans-serif;
-        font-size: clamp(2.1rem, 4vw, 4.2rem);
+
+        font-size: 1.25rem;
+
         font-weight: 700;
-        line-height: .96;
-        letter-spacing: -2.5px;
+
+        color: #32343e;
     }
 
-    .hero-title span {
-        color: var(--blue);
-    }
+    .hero-description {
+        max-width: 650px;
 
-    .hero-copy {
-        max-width: 680px;
-        margin-top: 16px;
-        color: #575965;
-        font-size: .95rem;
+        margin-top: 10px;
+
+        color: #6e7079;
+
+        font-size: .9rem;
+
         line-height: 1.55;
     }
 
-    .hero-pill {
+    .hero-tag {
         display: inline-block;
-        margin-top: 17px;
-        padding: 8px 13px;
-        border-radius: 999px;
+
+        margin-top: 18px;
+
+        padding: 8px 12px;
+
         background: var(--lime);
-        color: #263016;
-        font-size: .72rem;
-        font-weight: 700;
-    }
 
-    /* ---------- SIDEBAR ---------- */
+        color: #252b18;
 
-    [data-testid="stSidebar"] {
-        background: #1f2028 !important;
-        border-right: 0 !important;
-    }
+        border-radius: 4px;
 
-    [data-testid="stSidebar"] * {
-        color: #f4f4f7 !important;
-    }
-
-    .side-title {
-        font-family: "Space Grotesk", sans-serif;
-        font-size: 1.1rem;
-        font-weight: 700;
-        margin-bottom: 8px;
-    }
-
-    .side-box {
-        padding: 15px;
-        margin: 10px 0 14px;
-        border-radius: 18px;
-        background: #292b35;
-        border: 1px solid #3c3e49;
-    }
-
-    .side-label {
-        color: var(--lime);
         font-size: .68rem;
+
         font-weight: 700;
+
         text-transform: uppercase;
-        letter-spacing: 1px;
-        margin-bottom: 7px;
+
+        letter-spacing: .8px;
     }
 
-    .side-copy {
-        color: #d9dae1 !important;
-        font-size: .84rem;
-        line-height: 1.55;
-    }
 
-    /* ---------- SECCIÓN ---------- */
+    /* ========================================================
+       SECCIÓN
+       ======================================================== */
 
-    .section-heading {
+    .section-head {
         display: flex;
-        align-items: end;
+
         justify-content: space-between;
-        gap: 15px;
-        margin: 4px 0 14px;
+
+        align-items: baseline;
+
+        margin-bottom: 14px;
     }
 
     .section-title {
         font-family: "Space Grotesk", sans-serif;
-        font-size: 1.5rem;
+
+        font-size: 1.55rem;
+
         font-weight: 700;
+
+        letter-spacing: -1px;
     }
 
-    .section-note {
-        color: #777984;
-        font-size: .75rem;
-        font-weight: 600;
+    .section-count {
+        color: #858790;
+
+        font-size: .72rem;
+
+        font-weight: 700;
+
+        text-transform: uppercase;
+
+        letter-spacing: 1px;
     }
 
-    /* ---------- TARJETAS ---------- */
+
+    /* ========================================================
+       TARJETAS
+       ======================================================== */
 
     .app-card {
         background: var(--white);
-        border: 1px solid #d8dae2;
-        border-radius: 20px;
-        padding: 12px;
-        margin-bottom: 22px;
-        box-shadow: 0 8px 20px rgba(34,36,49,.07);
-        transition: transform .18s ease, box-shadow .18s ease;
+
+        border: 1px solid #d7d9df;
+
+        padding: 9px 9px 15px;
+
+        margin-bottom: 24px;
+
+        box-shadow:
+            0 9px 22px rgba(34,36,47,.07);
+
+        transition:
+            transform .18s ease,
+            box-shadow .18s ease;
     }
 
     .app-card:hover {
         transform: translateY(-2px);
-        box-shadow: 0 14px 28px rgba(34,36,49,.11);
+
+        box-shadow:
+            0 14px 28px rgba(34,36,47,.11);
     }
 
-    .thumb {
-        position: relative;
-        height: 170px;
-        border-radius: 14px;
-        overflow: hidden;
+    .app-image {
+        width: 100%;
+
+        aspect-ratio: 1.5 / 1;
+
+        object-fit: cover;
+
+        display: block;
+    }
+
+    .app-meta {
         display: flex;
-        flex-direction: column;
+
         justify-content: space-between;
-        padding: 15px;
-        background:
-            linear-gradient(135deg, var(--blue) 0%, #7c78ff 100%);
-        color: white;
-    }
 
-    .thumb:after {
-        content: "";
-        position: absolute;
-        width: 110px;
-        height: 110px;
-        right: -35px;
-        bottom: -40px;
-        border-radius: 50%;
-        background: rgba(183,255,24,.95);
-    }
-
-    .thumb-number {
-        position: relative;
-        z-index: 2;
-        font-family: "Space Grotesk", sans-serif;
-        font-size: .72rem;
-        font-weight: 700;
-        letter-spacing: 1px;
-    }
-
-    .thumb-icon {
-        position: relative;
-        z-index: 2;
-        font-size: 2.7rem;
-        line-height: 1;
-    }
-
-    .thumb-word {
-        position: relative;
-        z-index: 2;
-        font-family: "Space Grotesk", sans-serif;
-        font-size: 1.2rem;
-        font-weight: 700;
-        max-width: 80%;
-    }
-
-    .card-meta {
-        display: flex;
         align-items: center;
-        justify-content: space-between;
-        margin-top: 12px;
-        gap: 10px;
+
+        margin:
+            12px 5px 0;
     }
 
-    .card-number {
-        padding: 5px 8px;
-        border-radius: 8px;
-        background: #eff1ff;
-        color: var(--blue-dark);
+    .app-number {
+        color: var(--blue);
+
         font-size: .68rem;
+
         font-weight: 700;
+
+        letter-spacing: .7px;
     }
 
-    .card-type {
-        color: #9698a2;
-        font-size: .68rem;
+    .app-category {
+        color: #999ba3;
+
+        font-size: .63rem;
+
         font-weight: 700;
+
+        letter-spacing: .8px;
+
         text-transform: uppercase;
     }
 
-    .card-title {
-        margin-top: 9px;
+    .app-title {
+        margin:
+            7px 5px 0;
+
         color: var(--ink);
-        font-family: "Space Grotesk", sans-serif;
+
+        font-family:
+            "Space Grotesk",
+            sans-serif;
+
         font-size: 1.12rem;
+
         font-weight: 700;
+
         line-height: 1.1;
     }
 
-    .card-copy {
-        min-height: 47px;
-        margin-top: 7px;
-        color: #6e707b;
-        font-size: .78rem;
-        line-height: 1.45;
+    .app-description {
+        min-height: 48px;
+
+        margin:
+            7px 5px 0;
+
+        color: #6f717b;
+
+        font-size: .76rem;
+
+        line-height: 1.48;
     }
 
-    .card-link {
+    .open-wrap {
+        margin:
+            12px 5px 0;
+    }
+
+    .open-link {
         display: inline-block;
-        margin-top: 11px;
-        padding: 8px 11px;
-        border-radius: 999px;
-        background: #181922;
+
+        padding:
+            9px 12px;
+
+        border-radius: 3px;
+
+        background: var(--ink);
+
         color: white !important;
+
         text-decoration: none !important;
-        font-size: .71rem;
+
+        font-size: .67rem;
+
         font-weight: 700;
+
+        letter-spacing: .5px;
+
+        text-transform: uppercase;
+
+        transition: .15s ease;
     }
 
-    .card-link:hover {
+    .open-link:hover {
         background: var(--blue);
+
+        transform: translateY(-1px);
     }
 
-    /* ---------- PIE ---------- */
 
-    .footer-card {
-        margin-top: 18px;
-        padding: 20px 22px;
-        border-radius: 20px;
-        background: #1f2028;
+    /* ========================================================
+       FOOTER
+       ======================================================== */
+
+    .footer {
+        margin-top: 16px;
+
+        padding: 22px 24px;
+
+        background: var(--ink);
+
         color: white;
+
+        border-radius: 4px;
     }
 
     .footer-title {
-        font-family: "Space Grotesk", sans-serif;
+        font-family:
+            "Space Grotesk",
+            sans-serif;
+
         font-size: 1rem;
+
         font-weight: 700;
     }
 
     .footer-copy {
-        margin-top: 4px;
-        color: #c9cad1;
-        font-size: .8rem;
+        margin-top: 5px;
+
+        color: #c7c8cf;
+
+        font-size: .75rem;
     }
 
+
+    /* ========================================================
+       MÓVIL
+       ======================================================== */
+
     @media (max-width: 700px) {
+
         .hero {
-            padding: 25px 22px;
+            padding: 30px 25px;
+
+            min-height: 300px;
         }
 
         .hero-title {
-            letter-spacing: -1.5px;
+            letter-spacing: -2.5px;
         }
 
-        .thumb {
-            height: 150px;
-        }
     }
+
     </style>
     """,
     unsafe_allow_html=True,
@@ -449,78 +496,34 @@ st.markdown(
 
 
 # ============================================================
-# SIDEBAR
+# FUNCIÓN PARA LAS IMÁGENES
 # ============================================================
 
-with st.sidebar:
-    st.markdown(
-        """
-        <div class="side-title">
-            Aplicaciones con Inteligencia Artificial
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+def imagen_base64(path):
 
-    st.markdown(
-        """
-        <div class="side-box">
-            <div class="side-label">Colección</div>
-            <div class="side-copy">
-                Explora herramientas y ejercicios prácticos
-                relacionados con texto, voz, imágenes y
-                análisis de datos mediante Inteligencia Artificial.
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+    with open(path, "rb") as archivo:
 
-    st.markdown(
-        """
-        <div class="side-box">
-            <div class="side-label">Contenido</div>
-            <div class="side-copy">
-                10 aplicaciones disponibles para consultar,
-                probar y explorar.
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-    st.markdown(
-        """
-        <div class="side-box">
-            <div class="side-label">Temas</div>
-            <div class="side-copy">
-                Voz · Texto · OCR · Sentimientos ·
-                Imágenes · TF-IDF · Visión
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+        return base64.b64encode(
+            archivo.read()
+        ).decode("utf-8")
 
 
 # ============================================================
-# HEADER
+# CABECERA
 # ============================================================
 
 st.markdown(
     """
-    <div class="topbar">
-        <div class="brand">
-            <div class="brand-mark">✦</div>
-            <div>
-                <div class="brand-name">Aplicaciones de IA</div>
-                <div class="brand-sub">
-                    Laboratorio de herramientas y ejercicios prácticos
-                </div>
-            </div>
+    <div class="nav">
+
+        <div class="nav-left">
+            ✦ BELEN CAJAHUAMAN
         </div>
 
-        <div class="top-tag">10 aplicaciones</div>
+        <div class="nav-right">
+            Portafolio · Inteligencia Artificial
+        </div>
+
     </div>
     """,
     unsafe_allow_html=True,
@@ -533,42 +536,56 @@ st.markdown(
 
 st.markdown(
     """
-    <div class="hero">
-        <div class="hero-inner">
+    <section class="hero">
+
+        <div class="hero-content">
+
             <div class="hero-kicker">
-                Inteligencia Artificial · Colección
+                Portafolio personal
             </div>
 
             <div class="hero-title">
-                Explora <span>nuevas herramientas</span>
-                de Inteligencia Artificial.
+                Mi <span class="red">Portafolio</span>
             </div>
 
-            <div class="hero-copy">
-                Accede a cada aplicación desde esta colección:
-                conversión de voz y texto, OCR, análisis de sentimientos,
-                nube de palabras, TF-IDF y visión por computador.
+            <div class="hero-name">
+                Belen Cajahuaman
             </div>
 
-            <div class="hero-pill">
-                ✦ Explora · Prueba · Aprende
+            <div class="hero-description">
+                Una colección de aplicaciones y proyectos
+                prácticos desarrollados para explorar
+                diferentes usos de la Inteligencia Artificial.
             </div>
+
+            <div class="hero-tag">
+                10 aplicaciones · 1 colección
+            </div>
+
         </div>
-    </div>
+
+    </section>
     """,
     unsafe_allow_html=True,
 )
 
 
 # ============================================================
-# TÍTULO DE SECCIÓN
+# TÍTULO DE LAS APLICACIONES
 # ============================================================
 
 st.markdown(
     """
-    <div class="section-heading">
-        <div class="section-title">Aplicaciones</div>
-        <div class="section-note">Selecciona una para abrirla</div>
+    <div class="section-head">
+
+        <div class="section-title">
+            Mis aplicaciones
+        </div>
+
+        <div class="section-count">
+            01 — 10
+        </div>
+
     </div>
     """,
     unsafe_allow_html=True,
@@ -576,166 +593,287 @@ st.markdown(
 
 
 # ============================================================
-# DATOS DE LAS NUEVAS APLICACIONES
+# APLICACIONES
 # ============================================================
 
 apps = [
+
     {
         "numero": "01",
         "titulo": "Mi primera App",
-        "descripcion": "Primera aplicación desarrollada para explorar el uso práctico de la Inteligencia Artificial.",
-        "url": "https://clase6-mwpnbk3fsbkennu2xxv2rr.streamlit.app/",
-        "icono": "✦",
         "categoria": "Inicio",
+        "descripcion": (
+            "Primera aplicación del portafolio para "
+            "explorar de forma práctica el uso de "
+            "Inteligencia Artificial."
+        ),
+        "url": (
+            "https://clase6-mwpnbk3fsbkennu2xxv2rr.streamlit.app/"
+        ),
+        "imagen": "app_01.png",
     },
+
     {
         "numero": "02",
         "titulo": "Texto a voz",
-        "descripcion": "Convierte contenido escrito en audio mediante una aplicación de síntesis de voz.",
-        "url": "https://s273ggysgxrvjc5xqcjjih.streamlit.app/",
-        "icono": "◖",
         "categoria": "Voz",
+        "descripcion": (
+            "Convierte contenido escrito en audio "
+            "mediante una aplicación de síntesis de voz."
+        ),
+        "url": (
+            "https://s273ggysgxrvjc5xqcjjih.streamlit.app/"
+        ),
+        "imagen": "app_02.png",
     },
+
     {
         "numero": "03",
         "titulo": "Voz a texto",
-        "descripcion": "Transcribe una entrada de voz y la transforma en texto.",
-        "url": "https://traductor-7ggtnhxykyspqhtk6cypby.streamlit.app/",
-        "icono": "◉",
         "categoria": "Audio",
+        "descripcion": (
+            "Transforma una entrada de voz en texto "
+            "para facilitar la transcripción y el procesamiento."
+        ),
+        "url": (
+            "https://traductor-7ggtnhxykyspqhtk6cypby.streamlit.app/"
+        ),
+        "imagen": "app_03.png",
     },
+
     {
         "numero": "04",
         "titulo": "Lector de texto",
-        "descripcion": "Herramienta orientada a la lectura de contenido textual mediante audio.",
-        "url": "https://e2vymapp8w22ojrpsuvqc2e.streamlit.app/",
-        "icono": "◌",
         "categoria": "Lectura",
+        "descripcion": (
+            "Herramienta enfocada en convertir contenido "
+            "textual en una experiencia de lectura mediante audio."
+        ),
+        "url": (
+            "https://e2vymapp8w22ojrpsuvqc2e.streamlit.app/"
+        ),
+        "imagen": "app_04.png",
     },
+
     {
         "numero": "05",
         "titulo": "OCR · Texto a audio",
-        "descripcion": "Extrae texto desde imágenes y permite transformarlo en audio.",
-        "url": "https://ocr-audio-ybjvud89srveyxujheuglj.streamlit.app/",
-        "icono": "▣",
         "categoria": "OCR",
+        "descripcion": (
+            "Extrae texto desde una imagen y permite "
+            "llevar ese contenido a una salida de audio."
+        ),
+        "url": (
+            "https://ocr-audio-ybjvud89srveyxujheuglj.streamlit.app/"
+        ),
+        "imagen": "app_05.png",
     },
+
     {
         "numero": "06",
         "titulo": "Análisis de sentimientos",
-        "descripcion": "Analiza textos para identificar el sentimiento presente en el contenido.",
-        "url": "https://sentimenta-yvw8kjjhc3k5ahfm2bvbbk.streamlit.app/",
-        "icono": "☺",
         "categoria": "Texto",
+        "descripcion": (
+            "Analiza contenido escrito para identificar "
+            "el sentimiento presente en el texto."
+        ),
+        "url": (
+            "https://sentimenta-yvw8kjjhc3k5ahfm2bvbbk.streamlit.app/"
+        ),
+        "imagen": "app_06.png",
     },
+
     {
         "numero": "07",
         "titulo": "Nube de palabras",
-        "descripcion": "Genera una representación visual de las palabras más relevantes de un texto.",
-        "url": "https://wordcloud-twmeornb88bu5daiohmzth.streamlit.app/",
-        "icono": "✧",
-        "categoria": "Texto",
+        "categoria": "NLP",
+        "descripcion": (
+            "Representa visualmente las palabras relevantes "
+            "y frecuentes de un conjunto de texto."
+        ),
+        "url": (
+            "https://wordcloud-twmeornb88bu5daiohmzth.streamlit.app/"
+        ),
+        "imagen": "app_07.png",
     },
+
     {
         "numero": "08",
         "titulo": "TF-IDF",
-        "descripcion": "Compara documentos y preguntas utilizando TF-IDF y similitud de coseno.",
-        "url": "https://tdfesp-mmsucjw6w26aff34fpsenn.streamlit.app/",
-        "icono": "01",
         "categoria": "NLP",
+        "descripcion": (
+            "Compara documentos y preguntas mediante "
+            "TF-IDF y similitud de coseno."
+        ),
+        "url": (
+            "https://tdfesp-mmsucjw6w26aff34fpsenn.streamlit.app/"
+        ),
+        "imagen": "app_08.png",
     },
+
     {
         "numero": "09",
         "titulo": "Detector de objetos",
-        "descripcion": "Detecta objetos presentes en imágenes utilizando visión por computador.",
-        "url": "https://yolov5-3qhk7h6k3kr9tjfgepuekf.streamlit.app/",
-        "icono": "◎",
         "categoria": "Visión",
+        "descripcion": (
+            "Detecta objetos presentes en imágenes "
+            "mediante técnicas de visión por computador."
+        ),
+        "url": (
+            "https://yolov5-3qhk7h6k3kr9tjfgepuekf.streamlit.app/"
+        ),
+        "imagen": "app_09.png",
     },
+
     {
         "numero": "10",
         "titulo": "Detector de emociones",
-        "descripcion": "Analiza imágenes para detectar expresiones y emociones.",
-        "url": "https://zb8fhzc4q6vjd726eqkviy.streamlit.app/",
-        "icono": "★",
         "categoria": "Visión",
+        "descripcion": (
+            "Analiza imágenes para identificar expresiones "
+            "y emociones mediante visión artificial."
+        ),
+        "url": (
+            "https://zb8fhzc4q6vjd726eqkviy.streamlit.app/"
+        ),
+        "imagen": "app_10.png",
     },
+
 ]
 
 
 # ============================================================
-# TARJETAS
+# MOSTRAR LAS TARJETAS DE 3 EN 3
 # ============================================================
 
-columns = st.columns(3, gap="medium")
+for inicio in range(
+    0,
+    len(apps),
+    3
+):
 
-for index, app in enumerate(apps):
-    with columns[index % 3]:
+    columnas = st.columns(
+        3,
+        gap="medium"
+    )
 
-        st.markdown(
-            f"""
-            <div class="app-card">
+    grupo = apps[
+        inicio:inicio + 3
+    ]
 
-                <div class="thumb">
-                    <div class="thumb-number">
-                        APP {app["numero"]}
+    for columna, app in zip(
+        columnas,
+        grupo
+    ):
+
+        with columna:
+
+            ruta_imagen = os.path.join(
+                "imagenes",
+                app["imagen"]
+            )
+
+            if os.path.exists(
+                ruta_imagen
+            ):
+
+                imagen = imagen_base64(
+                    ruta_imagen
+                )
+
+                imagen_html = f"""
+                <img
+                    class="app-image"
+                    src="data:image/png;base64,{imagen}"
+                    alt="{app['titulo']}"
+                >
+                """
+
+            else:
+
+                imagen_html = """
+                <div
+                    class="app-image"
+                    style="
+                        background:
+                            linear-gradient(
+                                135deg,
+                                #3f52e5,
+                                #baff19
+                            );
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        color:white;
+                        font-size:3rem;
+                        font-weight:700;
+                    "
+                >
+                    ✦
+                </div>
+                """
+
+
+            st.markdown(
+                f"""
+                <article class="app-card">
+
+                    {imagen_html}
+
+                    <div class="app-meta">
+
+                        <div class="app-number">
+                            APP {app["numero"]}
+                        </div>
+
+                        <div class="app-category">
+                            {app["categoria"]}
+                        </div>
+
                     </div>
 
-                    <div class="thumb-icon">
-                        {app["icono"]}
-                    </div>
-
-                    <div class="thumb-word">
+                    <div class="app-title">
                         {app["titulo"]}
                     </div>
-                </div>
 
-                <div class="card-meta">
-                    <div class="card-number">
-                        {app["numero"]}
+                    <div class="app-description">
+                        {app["descripcion"]}
                     </div>
 
-                    <div class="card-type">
-                        {app["categoria"]}
+                    <div class="open-wrap">
+
+                        <a
+                            class="open-link"
+                            href="{app["url"]}"
+                            target="_blank"
+                        >
+                            Abrir aplicación ↗
+                        </a>
+
                     </div>
-                </div>
 
-                <div class="card-title">
-                    {app["titulo"]}
-                </div>
-
-                <div class="card-copy">
-                    {app["descripcion"]}
-                </div>
-
-                <a
-                    class="card-link"
-                    href="{app["url"]}"
-                    target="_blank"
-                >
-                    ABRIR APLICACIÓN ↗
-                </a>
-
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
+                </article>
+                """,
+                unsafe_allow_html=True
+            )
 
 
 # ============================================================
-# PIE
+# PIE DE PÁGINA
 # ============================================================
 
 st.markdown(
     """
-    <div class="footer-card">
+    <div class="footer">
+
         <div class="footer-title">
-            ✦ Laboratorio de Inteligencia Artificial
+            ✦ Belen Cajahuaman
         </div>
+
         <div class="footer-copy">
-            Una colección de aplicaciones y ejercicios prácticos
-            para explorar diferentes usos de la Inteligencia Artificial.
+            Portafolio de aplicaciones de Inteligencia Artificial.
         </div>
+
     </div>
     """,
     unsafe_allow_html=True,
