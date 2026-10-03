@@ -1,5 +1,4 @@
 import os
-import base64
 import streamlit as st
 
 
@@ -8,10 +7,9 @@ import streamlit as st
 # ============================================================
 
 st.set_page_config(
-    page_title="Mi Portafolio — Belen Cajahuaman",
+    page_title="Mi Portafolio - Belen Cajahuaman",
     page_icon="✦",
     layout="wide",
-    initial_sidebar_state="collapsed",
 )
 
 
@@ -27,17 +25,6 @@ st.markdown(
         'https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap'
     );
 
-    :root {
-        --ink: #171820;
-        --muted: #686b75;
-        --blue: #3f52e5;
-        --lime: #baff19;
-        --cream: #f7f7f5;
-        --line: #d8d9de;
-        --white: #ffffff;
-        --red: #e85b49;
-    }
-
     html, body, [class*="css"] {
         font-family: "DM Sans", sans-serif;
     }
@@ -46,17 +33,19 @@ st.markdown(
         background:
             radial-gradient(
                 circle at 10% 5%,
-                rgba(64,84,229,.09),
-                transparent 23%
+                rgba(63,82,229,.10),
+                transparent 25%
             ),
             radial-gradient(
-                circle at 90% 70%,
-                rgba(186,255,25,.07),
-                transparent 22%
+                circle at 90% 80%,
+                rgba(186,255,25,.08),
+                transparent 25%
             ),
             #eef0f4;
+    }
 
-        color: var(--ink);
+    header[data-testid="stHeader"] {
+        background: transparent !important;
     }
 
     #MainMenu,
@@ -64,19 +53,10 @@ st.markdown(
         visibility: hidden;
     }
 
-    header[data-testid="stHeader"] {
-        background: transparent !important;
-    }
-
     .block-container {
-        max-width: 1280px !important;
+        max-width: 1250px !important;
         padding-top: 1.2rem !important;
         padding-bottom: 3rem !important;
-    }
-
-    h1, h2, h3, h4 {
-        font-family: "Space Grotesk", sans-serif !important;
-        color: var(--ink) !important;
     }
 
 
@@ -84,25 +64,13 @@ st.markdown(
        CABECERA
        ======================================================== */
 
-    .nav {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 8px 4px 18px;
-    }
-
-    .nav-left {
+    .nombre-superior {
         font-family: "Space Grotesk", sans-serif;
+        font-size: 0.9rem;
         font-weight: 700;
-        font-size: .92rem;
-    }
-
-    .nav-right {
-        color: #777984;
-        font-size: .72rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 1px;
+        letter-spacing: 0.8px;
+        color: #20222c;
+        margin-bottom: 20px;
     }
 
 
@@ -110,329 +78,281 @@ st.markdown(
        HERO
        ======================================================== */
 
-    .hero {
+    .hero-box {
         position: relative;
         overflow: hidden;
 
-        min-height: 345px;
+        background: #f8f8f8;
 
-        border-radius: 6px;
+        border: 1px solid #d7d9df;
 
-        padding: 42px 48px;
+        padding: 48px;
 
-        background:
-            linear-gradient(
-                120deg,
-                rgba(255,255,255,.96),
-                rgba(244,245,249,.96)
-            );
-
-        border: 1px solid #d4d6dd;
+        min-height: 330px;
 
         box-shadow:
-            0 16px 35px rgba(33,37,52,.08);
+            0 15px 35px rgba(30, 35, 50, 0.08);
 
-        margin-bottom: 34px;
+        margin-bottom: 35px;
     }
 
-    .hero:before {
+    .hero-box:before {
         content: "";
 
         position: absolute;
 
-        width: 370px;
+        width: 390px;
         height: 210px;
 
-        right: -75px;
-        top: -75px;
+        right: -90px;
+        top: -65px;
 
-        background: var(--blue);
+        background: #4155df;
 
-        transform: rotate(-11deg);
-
-        border-radius: 12px;
+        transform: rotate(-10deg);
     }
 
-    .hero:after {
+    .hero-box:after {
         content: "";
 
         position: absolute;
 
-        width: 250px;
-        height: 125px;
+        width: 240px;
+        height: 120px;
 
-        right: 95px;
-        bottom: -48px;
+        right: 80px;
+        bottom: -50px;
 
-        background: var(--lime);
+        background: #baff19;
 
-        transform: rotate(-16deg);
-
-        border-radius: 6px;
+        transform: rotate(-12deg);
     }
 
-    .hero-content {
+    .hero-contenido {
         position: relative;
         z-index: 2;
-
-        max-width: 780px;
     }
 
-    .hero-kicker {
-        font-size: .75rem;
-
-        text-transform: uppercase;
-
-        letter-spacing: 1.4px;
-
+    .hero-pequeno {
+        color: #4155df;
+        font-size: 0.75rem;
         font-weight: 700;
-
-        color: var(--blue);
-
-        margin-bottom: 10px;
+        text-transform: uppercase;
+        letter-spacing: 1.4px;
     }
 
-    .hero-title {
+    .hero-titulo {
+        margin-top: 10px;
+
         font-family: "Space Grotesk", sans-serif;
 
-        font-size: clamp(
-            3.2rem,
-            7vw,
-            6.8rem
-        );
+        font-size: clamp(3.3rem, 8vw, 6.8rem);
 
-        line-height: .86;
+        line-height: 0.86;
 
         letter-spacing: -5px;
 
         font-weight: 700;
 
-        color: var(--ink);
+        color: #181a22;
     }
 
-    .hero-title .red {
-        color: var(--red);
+    .hero-titulo span {
+        color: #e55b4a;
     }
 
-    .hero-name {
-        margin-top: 20px;
+    .hero-nombre {
+        margin-top: 24px;
 
         font-family: "Space Grotesk", sans-serif;
 
-        font-size: 1.25rem;
+        font-size: 1.35rem;
 
         font-weight: 700;
 
         color: #32343e;
     }
 
-    .hero-description {
+    .hero-texto {
         max-width: 650px;
 
-        margin-top: 10px;
+        margin-top: 9px;
 
-        color: #6e7079;
+        color: #6c6e78;
 
-        font-size: .9rem;
+        font-size: 0.92rem;
 
         line-height: 1.55;
     }
 
-    .hero-tag {
+    .hero-etiqueta {
         display: inline-block;
 
         margin-top: 18px;
 
-        padding: 8px 12px;
+        padding: 8px 13px;
 
-        background: var(--lime);
+        background: #baff19;
 
-        color: #252b18;
+        color: #293018;
 
-        border-radius: 4px;
-
-        font-size: .68rem;
+        font-size: 0.68rem;
 
         font-weight: 700;
 
         text-transform: uppercase;
 
-        letter-spacing: .8px;
+        letter-spacing: 0.8px;
     }
 
 
     /* ========================================================
-       SECCIÓN
+       TÍTULO SECCIÓN
        ======================================================== */
 
-    .section-head {
-        display: flex;
-
-        justify-content: space-between;
-
-        align-items: baseline;
-
-        margin-bottom: 14px;
-    }
-
-    .section-title {
+    .seccion-titulo {
         font-family: "Space Grotesk", sans-serif;
 
-        font-size: 1.55rem;
+        font-size: 1.7rem;
 
         font-weight: 700;
 
-        letter-spacing: -1px;
+        color: #1d1e27;
+
+        margin-bottom: 4px;
     }
 
-    .section-count {
-        color: #858790;
+    .seccion-subtitulo {
+        color: #777983;
 
-        font-size: .72rem;
+        font-size: 0.78rem;
 
-        font-weight: 700;
-
-        text-transform: uppercase;
-
-        letter-spacing: 1px;
+        margin-bottom: 18px;
     }
 
 
     /* ========================================================
-       TARJETAS
+       TARJETAS STREAMLIT
        ======================================================== */
 
-    .app-card {
-        background: var(--white);
+    div[data-testid="stVerticalBlockBorderWrapper"] {
+        background: #ffffff !important;
 
-        border: 1px solid #d7d9df;
+        border: 1px solid #d8dae0 !important;
 
-        padding: 9px 9px 15px;
+        border-radius: 4px !important;
 
-        margin-bottom: 24px;
-
-        box-shadow:
-            0 9px 22px rgba(34,36,47,.07);
-
-        transition:
-            transform .18s ease,
-            box-shadow .18s ease;
-    }
-
-    .app-card:hover {
-        transform: translateY(-2px);
+        padding: 10px !important;
 
         box-shadow:
-            0 14px 28px rgba(34,36,47,.11);
+            0 8px 22px rgba(33, 36, 49, 0.07) !important;
+
+        margin-bottom: 22px !important;
     }
 
-    .app-image {
-        width: 100%;
 
-        aspect-ratio: 1.5 / 1;
+    /* ========================================================
+       IMÁGENES
+       ======================================================== */
 
-        object-fit: cover;
-
-        display: block;
+    [data-testid="stImage"] img {
+        border-radius: 2px !important;
     }
 
-    .app-meta {
-        display: flex;
 
-        justify-content: space-between;
+    /* ========================================================
+       TEXTO DE LAS TARJETAS
+       ======================================================== */
 
-        align-items: center;
+    .numero-app {
+        color: #4155df;
 
-        margin:
-            12px 5px 0;
-    }
-
-    .app-number {
-        color: var(--blue);
-
-        font-size: .68rem;
+        font-size: 0.65rem;
 
         font-weight: 700;
 
-        letter-spacing: .7px;
+        letter-spacing: 1px;
+
+        margin-top: 9px;
     }
 
-    .app-category {
+    .categoria-app {
         color: #999ba3;
 
-        font-size: .63rem;
+        font-size: 0.63rem;
 
         font-weight: 700;
 
-        letter-spacing: .8px;
-
         text-transform: uppercase;
+
+        letter-spacing: 0.8px;
+
+        float: right;
+
+        margin-top: -14px;
     }
 
-    .app-title {
-        margin:
-            7px 5px 0;
+    .titulo-app {
+        font-family: "Space Grotesk", sans-serif;
 
-        color: var(--ink);
+        color: #181a22;
 
-        font-family:
-            "Space Grotesk",
-            sans-serif;
-
-        font-size: 1.12rem;
+        font-size: 1.15rem;
 
         font-weight: 700;
 
         line-height: 1.1;
+
+        margin-top: 8px;
     }
 
-    .app-description {
+    .descripcion-app {
+        color: #6f717a;
+
+        font-size: 0.76rem;
+
+        line-height: 1.5;
+
         min-height: 48px;
 
-        margin:
-            7px 5px 0;
+        margin-top: 7px;
 
-        color: #6f717b;
-
-        font-size: .76rem;
-
-        line-height: 1.48;
+        margin-bottom: 12px;
     }
 
-    .open-wrap {
-        margin:
-            12px 5px 0;
-    }
 
-    .open-link {
-        display: inline-block;
+    /* ========================================================
+       BOTONES
+       ======================================================== */
 
-        padding:
-            9px 12px;
+    div.stLinkButton > a {
+        width: 100% !important;
 
-        border-radius: 3px;
+        border-radius: 2px !important;
 
-        background: var(--ink);
+        background: #191a21 !important;
+
+        border: none !important;
 
         color: white !important;
 
-        text-decoration: none !important;
+        font-family: "Space Grotesk", sans-serif !important;
 
-        font-size: .67rem;
+        font-size: 0.68rem !important;
 
-        font-weight: 700;
+        font-weight: 700 !important;
 
-        letter-spacing: .5px;
+        letter-spacing: 0.5px;
 
         text-transform: uppercase;
 
-        transition: .15s ease;
+        text-align: center !important;
     }
 
-    .open-link:hover {
-        background: var(--blue);
+    div.stLinkButton > a:hover {
+        background: #4155df !important;
 
-        transform: translateY(-1px);
+        color: white !important;
     }
 
 
@@ -440,53 +360,30 @@ st.markdown(
        FOOTER
        ======================================================== */
 
-    .footer {
-        margin-top: 16px;
+    .pie {
+        background: #191a21;
 
-        padding: 22px 24px;
+        padding: 22px;
 
-        background: var(--ink);
+        margin-top: 20px;
 
         color: white;
-
-        border-radius: 4px;
     }
 
-    .footer-title {
-        font-family:
-            "Space Grotesk",
-            sans-serif;
+    .pie-titulo {
+        font-family: "Space Grotesk", sans-serif;
 
         font-size: 1rem;
 
         font-weight: 700;
     }
 
-    .footer-copy {
+    .pie-texto {
+        color: #c6c7ce;
+
+        font-size: 0.75rem;
+
         margin-top: 5px;
-
-        color: #c7c8cf;
-
-        font-size: .75rem;
-    }
-
-
-    /* ========================================================
-       MÓVIL
-       ======================================================== */
-
-    @media (max-width: 700px) {
-
-        .hero {
-            padding: 30px 25px;
-
-            min-height: 300px;
-        }
-
-        .hero-title {
-            letter-spacing: -2.5px;
-        }
-
     }
 
     </style>
@@ -496,36 +393,11 @@ st.markdown(
 
 
 # ============================================================
-# FUNCIÓN PARA LAS IMÁGENES
-# ============================================================
-
-def imagen_base64(path):
-
-    with open(path, "rb") as archivo:
-
-        return base64.b64encode(
-            archivo.read()
-        ).decode("utf-8")
-
-
-# ============================================================
 # CABECERA
 # ============================================================
 
 st.markdown(
-    """
-    <div class="nav">
-
-        <div class="nav-left">
-            ✦ BELEN CAJAHUAMAN
-        </div>
-
-        <div class="nav-right">
-            Portafolio · Inteligencia Artificial
-        </div>
-
-    </div>
-    """,
+    '<div class="nombre-superior">✦ BELEN CAJAHUAMAN</div>',
     unsafe_allow_html=True,
 )
 
@@ -536,54 +408,32 @@ st.markdown(
 
 st.markdown(
     """
-    <section class="hero">
+    <div class="hero-box">
 
-        <div class="hero-content">
+        <div class="hero-contenido">
 
-            <div class="hero-kicker">
+            <div class="hero-pequeno">
                 Portafolio personal
             </div>
 
-            <div class="hero-title">
-                Mi <span class="red">Portafolio</span>
+            <div class="hero-titulo">
+                Mi <span>Portafolio</span>
             </div>
 
-            <div class="hero-name">
+            <div class="hero-nombre">
                 Belen Cajahuaman
             </div>
 
-            <div class="hero-description">
+            <div class="hero-texto">
                 Una colección de aplicaciones y proyectos
-                prácticos desarrollados para explorar
-                diferentes usos de la Inteligencia Artificial.
+                prácticos desarrollados para explorar diferentes
+                usos de la Inteligencia Artificial.
             </div>
 
-            <div class="hero-tag">
-                10 aplicaciones · 1 colección
+            <div class="hero-etiqueta">
+                10 aplicaciones · Inteligencia Artificial
             </div>
 
-        </div>
-
-    </section>
-    """,
-    unsafe_allow_html=True,
-)
-
-
-# ============================================================
-# TÍTULO DE LAS APLICACIONES
-# ============================================================
-
-st.markdown(
-    """
-    <div class="section-head">
-
-        <div class="section-title">
-            Mis aplicaciones
-        </div>
-
-        <div class="section-count">
-            01 — 10
         </div>
 
     </div>
@@ -593,7 +443,22 @@ st.markdown(
 
 
 # ============================================================
-# APLICACIONES
+# SECCIÓN
+# ============================================================
+
+st.markdown(
+    '<div class="seccion-titulo">Mis aplicaciones</div>',
+    unsafe_allow_html=True,
+)
+
+st.markdown(
+    '<div class="seccion-subtitulo">Explora cada proyecto y abre la aplicación.</div>',
+    unsafe_allow_html=True,
+)
+
+
+# ============================================================
+# DATOS
 # ============================================================
 
 apps = [
@@ -610,7 +475,7 @@ apps = [
         "url": (
             "https://clase6-mwpnbk3fsbkennu2xxv2rr.streamlit.app/"
         ),
-        "imagen": "app_01.png",
+        "imagen": "imagenes/app_01.png",
     },
 
     {
@@ -624,7 +489,7 @@ apps = [
         "url": (
             "https://s273ggysgxrvjc5xqcjjih.streamlit.app/"
         ),
-        "imagen": "app_02.png",
+        "imagen": "imagenes/app_02.png",
     },
 
     {
@@ -633,12 +498,12 @@ apps = [
         "categoria": "Audio",
         "descripcion": (
             "Transforma una entrada de voz en texto "
-            "para facilitar la transcripción y el procesamiento."
+            "para facilitar la transcripción."
         ),
         "url": (
             "https://traductor-7ggtnhxykyspqhtk6cypby.streamlit.app/"
         ),
-        "imagen": "app_03.png",
+        "imagen": "imagenes/app_03.png",
     },
 
     {
@@ -646,13 +511,13 @@ apps = [
         "titulo": "Lector de texto",
         "categoria": "Lectura",
         "descripcion": (
-            "Herramienta enfocada en convertir contenido "
-            "textual en una experiencia de lectura mediante audio."
+            "Herramienta para trabajar con contenido "
+            "textual mediante lectura por audio."
         ),
         "url": (
             "https://e2vymapp8w22ojrpsuvqc2e.streamlit.app/"
         ),
-        "imagen": "app_04.png",
+        "imagen": "imagenes/app_04.png",
     },
 
     {
@@ -660,13 +525,13 @@ apps = [
         "titulo": "OCR · Texto a audio",
         "categoria": "OCR",
         "descripcion": (
-            "Extrae texto desde una imagen y permite "
-            "llevar ese contenido a una salida de audio."
+            "Extrae texto desde imágenes y permite "
+            "convertir el contenido en audio."
         ),
         "url": (
             "https://ocr-audio-ybjvud89srveyxujheuglj.streamlit.app/"
         ),
-        "imagen": "app_05.png",
+        "imagen": "imagenes/app_05.png",
     },
 
     {
@@ -680,7 +545,7 @@ apps = [
         "url": (
             "https://sentimenta-yvw8kjjhc3k5ahfm2bvbbk.streamlit.app/"
         ),
-        "imagen": "app_06.png",
+        "imagen": "imagenes/app_06.png",
     },
 
     {
@@ -688,13 +553,13 @@ apps = [
         "titulo": "Nube de palabras",
         "categoria": "NLP",
         "descripcion": (
-            "Representa visualmente las palabras relevantes "
-            "y frecuentes de un conjunto de texto."
+            "Genera una representación visual de las "
+            "palabras más relevantes de un texto."
         ),
         "url": (
             "https://wordcloud-twmeornb88bu5daiohmzth.streamlit.app/"
         ),
-        "imagen": "app_07.png",
+        "imagen": "imagenes/app_07.png",
     },
 
     {
@@ -708,7 +573,7 @@ apps = [
         "url": (
             "https://tdfesp-mmsucjw6w26aff34fpsenn.streamlit.app/"
         ),
-        "imagen": "app_08.png",
+        "imagen": "imagenes/app_08.png",
     },
 
     {
@@ -717,12 +582,12 @@ apps = [
         "categoria": "Visión",
         "descripcion": (
             "Detecta objetos presentes en imágenes "
-            "mediante técnicas de visión por computador."
+            "mediante visión por computador."
         ),
         "url": (
             "https://yolov5-3qhk7h6k3kr9tjfgepuekf.streamlit.app/"
         ),
-        "imagen": "app_09.png",
+        "imagen": "imagenes/app_09.png",
     },
 
     {
@@ -730,147 +595,115 @@ apps = [
         "titulo": "Detector de emociones",
         "categoria": "Visión",
         "descripcion": (
-            "Analiza imágenes para identificar expresiones "
-            "y emociones mediante visión artificial."
+            "Analiza imágenes para identificar "
+            "expresiones y emociones."
         ),
         "url": (
             "https://zb8fhzc4q6vjd726eqkviy.streamlit.app/"
         ),
-        "imagen": "app_10.png",
+        "imagen": "imagenes/app_10.png",
     },
 
 ]
 
 
 # ============================================================
-# MOSTRAR LAS TARJETAS DE 3 EN 3
+# TARJETAS — 3 POR FILA
 # ============================================================
 
-for inicio in range(
-    0,
-    len(apps),
-    3
-):
+for inicio in range(0, len(apps), 3):
 
-    columnas = st.columns(
-        3,
-        gap="medium"
-    )
+    columnas = st.columns(3, gap="medium")
 
-    grupo = apps[
-        inicio:inicio + 3
-    ]
+    grupo = apps[inicio:inicio + 3]
 
-    for columna, app in zip(
-        columnas,
-        grupo
-    ):
+    for columna, app in zip(columnas, grupo):
 
         with columna:
 
-            ruta_imagen = os.path.join(
-                "imagenes",
-                app["imagen"]
-            )
+            # Contenedor nativo de Streamlit
+            with st.container(border=True):
 
-            if os.path.exists(
-                ruta_imagen
-            ):
+                # Imagen
+                if os.path.exists(app["imagen"]):
 
-                imagen = imagen_base64(
-                    ruta_imagen
+                    st.image(
+                        app["imagen"],
+                        use_container_width=True
+                    )
+
+                else:
+
+                    st.warning(
+                        f"No se encontró la imagen: {app['imagen']}"
+                    )
+
+
+                # Número
+                st.markdown(
+                    f"""
+                    <div class="numero-app">
+                        APP {app["numero"]}
+                    </div>
+                    """,
+                    unsafe_allow_html=True
                 )
 
-                imagen_html = f"""
-                <img
-                    class="app-image"
-                    src="data:image/png;base64,{imagen}"
-                    alt="{app['titulo']}"
-                >
-                """
 
-            else:
-
-                imagen_html = """
-                <div
-                    class="app-image"
-                    style="
-                        background:
-                            linear-gradient(
-                                135deg,
-                                #3f52e5,
-                                #baff19
-                            );
-                        display:flex;
-                        align-items:center;
-                        justify-content:center;
-                        color:white;
-                        font-size:3rem;
-                        font-weight:700;
-                    "
-                >
-                    ✦
-                </div>
-                """
-
-
-            st.markdown(
-                f"""
-                <article class="app-card">
-
-                    {imagen_html}
-
-                    <div class="app-meta">
-
-                        <div class="app-number">
-                            APP {app["numero"]}
-                        </div>
-
-                        <div class="app-category">
-                            {app["categoria"]}
-                        </div>
-
+                # Categoría
+                st.markdown(
+                    f"""
+                    <div class="categoria-app">
+                        {app["categoria"]}
                     </div>
+                    """,
+                    unsafe_allow_html=True
+                )
 
-                    <div class="app-title">
+
+                # Título
+                st.markdown(
+                    f"""
+                    <div class="titulo-app">
                         {app["titulo"]}
                     </div>
+                    """,
+                    unsafe_allow_html=True
+                )
 
-                    <div class="app-description">
+
+                # Descripción
+                st.markdown(
+                    f"""
+                    <div class="descripcion-app">
                         {app["descripcion"]}
                     </div>
+                    """,
+                    unsafe_allow_html=True
+                )
 
-                    <div class="open-wrap">
 
-                        <a
-                            class="open-link"
-                            href="{app["url"]}"
-                            target="_blank"
-                        >
-                            Abrir aplicación ↗
-                        </a>
-
-                    </div>
-
-                </article>
-                """,
-                unsafe_allow_html=True
-            )
+                # BOTÓN NATIVO
+                st.link_button(
+                    "ABRIR APLICACIÓN ↗",
+                    app["url"],
+                    use_container_width=True
+                )
 
 
 # ============================================================
-# PIE DE PÁGINA
+# PIE
 # ============================================================
 
 st.markdown(
     """
-    <div class="footer">
+    <div class="pie">
 
-        <div class="footer-title">
+        <div class="pie-titulo">
             ✦ Belen Cajahuaman
         </div>
 
-        <div class="footer-copy">
+        <div class="pie-texto">
             Portafolio de aplicaciones de Inteligencia Artificial.
         </div>
 
@@ -878,3 +711,4 @@ st.markdown(
     """,
     unsafe_allow_html=True,
 )
+```
