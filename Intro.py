@@ -438,7 +438,7 @@ apps = [
         "numero": "01",
         "titulo": "Mi primera App",
         "categoria": "Inicio",
-        "descripcion": "Primera aplicación del portafolio para explorar de forma práctica el uso de Inteligencia Artificial.",
+        "descripcion": "Primera aplicación del portafolio para explorar Streamlit y Github.",
         "url": "https://clase6-mwpnbk3fsbkennu2xxv2rr.streamlit.app/",
         "imagen": "imagenes/app_01.png",
     },
@@ -508,9 +508,9 @@ apps = [
     },
     {
         "numero": "10",
-        "titulo": "Detector de emociones",
+        "titulo": "Detector de gestos",
         "categoria": "Visión",
-        "descripcion": "Analiza imágenes para identificar expresiones y emociones.",
+        "descripcion": "Analiza imágenes para identificar expresiones y personas.",
         "url": "https://zb8fhzc4q6vjd726eqkviy.streamlit.app/",
         "imagen": "imagenes/app_10.png",
     },
@@ -593,6 +593,6 @@ with st.container(key="footer"):
     )
 
     st.markdown(
-        '<div class="footer-text">Interfaces Multimodales · Aplicaciones de Inteligencia Artificial</div>',
+        '<div class="footer-text">Interfaces Multimodales · Aplicaciones · Streamlit · Github </div>',
         unsafe_allow_html=True,
     )
