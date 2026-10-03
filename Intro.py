@@ -440,7 +440,7 @@ apps = [
         "categoria": "Inicio",
         "descripcion": "Primera aplicación del portafolio para explorar Streamlit y Github.",
         "url": "https://clase6-mwpnbk3fsbkennu2xxv2rr.streamlit.app/",
-        "imagen": "imagenes/app_01.png",
+        "imagen": "imagenes/app_01.jpg",
     },
     {
         "numero": "02",
@@ -448,7 +448,7 @@ apps = [
         "categoria": "Voz",
         "descripcion": "Convierte contenido escrito en audio mediante una aplicación de síntesis de voz.",
         "url": "https://s273ggysgxrvjc5xqcjjih.streamlit.app/",
-        "imagen": "imagenes/app_02.png",
+        "imagen": "imagenes/app_02.jpg",
     },
     {
         "numero": "03",
@@ -456,7 +456,7 @@ apps = [
         "categoria": "Audio",
         "descripcion": "Transforma una entrada de voz en texto para facilitar la transcripción.",
         "url": "https://traductor-7ggtnhxykyspqhtk6cypby.streamlit.app/",
-        "imagen": "imagenes/app_03.png",
+        "imagen": "imagenes/app_03.jpg",
     },
     {
         "numero": "04",
@@ -464,7 +464,7 @@ apps = [
         "categoria": "Lectura",
         "descripcion": "Herramienta para trabajar con contenido textual mediante lectura por audio.",
         "url": "https://e2vymapp8w22ojrpsuvqc2e.streamlit.app/",
-        "imagen": "imagenes/app_04.png",
+        "imagen": "imagenes/app_04.jpg",
     },
     {
         "numero": "05",
@@ -472,7 +472,7 @@ apps = [
         "categoria": "OCR",
         "descripcion": "Extrae texto desde imágenes y permite convertir el contenido en audio.",
         "url": "https://ocr-audio-ybjvud89srveyxujheuglj.streamlit.app/",
-        "imagen": "imagenes/app_05.png",
+        "imagen": "imagenes/app_05.jpg",
     },
     {
         "numero": "06",
@@ -480,7 +480,7 @@ apps = [
         "categoria": "Texto",
         "descripcion": "Analiza contenido escrito para identificar el sentimiento presente en el texto.",
         "url": "https://sentimenta-yvw8kjjhc3k5ahfm2bvbbk.streamlit.app/",
-        "imagen": "imagenes/app_06.png",
+        "imagen": "imagenes/app_06.jpg",
     },
     {
         "numero": "07",
@@ -488,7 +488,7 @@ apps = [
         "categoria": "NLP",
         "descripcion": "Genera una representación visual de las palabras más relevantes de un texto.",
         "url": "https://wordcloud-twmeornb88bu5daiohmzth.streamlit.app/",
-        "imagen": "imagenes/app_07.png",
+        "imagen": "imagenes/app_07.jpg",
     },
     {
         "numero": "08",
@@ -496,7 +496,7 @@ apps = [
         "categoria": "NLP",
         "descripcion": "Compara documentos y preguntas mediante TF-IDF y similitud de coseno.",
         "url": "https://tdfesp-mmsucjw6w26aff34fpsenn.streamlit.app/",
-        "imagen": "imagenes/app_08.png",
+        "imagen": "imagenes/app_08.jpg",
     },
     {
         "numero": "09",
@@ -504,7 +504,7 @@ apps = [
         "categoria": "Visión",
         "descripcion": "Detecta objetos presentes en imágenes mediante visión por computador.",
         "url": "https://yolov5-3qhk7h6k3kr9tjfgepuekf.streamlit.app/",
-        "imagen": "imagenes/app_09.png",
+        "imagen": "imagenes/app_09.jpg",
     },
     {
         "numero": "10",
@@ -512,7 +512,7 @@ apps = [
         "categoria": "Visión",
         "descripcion": "Analiza imágenes para identificar expresiones y personas con Teachable Machine.",
         "url": "https://zb8fhzc4q6vjd726eqkviy.streamlit.app/",
-        "imagen": "imagenes/app_10.png",
+        "imagen": "imagenes/app_10.jpg",
     },
 ]
 
