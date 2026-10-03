@@ -7,7 +7,7 @@ import streamlit as st
 # ============================================================
 
 st.set_page_config(
-    page_title="Mi Portafolio | Belen Cajahuaman",
+    page_title="Portafolio 2026 | Belen Cajahuaman",
     page_icon="✦",
     layout="wide",
     initial_sidebar_state="collapsed",
@@ -20,290 +20,345 @@ st.set_page_config(
 
 st.markdown(
     """
-    <style>
-    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+<style>
 
-    html, body, [class*="css"] {
-        font-family: 'DM Sans', sans-serif;
-    }
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
-    .stApp {
-        background:
-            radial-gradient(circle at 15% 0%, rgba(255, 164, 218, .18), transparent 25%),
-            radial-gradient(circle at 90% 12%, rgba(255, 214, 72, .14), transparent 22%),
-            #f6f3f7;
-        color: #171717;
-    }
+html, body, [class*="css"] {
+    font-family: "DM Sans", sans-serif;
+}
 
-    #MainMenu, footer {
-        visibility: hidden;
-    }
+.stApp {
+    background:
+        radial-gradient(circle at 8% 8%, rgba(255, 185, 213, .18), transparent 24%),
+        radial-gradient(circle at 92% 10%, rgba(190, 187, 255, .16), transparent 24%),
+        radial-gradient(circle at 75% 88%, rgba(211, 255, 175, .14), transparent 22%),
+        #f5f3f6;
+    color: #19191f;
+}
 
-    header[data-testid="stHeader"] {
-        background: transparent !important;
-    }
+#MainMenu,
+footer {
+    visibility: hidden;
+}
 
-    .block-container {
-        max-width: 1240px !important;
-        padding-top: 1.2rem !important;
-        padding-bottom: 3rem !important;
-    }
+header[data-testid="stHeader"] {
+    background: transparent !important;
+}
 
-    /* Barra superior */
-    .top-line {
-        width: 100%;
-        height: 4px;
-        background: #171717;
-        margin-bottom: 12px;
-    }
+.block-container {
+    max-width: 1240px !important;
+    padding-top: 1.2rem !important;
+    padding-bottom: 3rem !important;
+}
 
-    .top-nav {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 4px 2px 18px;
-        font-size: .72rem;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        font-weight: 700;
-        color: #5e5a62;
-    }
+/* ============================================================
+   BARRA SUPERIOR
+   ============================================================ */
 
-    .top-nav .brand {
-        color: #e35d4d;
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 1rem;
-        letter-spacing: -.2px;
-    }
+.top-line {
+    width: 100%;
+    height: 3px;
+    background: #19191f;
+    margin-bottom: 10px;
+}
 
-    /* Hero */
+.top-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 2px 18px;
+    color: #75727a;
+    font-size: .7rem;
+    font-weight: 500;
+    letter-spacing: .9px;
+    text-transform: uppercase;
+}
+
+.top-nav .brand {
+    color: #55505a;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: .9rem;
+    font-weight: 600;
+    letter-spacing: .2px;
+}
+
+/* ============================================================
+   HERO — PASTEL + TRANSPARENCIA
+   ============================================================ */
+
+.hero {
+    position: relative;
+    overflow: hidden;
+    min-height: 420px;
+    padding: 54px 52px;
+    margin-bottom: 34px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 220, 232, .80) 0%,
+            rgba(224, 220, 255, .76) 48%,
+            rgba(222, 250, 190, .72) 100%
+        );
+
+    border: 1px solid rgba(255,255,255,.68);
+    box-shadow:
+        0 18px 42px rgba(56, 48, 65, .09),
+        inset 0 1px 0 rgba(255,255,255,.75);
+
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+.hero:before {
+    content: "";
+    position: absolute;
+    width: 390px;
+    height: 220px;
+    right: -85px;
+    top: -68px;
+    background: rgba(169, 179, 255, .50);
+    transform: rotate(-10deg);
+    border-radius: 42% 58% 40% 60%;
+}
+
+.hero:after {
+    content: "";
+    position: absolute;
+    width: 260px;
+    height: 150px;
+    right: 75px;
+    bottom: -58px;
+    background: rgba(255, 177, 212, .56);
+    transform: rotate(-12deg);
+    border-radius: 50%;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 4;
+    max-width: 820px;
+}
+
+.hero-small {
+    color: #66616b;
+    font-size: .72rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
+    margin-bottom: 12px;
+}
+
+.hero-name {
+    font-family: "DM Sans", sans-serif;
+    font-size: 1.05rem;
+    font-weight: 400;
+    color: #5f5a63;
+    margin-bottom: 8px;
+}
+
+.hero-title {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(3.3rem, 8vw, 6.7rem);
+    font-weight: 500;
+    line-height: .90;
+    letter-spacing: -4px;
+    color: #19191f;
+}
+
+.hero-title span {
+    background:
+        linear-gradient(
+            90deg,
+            #d95d7f,
+            #877be5,
+            #6ea45d
+        );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-subtitle {
+    margin-top: 12px;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 1.15rem;
+    font-weight: 400;
+    color: #48434d;
+}
+
+.hero-copy {
+    max-width: 670px;
+    margin-top: 17px;
+    color: #68636c;
+    font-size: .88rem;
+    font-weight: 400;
+    line-height: 1.6;
+}
+
+.hero-tag {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 8px 13px;
+    background: rgba(255,255,255,.48);
+    border: 1px solid rgba(255,255,255,.7);
+    color: #504c55;
+    font-size: .66rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+}
+
+/* ============================================================
+   SECCIÓN
+   ============================================================ */
+
+.section-title {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 1.8rem;
+    font-weight: 500;
+    letter-spacing: -1px;
+    color: #1b1b21;
+    margin-bottom: 3px;
+}
+
+.section-subtitle {
+    color: #79747d;
+    font-size: .78rem;
+    font-weight: 400;
+    margin-bottom: 18px;
+}
+
+/* ============================================================
+   TARJETAS
+   ============================================================ */
+
+div[data-testid="stVerticalBlockBorderWrapper"] {
+    background: rgba(255,255,255,.88) !important;
+    border: 1px solid rgba(214,210,220,.9) !important;
+    border-radius: 6px !important;
+    box-shadow: 0 10px 25px rgba(35, 30, 42, .06) !important;
+    padding: 10px !important;
+    margin-bottom: 24px !important;
+}
+
+[data-testid="stImage"] img {
+    border-radius: 3px !important;
+}
+
+.app-meta {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.app-number {
+    color: #7770d7;
+    font-size: .64rem;
+    font-weight: 600;
+    letter-spacing: .8px;
+}
+
+.app-category {
+    color: #9b969e;
+    font-size: .6rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: .7px;
+}
+
+.app-title {
+    margin-top: 7px;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 1.08rem;
+    font-weight: 500;
+    line-height: 1.12;
+    color: #24232a;
+}
+
+.app-description {
+    min-height: 52px;
+    margin-top: 7px;
+    color: #77727b;
+    font-size: .74rem;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+div.stLinkButton > a {
+    width: 100% !important;
+    background: #25232b !important;
+    border: none !important;
+    border-radius: 3px !important;
+    color: white !important;
+    font-family: "DM Sans", sans-serif !important;
+    font-size: .64rem !important;
+    font-weight: 600 !important;
+    letter-spacing: .6px !important;
+    text-transform: uppercase !important;
+}
+
+div.stLinkButton > a:hover {
+    background: #7770d7 !important;
+    color: white !important;
+}
+
+/* ============================================================
+   PIE
+   ============================================================ */
+
+.footer-box {
+    margin-top: 10px;
+    padding: 22px 24px;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(219, 214, 255, .82),
+            rgba(255, 219, 232, .82),
+            rgba(221, 249, 198, .78)
+        );
+    border: 1px solid rgba(255,255,255,.7);
+    color: #292731;
+}
+
+.footer-title {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.footer-text {
+    margin-top: 4px;
+    color: #716c75;
+    font-size: .74rem;
+}
+
+@media (max-width: 700px) {
+
     .hero {
-        position: relative;
-        overflow: hidden;
-        min-height: 430px;
-        margin-bottom: 34px;
-        padding: 58px 52px;
-        background: #fff;
-        border: 1px solid #d9d5dd;
-        box-shadow: 0 18px 40px rgba(40, 30, 50, .08);
-    }
-
-    .hero-shape-blue {
-        position: absolute;
-        width: 420px;
-        height: 220px;
-        right: -100px;
-        top: -80px;
-        background: #4458e7;
-        transform: rotate(-8deg);
-    }
-
-    .hero-shape-pink {
-        position: absolute;
-        width: 280px;
-        height: 160px;
-        right: 90px;
-        bottom: -70px;
-        background: #ff78b6;
-        transform: rotate(-10deg);
-    }
-
-    .hero-shape-lime {
-        position: absolute;
-        width: 145px;
-        height: 145px;
-        right: 140px;
-        top: 95px;
-        background: #c5ff1a;
-        border-radius: 50%;
-    }
-
-    .hero-content {
-        position: relative;
-        z-index: 3;
-        max-width: 800px;
-    }
-
-    .hero-small {
-        font-size: .75rem;
-        text-transform: uppercase;
-        letter-spacing: 1.5px;
-        font-weight: 700;
-        color: #4458e7;
-        margin-bottom: 12px;
-    }
-
-    .hero-name {
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 1.25rem;
-        font-weight: 600;
-        color: #5c5961;
-        margin-bottom: 8px;
+        min-height: 360px;
+        padding: 34px 25px;
     }
 
     .hero-title {
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: clamp(3.5rem, 8vw, 7rem);
-        font-weight: 700;
-        line-height: .86;
-        letter-spacing: -5px;
-        color: #171717;
-        margin: 0;
+        letter-spacing: -2.5px;
     }
 
-    .hero-title span {
-        color: #e25b4e;
+    .hero:before {
+        width: 250px;
+        right: -80px;
     }
 
-    .hero-copy {
-        max-width: 650px;
-        margin-top: 24px;
-        color: #6c6870;
-        font-size: .93rem;
-        line-height: 1.55;
+    .hero:after {
+        width: 180px;
+        right: 20px;
     }
+}
 
-    .hero-tag {
-        display: inline-block;
-        margin-top: 20px;
-        padding: 8px 12px;
-        background: #c5ff1a;
-        color: #232817;
-        font-size: .68rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: .7px;
-    }
-
-    /* Sección */
-    .section-title {
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 2rem;
-        font-weight: 700;
-        letter-spacing: -1.3px;
-        margin: 0;
-        color: #171717;
-    }
-
-    .section-subtitle {
-        color: #77727b;
-        font-size: .82rem;
-        margin-bottom: 18px;
-    }
-
-    /* Tarjetas */
-    div[data-testid="stVerticalBlockBorderWrapper"] {
-        background: #ffffff !important;
-        border: 1px solid #d7d4db !important;
-        border-radius: 4px !important;
-        box-shadow: 0 10px 24px rgba(38, 31, 45, .07) !important;
-        padding: 10px !important;
-        margin-bottom: 24px !important;
-    }
-
-    [data-testid="stImage"] img {
-        border-radius: 2px !important;
-    }
-
-    .app-meta {
-        margin-top: 10px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .app-number {
-        color: #4458e7;
-        font-size: .66rem;
-        font-weight: 700;
-        letter-spacing: .8px;
-    }
-
-    .app-category {
-        color: #97939a;
-        font-size: .61rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: .8px;
-    }
-
-    .app-title {
-        margin-top: 7px;
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 1.15rem;
-        font-weight: 700;
-        line-height: 1.08;
-        color: #18181c;
-    }
-
-    .app-description {
-        min-height: 52px;
-        margin-top: 7px;
-        color: #6d6972;
-        font-size: .76rem;
-        line-height: 1.48;
-    }
-
-    div.stLinkButton > a {
-        width: 100% !important;
-        background: #171717 !important;
-        border: none !important;
-        border-radius: 2px !important;
-        color: white !important;
-        font-family: 'Space Grotesk', sans-serif !important;
-        font-weight: 700 !important;
-        font-size: .67rem !important;
-        letter-spacing: .6px !important;
-        text-transform: uppercase !important;
-    }
-
-    div.stLinkButton > a:hover {
-        background: #4458e7 !important;
-        color: white !important;
-    }
-
-    /* Pie */
-    .footer-box {
-        margin-top: 10px;
-        padding: 22px;
-        background: #171717;
-        color: white;
-    }
-
-    .footer-title {
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 1rem;
-        font-weight: 700;
-    }
-
-    .footer-text {
-        margin-top: 4px;
-        color: #cac7cd;
-        font-size: .75rem;
-    }
-
-    @media (max-width: 700px) {
-        .hero {
-            padding: 34px 24px;
-            min-height: 360px;
-        }
-
-        .hero-title {
-            letter-spacing: -2.5px;
-        }
-
-        .hero-shape-blue {
-            width: 260px;
-            right: -90px;
-        }
-
-        .hero-shape-pink {
-            width: 190px;
-            right: 35px;
-        }
-    }
-    </style>
-    """,
+</style>
+""",
     unsafe_allow_html=True,
 )
 
@@ -317,7 +372,7 @@ st.markdown(
 <div class="top-line"></div>
 <div class="top-nav">
     <div class="brand">✦ BELEN CAJAHUAMAN</div>
-    <div>PORTAFOLIO · INTELIGENCIA ARTIFICIAL</div>
+    <div>PORTAFOLIO 2026 · INTERFACES MULTIMODALES</div>
 </div>
 """,
     unsafe_allow_html=True,
@@ -331,28 +386,37 @@ st.markdown(
 st.markdown(
     """
 <div class="hero">
-    <div class="hero-shape-blue"></div>
-    <div class="hero-shape-pink"></div>
-    <div class="hero-shape-lime"></div>
 
     <div class="hero-content">
-        <div class="hero-small">Portafolio personal</div>
-        <div class="hero-name">Belen Cajahuaman</div>
+
+        <div class="hero-small">
+            Portafolio académico · 2026
+        </div>
+
+        <div class="hero-name">
+            Belen Cajahuaman
+        </div>
 
         <div class="hero-title">
             Mi <span>Portafolio</span>
         </div>
 
+        <div class="hero-subtitle">
+            Interfaces Multimodales
+        </div>
+
         <div class="hero-copy">
-            Una colección de aplicaciones y proyectos prácticos
-            desarrollados para explorar diferentes usos de la
-            Inteligencia Artificial.
+            Colección de aplicaciones y proyectos desarrollados
+            durante 2026 para explorar la interacción entre texto,
+            voz, imagen y diferentes tecnologías de Inteligencia Artificial.
         </div>
 
         <div class="hero-tag">
-            10 aplicaciones · una colección
+            2026 · Interfaces Multimodales · 10 aplicaciones
         </div>
+
     </div>
+
 </div>
 """,
     unsafe_allow_html=True,
@@ -360,7 +424,7 @@ st.markdown(
 
 
 # ============================================================
-# SECCIÓN DE APLICACIONES
+# SECCIÓN
 # ============================================================
 
 st.markdown(
@@ -369,16 +433,17 @@ st.markdown(
 )
 
 st.markdown(
-    '<div class="section-subtitle">Explora cada proyecto y abre la aplicación.</div>',
+    '<div class="section-subtitle">Proyectos desarrollados para Interfaces Multimodales durante 2026.</div>',
     unsafe_allow_html=True,
 )
 
 
 # ============================================================
-# DATOS
+# APLICACIONES
 # ============================================================
 
 apps = [
+
     {
         "numero": "01",
         "titulo": "Mi primera App",
@@ -387,6 +452,7 @@ apps = [
         "url": "https://clase6-mwpnbk3fsbkennu2xxv2rr.streamlit.app/",
         "imagen": "imagenes/app_01.png",
     },
+
     {
         "numero": "02",
         "titulo": "Texto a voz",
@@ -395,6 +461,7 @@ apps = [
         "url": "https://s273ggysgxrvjc5xqcjjih.streamlit.app/",
         "imagen": "imagenes/app_02.png",
     },
+
     {
         "numero": "03",
         "titulo": "Voz a texto",
@@ -403,6 +470,7 @@ apps = [
         "url": "https://traductor-7ggtnhxykyspqhtk6cypby.streamlit.app/",
         "imagen": "imagenes/app_03.png",
     },
+
     {
         "numero": "04",
         "titulo": "Lector de texto",
@@ -411,6 +479,7 @@ apps = [
         "url": "https://e2vymapp8w22ojrpsuvqc2e.streamlit.app/",
         "imagen": "imagenes/app_04.png",
     },
+
     {
         "numero": "05",
         "titulo": "OCR · Texto a audio",
@@ -419,6 +488,7 @@ apps = [
         "url": "https://ocr-audio-ybjvud89srveyxujheuglj.streamlit.app/",
         "imagen": "imagenes/app_05.png",
     },
+
     {
         "numero": "06",
         "titulo": "Análisis de sentimientos",
@@ -427,6 +497,7 @@ apps = [
         "url": "https://sentimenta-yvw8kjjhc3k5ahfm2bvbbk.streamlit.app/",
         "imagen": "imagenes/app_06.png",
     },
+
     {
         "numero": "07",
         "titulo": "Nube de palabras",
@@ -435,6 +506,7 @@ apps = [
         "url": "https://wordcloud-twmeornb88bu5daiohmzth.streamlit.app/",
         "imagen": "imagenes/app_07.png",
     },
+
     {
         "numero": "08",
         "titulo": "TF-IDF",
@@ -443,6 +515,7 @@ apps = [
         "url": "https://tdfesp-mmsucjw6w26aff34fpsenn.streamlit.app/",
         "imagen": "imagenes/app_08.png",
     },
+
     {
         "numero": "09",
         "titulo": "Detector de objetos",
@@ -451,6 +524,7 @@ apps = [
         "url": "https://yolov5-3qhk7h6k3kr9tjfgepuekf.streamlit.app/",
         "imagen": "imagenes/app_09.png",
     },
+
     {
         "numero": "10",
         "titulo": "Detector de emociones",
@@ -459,11 +533,12 @@ apps = [
         "url": "https://zb8fhzc4q6vjd726eqkviy.streamlit.app/",
         "imagen": "imagenes/app_10.png",
     },
+
 ]
 
 
 # ============================================================
-# TARJETAS 3 POR FILA
+# TARJETAS — 3 POR FILA
 # ============================================================
 
 for inicio in range(0, len(apps), 3):
@@ -488,8 +563,8 @@ for inicio in range(0, len(apps), 3):
 
                 else:
 
-                    st.error(
-                        f"No se encontró {app['imagen']}"
+                    st.warning(
+                        f"No se encontró la imagen: {app['imagen']}"
                     )
 
                 st.markdown(
@@ -526,10 +601,15 @@ for inicio in range(0, len(apps), 3):
 st.markdown(
     """
 <div class="footer-box">
-    <div class="footer-title">✦ Belen Cajahuaman</div>
-    <div class="footer-text">
-        Portafolio de aplicaciones de Inteligencia Artificial.
+
+    <div class="footer-title">
+        ✦ Belen Cajahuaman · Portafolio 2026
     </div>
+
+    <div class="footer-text">
+        Interfaces Multimodales · Aplicaciones de Inteligencia Artificial
+    </div>
+
 </div>
 """,
     unsafe_allow_html=True,
