@@ -510,7 +510,7 @@ apps = [
         "numero": "10",
         "titulo": "Detector de gestos",
         "categoria": "Visión",
-        "descripcion": "Analiza imágenes para identificar expresiones y personas.",
+        "descripcion": "Analiza imágenes para identificar expresiones y personas con Teachable Machine.",
         "url": "https://zb8fhzc4q6vjd726eqkviy.streamlit.app/",
         "imagen": "imagenes/app_10.png",
     },
