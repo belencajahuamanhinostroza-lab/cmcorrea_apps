@@ -404,7 +404,7 @@ with st.container(key="hero"):
     )
 
     st.markdown(
-        '<div class="hero-copy">Colección de aplicaciones y proyectos desarrollados durante 2026 para explorar la interacción entre texto, voz, imagen y diferentes tecnologías de Inteligencia Artificial.</div>',
+        '<div class="hero-copy">Primera colección de aplicaciones y proyectos desarrollados durante 2026 para explorar la interacción entre texto, voz, imagen y diferentes tecnologías.</div>',
         unsafe_allow_html=True,
     )
 
