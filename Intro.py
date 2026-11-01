@@ -3,6 +3,10 @@ import streamlit as st
 import os
 import base64
 
+# =====================================================
+# CONFIGURACIÓN
+# =====================================================
+
 st.set_page_config(
     page_title="Belen Cajahuaman | Portafolio 2026",
     page_icon="🎨",
@@ -11,7 +15,7 @@ st.set_page_config(
 )
 
 # =====================================================
-# FONDO
+# CARGAR FONDO
 # =====================================================
 
 def cargar_fondo(ruta):
@@ -20,34 +24,43 @@ def cargar_fondo(ruta):
             return base64.b64encode(archivo.read()).decode()
     return None
 
+
 fondo = cargar_fondo("fondo.jpg")
 
 if fondo:
     fondo_css = f"""
     background-image:
-        linear-gradient(rgba(230, 245, 251, 0.18),
-                        rgba(230, 245, 251, 0.18)),
+        linear-gradient(
+            rgba(230, 245, 251, 0.15),
+            rgba(230, 245, 251, 0.15)
+        ),
         url("data:image/jpeg;base64,{fondo}");
     """
 else:
     fondo_css = """
     background: linear-gradient(
-        135deg, #dff3f8, #e9edfa, #f9eaf0
+        135deg,
+        #dff3f8,
+        #e9edfa,
+        #f9eaf0
     );
     """
 
 # =====================================================
-# ESTILOS
+# ESTILOS VISUALES
 # =====================================================
 
 st.html(f"""
 <style>
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Caveat:wght@600;700&display=swap');
+
+/* FONDO GENERAL */
 
 .stApp {{
     {fondo_css}
     background-size: cover !important;
-    background-position: center !important;
+    background-position: center center !important;
     background-attachment: fixed !important;
     background-repeat: no-repeat !important;
     font-family: 'Poppins', sans-serif !important;
@@ -102,11 +115,13 @@ p {{
     line-height: 1.85 !important;
 }}
 
-.stCaption, [data-testid="stCaptionContainer"] p {{
+[data-testid="stCaptionContainer"] p {{
     color: #496b82 !important;
     font-size: 14px !important;
     line-height: 1.7 !important;
 }}
+
+/* ETIQUETAS */
 
 .top-label {{
     color: #395d7c;
@@ -119,7 +134,7 @@ p {{
 .name-label {{
     display: inline-block;
     background: #83bdd4;
-    color: white;
+    color: #ffffff;
     padding: 12px 28px;
     border-radius: 30px;
     font-size: 20px;
@@ -127,29 +142,34 @@ p {{
     margin: 10px 0 18px;
 }}
 
-/* PANEL PRINCIPAL: FONDO SÓLIDO */
+/* TODOS LOS RECUADROS EN BLANCO */
 
 [data-testid="stVerticalBlockBorderWrapper"] {{
-    background: #f5fcff !important;
+    background: #ffffff !important;
+    background-color: #ffffff !important;
     border: 2px solid #ffffff !important;
     border-radius: 28px !important;
-    box-shadow: 0 12px 35px rgba(44, 88, 122, 0.16) !important;
+    box-shadow: 0 10px 28px rgba(50, 90, 120, 0.13) !important;
     padding: 22px !important;
 }}
 
-/* TARJETAS INTERNAS */
+/* TARJETAS INTERNAS TAMBIÉN EN BLANCO */
 
-[data-testid="stVerticalBlockBorderWrapper"] [data-testid="stVerticalBlockBorderWrapper"] {{
-    background: #e5f5fb !important;
-    border: 2px solid #ffffff !important;
+[data-testid="stVerticalBlockBorderWrapper"] 
+[data-testid="stVerticalBlockBorderWrapper"] {{
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    border: 2px solid #e8f3f8 !important;
     border-radius: 22px !important;
-    padding: 17px !important;
-    box-shadow: 0 6px 18px rgba(68, 130, 160, 0.12) !important;
-    transition: transform .2s ease;
+    padding: 18px !important;
+    box-shadow: 0 6px 18px rgba(50, 90, 120, 0.10) !important;
+    transition: transform .2s ease, box-shadow .2s ease;
 }}
 
-[data-testid="stVerticalBlockBorderWrapper"] [data-testid="stVerticalBlockBorderWrapper"]:hover {{
+[data-testid="stVerticalBlockBorderWrapper"] 
+[data-testid="stVerticalBlockBorderWrapper"]:hover {{
     transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(50, 90, 120, 0.16) !important;
 }}
 
 /* NUMERACIÓN Y CATEGORÍAS */
@@ -157,7 +177,7 @@ p {{
 .project-number {{
     display: inline-block;
     background: #478eaf;
-    color: white;
+    color: #ffffff;
     border-radius: 20px;
     padding: 5px 12px;
     font-size: 13px;
@@ -180,7 +200,7 @@ p {{
     min-height: 100px;
 }}
 
-/* IMAGENES */
+/* IMÁGENES */
 
 [data-testid="stImage"] img {{
     border-radius: 16px !important;
@@ -190,7 +210,11 @@ p {{
 /* BOTONES */
 
 div.stLinkButton > a {{
-    background: linear-gradient(110deg, #378eae, #777db5) !important;
+    background: linear-gradient(
+        110deg,
+        #378eae,
+        #777db5
+    ) !important;
     border: none !important;
     border-radius: 13px !important;
     color: #ffffff !important;
@@ -203,15 +227,20 @@ div.stLinkButton > a {{
 }}
 
 div.stLinkButton > a:hover {{
-    background: linear-gradient(110deg, #267b9b, #5f66a3) !important;
+    background: linear-gradient(
+        110deg,
+        #267b9b,
+        #5f66a3
+    ) !important;
     color: #ffffff !important;
     transform: translateY(-3px);
 }}
 
-/* METRICAS */
+/* MÉTRICAS */
 
 [data-testid="stMetric"] {{
-    background: #e5f5fb;
+    background: #ffffff !important;
+    border: 1px solid #e8f3f8;
     padding: 18px;
     border-radius: 17px;
 }}
@@ -234,6 +263,8 @@ hr {{
     margin: 30px 0 !important;
 }}
 
+/* PIE DE PÁGINA */
+
 .footer {{
     color: #345c79;
     font-size: 14px;
@@ -242,6 +273,8 @@ hr {{
     text-align: center;
     padding: 30px 0 15px;
 }}
+
+/* RESPONSIVE */
 
 @media (max-width: 850px) {{
     .block-container {{
@@ -260,14 +293,16 @@ hr {{
         font-size: 20px !important;
     }}
 }}
+
 </style>
 """)
 
 # =====================================================
-# PROYECTOS
+# INFORMACIÓN DE LOS PROYECTOS
 # =====================================================
 
 apps = [
+
     ("01", "Mi primera App", "Inicio",
      "Primera aplicación desarrollada para explorar Streamlit y GitHub.",
      "https://clase6-mwpnbk3fsbkennu2xxv2rr.streamlit.app/", "app_01.jpg"),
@@ -343,10 +378,11 @@ apps = [
     ("19", "Control por Voz", "Voz",
      "Permite interactuar y controlar funciones mediante comandos de voz.",
      "https://ctrlvoice-9pedwjpvfprq6xjcdzaptz.streamlit.app/", "app_19.JPG")
+
 ]
 
 # =====================================================
-# PRESENTACIÓN
+# ENCABEZADO DEL PORTAFOLIO
 # =====================================================
 
 st.markdown(
@@ -365,8 +401,8 @@ st.markdown(
 
 st.write(
     "Un espacio donde la creatividad, el diseño y la tecnología "
-    "se encuentran. En este portafolio presento los proyectos que "
-    "he desarrollado durante mi aprendizaje en Interfaces "
+    "se encuentran. En este portafolio presento los proyectos "
+    "que he desarrollado durante mi aprendizaje en Interfaces "
     "Multimodales."
 )
 
@@ -379,14 +415,20 @@ st.write(
 st.divider()
 
 # =====================================================
-# DISTRIBUCIÓN: INFORMACIÓN Y GALERÍA
+# DISTRIBUCIÓN PRINCIPAL
 # =====================================================
 
-col_info, col_projects = st.columns([0.85, 2.4], gap="large")
+col_info, col_projects = st.columns(
+    [0.85, 2.4],
+    gap="large"
+)
 
-# PANEL IZQUIERDO
+# =====================================================
+# PANEL IZQUIERDO: INFORMACIÓN PERSONAL
+# =====================================================
 
 with col_info:
+
     with st.container(border=True):
 
         st.subheader("Sobre mí")
@@ -406,11 +448,13 @@ with col_info:
         st.divider()
 
         st.subheader("Mi formación")
+
         st.write("Interfaces Multimodales · 2026")
 
         st.divider()
 
         st.subheader("Tecnologías")
+
         st.write(
             "Python · Streamlit · Inteligencia Artificial · "
             "Procesamiento de Lenguaje · Visión Artificial · "
@@ -420,6 +464,7 @@ with col_info:
         st.divider()
 
         st.subheader("Mi objetivo")
+
         st.write(
             "Crear experiencias digitales que conecten a las "
             "personas con la tecnología mediante diferentes "
@@ -428,11 +473,17 @@ with col_info:
 
         st.divider()
 
-        st.metric("Proyectos desarrollados", "19")
+        st.metric(
+            "Proyectos desarrollados",
+            "19"
+        )
 
-# PANEL DERECHO
+# =====================================================
+# PANEL DERECHO: GALERÍA DE PROYECTOS
+# =====================================================
 
 with col_projects:
+
     with st.container(border=True):
 
         st.subheader("✦ Mis proyectos")
@@ -448,20 +499,30 @@ with col_projects:
 
             columnas = st.columns(3, gap="large")
 
-            for columna, app in zip(columnas, apps[inicio:inicio + 3]):
+            for columna, app in zip(
+                columnas,
+                apps[inicio:inicio + 3]
+            ):
 
                 numero, titulo, categoria, descripcion, url, imagen = app
 
                 with columna:
+
                     with st.container(border=True):
 
                         if os.path.exists(imagen):
+
                             st.image(
                                 imagen,
                                 use_container_width=True
                             )
+
                         else:
-                            st.markdown(f"### Proyecto {numero}")
+
+                            st.markdown(
+                                f"### Proyecto {numero}"
+                            )
+
                             st.caption(
                                 f"Agrega la imagen {imagen} a GitHub."
                             )
@@ -476,7 +537,8 @@ with col_projects:
 
                         st.markdown(
                             f'<div class="project-description">'
-                            f'{descripcion}</div>',
+                            f'{descripcion}'
+                            f'</div>',
                             unsafe_allow_html=True
                         )
 
@@ -487,7 +549,7 @@ with col_projects:
                         )
 
 # =====================================================
-# HABILIDADES
+# HABILIDADES DESARROLLADAS
 # =====================================================
 
 st.divider()
@@ -504,16 +566,28 @@ with st.container(border=True):
     c1, c2, c3 = st.columns(3, gap="large")
 
     with c1:
+
         st.markdown("### Procesamiento de información")
-        st.write("NLP · TF-IDF · Análisis de sentimientos · OCR")
+
+        st.write(
+            "NLP · TF-IDF · Análisis de sentimientos · OCR"
+        )
 
     with c2:
+
         st.markdown("### Interacción multimodal")
-        st.write("Voz · Audio · Imagen · Dibujo · Visión artificial")
+
+        st.write(
+            "Voz · Audio · Imagen · Dibujo · Visión artificial"
+        )
 
     with c3:
+
         st.markdown("### Tecnología y conexión")
-        st.write("Python · Streamlit · MQTT · Wokwi · Dashboards")
+
+        st.write(
+            "Python · Streamlit · MQTT · Wokwi · Dashboards"
+        )
 
 # =====================================================
 # PIE DE PÁGINA
