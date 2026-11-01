@@ -712,7 +712,7 @@ panel_personal = """
     <h2 class="panel-title">Sobre mí</h2>
 
     <p class="panel-text">
-        Soy Belen Cajahuaman, Aquí comparto 19 proyectos 
+        Soy Belen Cajahuaman, aquí comparto 19 proyectos 
         desarrollados durante mi aprendizaje, combinando
         creatividad, programación y soluciones digitales.
     </p>
