@@ -7,516 +7,272 @@ import os
 # ============================================================
 
 st.set_page_config(
-    page_title="Mi Portafolio 2026",
-    page_icon="🌤️",
+    page_title="Mi Portafolio | Interfaces Multimodales 2026",
+    page_icon="🌸",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
 
 # ============================================================
-# DISEÑO Y ESTILOS
+# ESTILOS CSS
+# Se utiliza st.html para que el código HTML/CSS no aparezca
+# como texto dentro de la aplicación.
 # ============================================================
 
-st.markdown("""
+st.html("""
 <style>
 
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Amatic+SC:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Playfair+Display:wght@600;700;800&display=swap');
 
-html, body, [class*="css"] {
+:root {
+    --azul: #5b91ad;
+    --azul-oscuro: #315e78;
+    --celeste: #dff4f8;
+    --lavanda: #eee8fa;
+    --rosa: #f9e8ef;
+    --texto: #466579;
+}
+
+/* FONDO COMPLETO */
+
+.stApp {
+    background: linear-gradient(
+        135deg,
+        #e3f6f8 0%,
+        #e9effc 35%,
+        #f2eafa 68%,
+        #fcecf1 100%
+    ) !important;
     font-family: 'Nunito', sans-serif;
 }
 
-.stApp {
-    background: #ffffff;
-    color: #24485a;
+[data-testid="stHeader"] {
+    background: transparent !important;
 }
 
-#MainMenu, footer {
+#MainMenu,
+footer {
     visibility: hidden;
 }
 
-header[data-testid="stHeader"] {
-    background: transparent;
-}
-
 .block-container {
-    max-width: 1200px;
-    padding-top: 1rem;
-    padding-bottom: 0;
+    max-width: 1600px;
+    padding: 2rem 2.5rem 2rem;
 }
 
-/* NAVEGACIÓN */
+/* COLUMNAS */
 
-.top-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 15px 22px;
+[data-testid="stHorizontalBlock"] {
+    gap: 2rem !important;
 }
 
-.logo {
-    color: #08799b;
-    font-size: 23px;
-    font-weight: 900;
-    line-height: .85;
-    letter-spacing: -2px;
+/* PANEL IZQUIERDO */
+
+.info-panel {
+    background: rgba(255,255,255,.73);
+    border: 1px solid rgba(255,255,255,.9);
+    border-radius: 25px;
+    padding: 30px 25px;
+    box-shadow: 0 10px 35px rgba(90,130,160,.10);
 }
 
-.nav-links {
-    display: flex;
-    gap: 22px;
-    font-size: 12px;
-    font-weight: 800;
-}
-
-.nav-links a {
-    color: #34758b !important;
-    text-decoration: none;
-}
-
-/* HERO */
-
-.hero {
-    position: relative;
-    overflow: hidden;
-    min-height: 530px;
-    padding: 35px 35px 65px;
-    text-align: center;
-    background: linear-gradient(
-        180deg,
-        #08719a 0%,
-        #16a3c3 48%,
-        #a8e9e9 100%
-    );
-    border-radius: 3px;
-}
-
-.hero:before {
-    content: "";
-    position: absolute;
-    width: 135px;
-    height: 135px;
-    background: #ffd66e;
-    border-radius: 50%;
-    top: 85px;
-    right: 12%;
-    box-shadow: 0 0 50px rgba(255,226,127,.55);
-}
-
-.cloud {
-    position: absolute;
-    background: #ffffff;
-    height: 36px;
-    width: 135px;
-    border-radius: 50px;
-    opacity: .95;
-}
-
-.cloud:before,
-.cloud:after {
-    content: "";
-    position: absolute;
-    background: #ffffff;
-    border-radius: 50%;
-}
-
-.cloud:before {
-    width: 65px;
-    height: 65px;
-    top: -35px;
-    left: 20px;
-}
-
-.cloud:after {
-    width: 55px;
-    height: 55px;
-    top: -24px;
-    right: 15px;
-}
-
-.cloud-one {
-    top: 190px;
-    left: 5%;
-}
-
-.cloud-two {
-    top: 260px;
-    right: 5%;
-    transform: scale(1.3);
-}
-
-.cloud-three {
-    top: 380px;
-    left: 16%;
-    transform: scale(.8);
-}
-
-.hero-content {
-    position: relative;
-    z-index: 3;
-}
-
-.hero-label {
-    color: #d9ffff;
-    font-size: 12px;
-    font-weight: 900;
-    letter-spacing: 3px;
-    margin-top: 30px;
-}
-
-.hero h1 {
-    color: white !important;
-    font-size: clamp(45px, 8vw, 82px) !important;
-    font-weight: 900 !important;
-    letter-spacing: -4px;
-    line-height: 1;
-    margin: 20px 0 5px;
-    text-shadow: 0 5px 12px rgba(0,54,83,.17);
-}
-
-.hero-name {
-    color: #fff1c4;
-    font-size: 21px;
-    font-weight: 800;
-    margin-top: 8px;
-}
-
-.hero-subtitle {
-    color: #ffffff;
-    font-size: 19px;
-    font-weight: 800;
-    letter-spacing: 1px;
-    margin-top: 12px;
-}
-
-.hero-description {
-    max-width: 600px;
-    margin: 14px auto;
-    color: #e8ffff;
-    font-size: 15px;
-    line-height: 1.7;
-}
-
-.hero-tag {
-    display: inline-block;
-    margin-top: 15px;
-    padding: 9px 18px;
-    color: #27637a;
-    background: #ffffff;
-    border-radius: 30px;
+.eyebrow {
+    color: #8a9eb7;
     font-size: 11px;
     font-weight: 900;
-    letter-spacing: 1px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
 }
 
-.hero-bottom {
-    position: absolute;
-    z-index: 2;
-    height: 95px;
-    bottom: -42px;
-    left: -3%;
-    width: 106%;
-    background: white;
-    border-radius: 50% 50% 0 0;
+.main-heading {
+    color: #416c88;
+    font-family: 'Playfair Display', serif;
+    font-size: 39px;
+    font-weight: 800;
+    line-height: 1.15;
+    margin: 15px 0 8px;
 }
 
-/* PRESENTACIÓN */
-
-.intro {
-    text-align: center;
-    padding: 35px 15px 25px;
+.name-heading {
+    color: #8b80b5;
+    font-size: 21px;
+    font-weight: 900;
+    margin: 8px 0 20px;
 }
 
-.intro-title {
-    font-family: 'Amatic SC', cursive;
-    font-size: 43px;
-    color: #34758b;
-    font-weight: 700;
-}
-
-.intro-text {
-    color: #7b929b;
+.description {
+    color: #71899a;
     font-size: 14px;
-    line-height: 1.7;
-    max-width: 650px;
-    margin: 5px auto;
+    line-height: 1.9;
 }
 
-/* PROYECTOS */
-
-.projects-title {
-    text-align: center;
-    color: #34758b;
-    font-family: 'Amatic SC', cursive;
-    font-size: 48px;
-    margin-top: 15px;
+.soft-line {
+    height: 3px;
+    width: 65px;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #87cbd9, #b9a9dd);
+    margin: 22px 0;
 }
 
-.projects-subtitle {
-    text-align: center;
-    color: #849ba3;
+.info-label {
+    color: #527d96;
     font-size: 13px;
-    margin-bottom: 30px;
+    font-weight: 900;
+    margin-top: 17px;
 }
 
-div[data-testid="stVerticalBlockBorderWrapper"] {
-    background: #ffffff !important;
-    border: 1px solid #e1eeee !important;
-    border-radius: 13px !important;
-    padding: 10px !important;
-    box-shadow: 0 5px 18px rgba(30,91,111,.08);
+.info-value {
+    color: #8498a7;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.project-count {
+    background: linear-gradient(135deg, #d9f1f5, #e9e2f7);
+    padding: 20px;
+    border-radius: 17px;
+    margin-top: 24px;
+    text-align: center;
+}
+
+.project-count-number {
+    color: #557f9b;
+    font-size: 37px;
+    font-weight: 900;
+}
+
+.project-count-text {
+    color: #8499a8;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+/* TÍTULO DEL LADO DERECHO */
+
+.projects-heading {
+    color: #416c88;
+    font-family: 'Playfair Display', serif;
+    font-size: 31px;
+    font-weight: 800;
+    margin-bottom: 3px;
+}
+
+.projects-caption {
+    color: #8a9eac;
+    font-size: 13px;
+    margin-bottom: 18px;
+}
+
+/* TARJETAS */
+
+[data-testid="stVerticalBlockBorderWrapper"] {
+    background: rgba(255,255,255,.88) !important;
+    border: 1px solid rgba(255,255,255,.95) !important;
+    border-radius: 18px !important;
+    padding: 13px !important;
+    box-shadow: 0 7px 24px rgba(85,120,150,.10) !important;
     transition: transform .2s ease, box-shadow .2s ease;
 }
 
-div[data-testid="stVerticalBlockBorderWrapper"]:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 25px rgba(30,91,111,.15);
+[data-testid="stVerticalBlockBorderWrapper"]:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(85,120,150,.16) !important;
 }
 
 [data-testid="stImage"] img {
-    border-radius: 8px;
+    border-radius: 12px;
     object-fit: cover;
 }
 
-.app-number {
-    color: #e99b38;
-    font-size: 11px;
-    font-weight: 900;
-    letter-spacing: 1px;
-}
-
-.app-category {
-    color: #4b9eb2;
-    font-size: 10px;
-    font-weight: 900;
-    text-transform: uppercase;
-    text-align: right;
-}
-
-.app-title {
-    color: #34758b;
-    font-size: 19px;
-    font-weight: 900;
-    margin-top: 8px;
-    line-height: 1.2;
-}
-
-.app-description {
-    color: #83969c;
-    font-size: 12px;
-    line-height: 1.6;
-    min-height: 58px;
-    margin-top: 8px;
-}
+/* BOTONES */
 
 div.stLinkButton > a {
-    width: 100%;
-    background: #f3a137 !important;
+    background: linear-gradient(90deg, #82bfd0, #9d9acb) !important;
     border: none !important;
-    border-radius: 7px !important;
-    color: #ffffff !important;
-    font-size: 11px;
-    font-weight: 900;
-    letter-spacing: .7px;
+    border-radius: 10px !important;
+    color: white !important;
+    font-size: 11px !important;
+    font-weight: 900 !important;
+    letter-spacing: .5px;
     transition: .2s;
 }
 
 div.stLinkButton > a:hover {
-    background: #df8125 !important;
+    background: linear-gradient(90deg, #6aaabd, #8984bb) !important;
     color: white !important;
 }
 
-/* CONTACTO */
+/* TEXTOS DE TARJETAS */
 
-.contact-section {
-    text-align: center;
-    padding: 45px 20px 55px;
-    margin-top: 55px;
-    background: linear-gradient(
-        180deg,
-        #e6f8f5,
-        #c9f0e9
-    );
-    border-radius: 15px 15px 0 0;
-}
-
-.contact-title {
-    font-family: 'Amatic SC', cursive;
-    color: #34758b;
-    font-size: 43px;
-}
-
-.contact-text {
-    color: #728d96;
-    font-size: 13px;
-    line-height: 1.8;
-}
-
-.contact-tag {
-    display: inline-block;
-    margin-top: 12px;
-    color: #ffffff;
-    background: #328ca1;
-    padding: 10px 22px;
-    border-radius: 30px;
-    font-size: 11px;
+.card-number {
+    color: #d49eb1;
+    font-size: 10px;
     font-weight: 900;
+    letter-spacing: 1px;
 }
 
-.footer {
-    text-align: center;
-    padding: 20px;
-    background: #bce9df;
-    color: #4c8490;
+.card-category {
+    color: #8a9eb7;
+    font-size: 10px;
+    font-weight: 900;
+    text-align: right;
+    text-transform: uppercase;
+}
+
+.card-title {
+    color: #527b96;
+    font-size: 17px;
+    font-weight: 900;
+    line-height: 1.3;
+    margin-top: 8px;
+    min-height: 44px;
+}
+
+.card-description {
+    color: #879aa6;
     font-size: 11px;
-    font-weight: 800;
+    line-height: 1.6;
+    min-height: 55px;
+}
+
+/* ÁREA DE DESPLAZAMIENTO */
+
+[data-testid="stVerticalBlock"]:has(> [data-testid="stVerticalBlockBorderWrapper"]) {
+    min-width: 0;
+}
+
+/* PIE */
+
+.footer-text {
+    color: #879aaa;
+    text-align: center;
+    font-size: 11px;
+    padding: 15px 0 5px;
+    letter-spacing: 1px;
 }
 
 /* RESPONSIVE */
 
-@media (max-width: 700px) {
-
-    .top-nav {
-        padding: 10px 5px;
+@media (max-width: 850px) {
+    .block-container {
+        padding: 1rem;
     }
 
-    .nav-links {
-        gap: 9px;
-        font-size: 9px;
+    .main-heading {
+        font-size: 31px;
     }
 
-    .hero {
-        min-height: 480px;
-        padding: 25px 15px 55px;
-    }
-
-    .hero h1 {
-        font-size: 48px !important;
-        letter-spacing: -2px;
-    }
-
-    .hero-name {
-        font-size: 17px;
-    }
-
-    .hero-subtitle {
-        font-size: 15px;
-    }
-
-    .hero-description {
-        font-size: 13px;
-    }
-
-    .projects-title {
-        font-size: 39px;
+    .projects-heading {
+        font-size: 25px;
     }
 }
 
 </style>
-""", unsafe_allow_html=True)
-
-
-# ============================================================
-# NAVEGACIÓN
-# ============================================================
-
-st.markdown("""
-<div class="top-nav">
-    <div class="logo">B.<br>CAJAHUAMAN</div>
-
-    <div class="nav-links">
-        <a href="#inicio">INICIO</a>
-        <a href="#proyectos">PROYECTOS</a>
-        <a href="#contacto">CONTACTO</a>
-    </div>
-</div>
-""", unsafe_allow_html=True)
-
+""")
 
 # ============================================================
-# ENCABEZADO PRINCIPAL
-# ============================================================
-
-st.markdown("""
-<div class="hero" id="inicio">
-
-    <div class="cloud cloud-one"></div>
-    <div class="cloud cloud-two"></div>
-    <div class="cloud cloud-three"></div>
-
-    <div class="hero-content">
-
-        <div class="hero-label">
-            PORTAFOLIO ACADÉMICO · 2026
-        </div>
-
-        <h1>MI PORTAFOLIO</h1>
-
-        <div class="hero-name">
-            Belen Cajahuaman
-        </div>
-
-        <div class="hero-subtitle">
-            INTERFACES MULTIMODALES
-        </div>
-
-        <div class="hero-description">
-            Un espacio donde la creatividad, la tecnología y la
-            interacción se unen. Explora mis aplicaciones y proyectos
-            desarrollados durante el año 2026.
-        </div>
-
-        <div class="hero-tag">
-            19 PROYECTOS · TECNOLOGÍA · CREATIVIDAD
-        </div>
-
-    </div>
-
-    <div class="hero-bottom"></div>
-
-</div>
-""", unsafe_allow_html=True)
-
-
-# ============================================================
-# PRESENTACIÓN
-# ============================================================
-
-st.markdown("""
-<div class="intro">
-
-    <div class="intro-title">
-        ¡Bienvenido a mi mundo creativo!
-    </div>
-
-    <div class="intro-text">
-        Cada proyecto representa una nueva experiencia de aprendizaje.
-        He explorado herramientas para trabajar con texto, voz,
-        imágenes, inteligencia artificial y diferentes formas de
-        interacción digital.
-    </div>
-
-</div>
-""", unsafe_allow_html=True)
-
-
-# ============================================================
-# TÍTULO DE PROYECTOS
-# ============================================================
-
-st.markdown("""
-<div id="proyectos" class="projects-title">
-    Mis aplicaciones
-</div>
-
-<div class="projects-subtitle">
-    Explora los 19 proyectos que he desarrollado.
-</div>
-""", unsafe_allow_html=True)
-
-
-# ============================================================
-# LISTA COMPLETA DE 19 PROYECTOS
+# DATOS DE LOS 19 PROYECTOS
 # ============================================================
 
 apps = [
@@ -524,7 +280,7 @@ apps = [
         "numero": "01",
         "titulo": "Mi primera App",
         "categoria": "Inicio",
-        "descripcion": "Primera aplicación del portafolio para explorar Streamlit y Github.",
+        "descripcion": "Primera aplicación del portafolio para explorar Streamlit y GitHub.",
         "url": "https://clase6-mwpnbk3fsbkennu2xxv2rr.streamlit.app/",
         "imagen": "app_01.jpg"
     },
@@ -604,7 +360,7 @@ apps = [
         "numero": "11",
         "titulo": "Evalua Pro",
         "categoria": "Lenguaje",
-        "descripcion": "Aplicación de procesamiento de lenguaje natural para trabajar con documentos y evaluaciones.",
+        "descripcion": "Procesamiento de lenguaje natural y trabajo con documentos.",
         "url": "https://chatpdf-wajopxwdovw7vz87rbnfhe.streamlit.app/",
         "imagen": "app_11.JPG"
     },
@@ -612,7 +368,7 @@ apps = [
         "numero": "12",
         "titulo": "Vision Lab",
         "categoria": "Imagen",
-        "descripcion": "Herramienta para explorar el análisis y procesamiento de imágenes.",
+        "descripcion": "Aplicación dedicada al análisis y procesamiento de imágenes.",
         "url": "https://visionapp-zvhnrjnesqyqvadmnjrmc9.streamlit.app/",
         "imagen": "app_12.JPG"
     },
@@ -620,7 +376,7 @@ apps = [
         "numero": "13",
         "titulo": "Detección de dígitos",
         "categoria": "Visión artificial",
-        "descripcion": "Aplicación para reconocer y detectar números escritos a mano.",
+        "descripcion": "Reconocimiento de números escritos a mano mediante inteligencia artificial.",
         "url": "https://mnistpred-hrccjfx4k2uhhhk7gcyz8u.streamlit.app/",
         "imagen": "app_13.JPG"
     },
@@ -674,91 +430,180 @@ apps = [
     }
 ]
 
+# ============================================================
+# DISTRIBUCIÓN PRINCIPAL: INFORMACIÓN + PROYECTOS
+# ============================================================
+
+col_info, col_projects = st.columns([0.85, 2.15], gap="large")
 
 # ============================================================
-# GENERAR TARJETAS AUTOMÁTICAMENTE
+# PANEL IZQUIERDO: INFORMACIÓN DEL PORTAFOLIO
 # ============================================================
 
-for inicio in range(0, len(apps), 3):
+with col_info:
 
-    columnas = st.columns(3, gap="medium")
+    with st.container(border=True):
 
-    for columna, app_data in zip(
-        columnas,
-        apps[inicio:inicio + 3]
-    ):
+        st.markdown("""
+        <div class="eyebrow">PORTAFOLIO ACADÉMICO</div>
 
-        with columna:
+        <div class="main-heading">
+            Mi portafolio de<br>
+            Interfaces<br>
+            Multimodales
+        </div>
 
-            with st.container(border=True):
+        <div class="name-heading">
+            Belen Cajahuaman
+        </div>
 
-                imagen = app_data["imagen"]
+        <div class="description">
+            Bienvenido a mi espacio creativo. Aquí encontrarás
+            una recopilación de mis proyectos desarrollados
+            durante el año 2026, donde exploro diferentes
+            tecnologías y formas de interacción digital.
+        </div>
 
-                if os.path.exists(imagen):
-                    st.image(
-                        imagen,
-                        use_container_width=True
-                    )
-                else:
-                    st.info(
-                        f"Imagen pendiente: {imagen}"
-                    )
+        <div class="soft-line"></div>
 
-                meta_col1, meta_col2 = st.columns(2)
+        <div class="info-label">ÁREA DE ESTUDIO</div>
+        <div class="info-value">
+            Interfaces Multimodales
+        </div>
 
-                with meta_col1:
-                    st.markdown(
-                        f'<div class="app-number">PROYECTO {app_data["numero"]}</div>',
-                        unsafe_allow_html=True
-                    )
+        <div class="info-label">TECNOLOGÍAS</div>
+        <div class="info-value">
+            Streamlit · Python · Inteligencia Artificial
+            · Procesamiento de lenguaje · Visión artificial
+            · IoT · MQTT
+        </div>
 
-                with meta_col2:
-                    st.markdown(
-                        f'<div class="app-category">{app_data["categoria"]}</div>',
-                        unsafe_allow_html=True
-                    )
+        <div class="info-label">OBJETIVO</div>
+        <div class="info-value">
+            Diseñar experiencias digitales que integren
+            distintas formas de comunicación e interacción
+            entre las personas y la tecnología.
+        </div>
 
-                st.markdown(
-                    f'<div class="app-title">{app_data["titulo"]}</div>',
-                    unsafe_allow_html=True
-                )
+        <div class="project-count">
+            <div class="project-count-number">19</div>
+            <div class="project-count-text">
+                PROYECTOS DESARROLLADOS
+            </div>
+        </div>
 
-                st.markdown(
-                    f'<div class="app-description">{app_data["descripcion"]}</div>',
-                    unsafe_allow_html=True
-                )
+        <div class="info-label">AÑO</div>
+        <div class="info-value">2026</div>
 
-                st.link_button(
-                    "EXPLORAR PROYECTO ↗",
-                    app_data["url"],
-                    use_container_width=True
-                )
-
+        """, unsafe_allow_html=True)
 
 # ============================================================
-# CONTACTO Y PIE DE PÁGINA
+# PANEL DERECHO: GALERÍA DE PROYECTOS
+# ============================================================
+
+with col_projects:
+
+    st.markdown("""
+    <div class="projects-heading">
+        Mis proyectos
+    </div>
+
+    <div class="projects-caption">
+        Explora cada aplicación y descubre lo que he creado.
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Área con desplazamiento independiente
+    with st.container(height=760, border=False):
+
+        for inicio in range(0, len(apps), 2):
+
+            columnas = st.columns(2, gap="large")
+
+            for columna, app in zip(
+                columnas,
+                apps[inicio:inicio + 2]
+            ):
+
+                with columna:
+
+                    with st.container(border=True):
+
+                        # Imagen del proyecto
+                        if os.path.exists(app["imagen"]):
+
+                            st.image(
+                                app["imagen"],
+                                use_container_width=True
+                            )
+
+                        else:
+
+                            st.markdown(
+                                f"""
+                                <div style="
+                                    height:150px;
+                                    display:flex;
+                                    align-items:center;
+                                    justify-content:center;
+                                    background:linear-gradient(
+                                        135deg,
+                                        #dff2f5,
+                                        #eee8f8
+                                    );
+                                    border-radius:12px;
+                                    color:#7898aa;
+                                    font-size:13px;
+                                    font-weight:800;
+                                ">
+                                    IMAGEN DEL PROYECTO {app["numero"]}
+                                </div>
+                                """,
+                                unsafe_allow_html=True
+                            )
+
+                        # Número y categoría
+                        meta1, meta2 = st.columns(2)
+
+                        with meta1:
+                            st.markdown(
+                                f'<div class="card-number">PROYECTO {app["numero"]}</div>',
+                                unsafe_allow_html=True
+                            )
+
+                        with meta2:
+                            st.markdown(
+                                f'<div class="card-category">{app["categoria"]}</div>',
+                                unsafe_allow_html=True
+                            )
+
+                        # Nombre
+                        st.markdown(
+                            f'<div class="card-title">{app["titulo"]}</div>',
+                            unsafe_allow_html=True
+                        )
+
+                        # Descripción
+                        st.markdown(
+                            f'<div class="card-description">{app["descripcion"]}</div>',
+                            unsafe_allow_html=True
+                        )
+
+                        # Enlace
+                        st.link_button(
+                            "EXPLORAR PROYECTO ↗",
+                            app["url"],
+                            use_container_width=True
+                        )
+
+# ============================================================
+# PIE DE PÁGINA
 # ============================================================
 
 st.markdown("""
-<div class="contact-section" id="contacto">
-
-    <div class="contact-title">
-        ¡Gracias por visitar mi portafolio!
-    </div>
-
-    <div class="contact-text">
-        Este es un recorrido por mis proyectos, ideas y aprendizajes.
-        <br>
-        La tecnología es una herramienta para imaginar y crear nuevas experiencias.
-    </div>
-
-    <div class="contact-tag">
-        BELEN CAJAHUAMAN · PORTAFOLIO 2026
-    </div>
-
-</div>
-
-<div class="footer">
-    ✦ INTERFACES MULTIMODALES · STREAMLIT · GITHUB · 2026
+<div class="footer-text">
+    BELEN CAJAHUAMAN · INTERFACES MULTIMODALES · 2026
+    <br>
+    CREATIVIDAD · TECNOLOGÍA · INNOVACIÓN
 </div>
 """, unsafe_allow_html=True)
