@@ -2,10 +2,12 @@
 import streamlit as st
 import os
 import base64
+import html
+import mimetypes
 
-# =====================================================
+# =========================================================
 # CONFIGURACIÓN
-# =====================================================
+# =========================================================
 
 st.set_page_config(
     page_title="Belen Cajahuaman | Portafolio 2026",
@@ -14,51 +16,61 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# =====================================================
-# CARGAR FONDO
-# =====================================================
+# =========================================================
+# FUNCIONES PARA CARGAR IMÁGENES
+# =========================================================
 
-def cargar_fondo(ruta):
-    if os.path.exists(ruta):
-        with open(ruta, "rb") as archivo:
-            return base64.b64encode(archivo.read()).decode()
-    return None
+def imagen_base64(ruta):
+    if not os.path.exists(ruta):
+        return None
+
+    mime, _ = mimetypes.guess_type(ruta)
+
+    if not mime:
+        mime = "image/jpeg"
+
+    with open(ruta, "rb") as archivo:
+        contenido = base64.b64encode(archivo.read()).decode("utf-8")
+
+    return f"data:{mime};base64,{contenido}"
 
 
-fondo = cargar_fondo("fondo.jpg")
+fondo = imagen_base64("fondo.jpg")
 
 if fondo:
-    fondo_css = f"""
-    background-image:
-        linear-gradient(
-            rgba(230, 245, 251, 0.15),
-            rgba(230, 245, 251, 0.15)
-        ),
-        url("data:image/jpeg;base64,{fondo}");
-    """
+    fondo_css = f'url("{fondo}")'
 else:
-    fondo_css = """
-    background: linear-gradient(
-        135deg,
-        #dff3f8,
-        #e9edfa,
-        #f9eaf0
-    );
-    """
+    fondo_css = "linear-gradient(135deg, #dff3f8, #e9edfa, #f9eaf0)"
 
-# =====================================================
-# ESTILOS VISUALES
-# =====================================================
 
-st.html(f"""
+# =========================================================
+# ESTILOS GENERALES
+# =========================================================
+
+st.markdown(f"""
 <style>
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Caveat:wght@600;700&display=swap');
 
-/* FONDO GENERAL */
+:root {{
+    --azul: #378eae;
+    --azul-oscuro: #26366e;
+    --azul-texto: #344f65;
+    --celeste: #dff2fa;
+    --blanco: #ffffff;
+}}
+
+/* OCULTAR ELEMENTOS DE STREAMLIT */
+
+#MainMenu,
+footer,
+[data-testid="stHeader"] {{
+    visibility: hidden;
+    height: 0;
+}}
 
 .stApp {{
-    {fondo_css}
+    background-image: {fondo_css} !important;
     background-size: cover !important;
     background-position: center center !important;
     background-attachment: fixed !important;
@@ -68,535 +80,823 @@ st.html(f"""
 
 html, body, [class*="css"] {{
     font-family: 'Poppins', sans-serif !important;
-    font-size: 16px !important;
-}}
-
-[data-testid="stHeader"] {{
-    background: transparent !important;
-}}
-
-#MainMenu, footer {{
-    visibility: hidden;
 }}
 
 .block-container {{
-    max-width: 1600px;
-    padding: 2.5rem 3rem 2rem;
+    max-width: 1600px !important;
+    padding: 2rem 2.5rem 2rem !important;
 }}
 
-/* TITULOS */
-
-h1 {{
-    font-family: 'Caveat', cursive !important;
-    font-size: 96px !important;
-    color: #26366e !important;
-    font-weight: 700 !important;
-    line-height: 1.05 !important;
-    margin-bottom: 5px !important;
-}}
-
-h2 {{
-    font-size: 32px !important;
-    color: #28366e !important;
-    font-weight: 800 !important;
-}}
-
-h3 {{
-    font-size: 23px !important;
-    color: #344b7c !important;
-    font-weight: 800 !important;
-}}
-
-/* TEXTOS */
+/* TEXTOS GENERALES */
 
 p {{
-    color: #344b62 !important;
+    color: var(--azul-texto);
     font-size: 16px !important;
     line-height: 1.85 !important;
 }}
 
-[data-testid="stCaptionContainer"] p {{
-    color: #496b82 !important;
-    font-size: 14px !important;
-    line-height: 1.7 !important;
+h1, h2, h3 {{
+    font-family: 'Poppins', sans-serif !important;
 }}
 
-/* ETIQUETAS */
+/* ENCABEZADO */
 
-.top-label {{
-    color: #395d7c;
+.hero {{
+    padding: 30px 10px 35px;
+    text-align: left;
+}}
+
+.hero-label {{
+    color: #355d7a;
     font-size: 15px;
     font-weight: 800;
-    letter-spacing: 3px;
+    letter-spacing: 4px;
     text-transform: uppercase;
+    margin-bottom: 8px;
 }}
 
-.name-label {{
-    display: inline-block;
-    background: #83bdd4;
-    color: #ffffff;
-    padding: 12px 28px;
-    border-radius: 30px;
-    font-size: 20px;
+.hero-title {{
+    font-family: 'Caveat', cursive !important;
+    color: #26366e;
+    font-size: 100px;
+    line-height: 1.05;
+    font-weight: 700;
+    margin: 0;
+}}
+
+.hero-subtitle {{
+    color: #287da3;
+    font-size: 28px;
     font-weight: 800;
-    margin: 10px 0 18px;
+    margin-top: 5px;
 }}
 
-/* TODOS LOS RECUADROS EN BLANCO */
-
-[data-testid="stVerticalBlockBorderWrapper"] {{
-    background: #ffffff !important;
-    background-color: #ffffff !important;
-    border: 2px solid #ffffff !important;
-    border-radius: 28px !important;
-    box-shadow: 0 10px 28px rgba(50, 90, 120, 0.13) !important;
-    padding: 22px !important;
+.hero-name {{
+    display: inline-block;
+    color: white;
+    background: linear-gradient(100deg, #489ab7, #8c83bb);
+    padding: 12px 30px;
+    border-radius: 40px;
+    font-size: 19px;
+    font-weight: 800;
+    margin-top: 18px;
 }}
 
-/* TARJETAS INTERNAS TAMBIÉN EN BLANCO */
+.hero-description {{
+    max-width: 950px;
+    color: #344f65;
+    font-size: 17px;
+    line-height: 1.9;
+    margin-top: 20px;
+}}
 
-[data-testid="stVerticalBlockBorderWrapper"] 
-[data-testid="stVerticalBlockBorderWrapper"] {{
+/* DISTRIBUCIÓN PRINCIPAL */
+
+.portfolio-layout {{
+    display: grid;
+    grid-template-columns: minmax(250px, 0.85fr) minmax(0, 2.4fr);
+    gap: 28px;
+    align-items: start;
+}}
+
+/* TODOS LOS PANELES: BLANCO SÓLIDO */
+
+.white-panel {{
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+    border: 2px solid #ffffff;
+    border-radius: 28px;
+    padding: 27px;
+    box-shadow: 0 10px 30px rgba(42, 78, 110, 0.15);
+    opacity: 1 !important;
+    color: #344f65;
+}}
+
+/* PANEL PERSONAL */
+
+.about-panel {{
+    position: sticky;
+    top: 20px;
+}}
+
+.panel-title {{
+    color: #28366e;
+    font-family: 'Poppins', sans-serif;
+    font-size: 27px;
+    font-weight: 800;
+    margin: 0 0 18px;
+}}
+
+.panel-text {{
+    color: #344f65;
+    font-size: 15px;
+    line-height: 1.9;
+    margin-bottom: 17px;
+}}
+
+.panel-section {{
+    border-top: 1px solid #e4edf3;
+    padding-top: 17px;
+    margin-top: 18px;
+}}
+
+.panel-section h3 {{
+    color: #287da3;
+    font-size: 19px;
+    font-weight: 800;
+    margin-bottom: 8px;
+}}
+
+.project-count {{
+    background: #e8f5fa;
+    border-radius: 18px;
+    padding: 16px;
+    margin-top: 20px;
+    text-align: center;
+}}
+
+.project-count strong {{
+    display: block;
+    color: #287da3;
+    font-size: 42px;
+    font-weight: 900;
+}}
+
+.project-count span {{
+    color: #496b82;
+    font-size: 14px;
+    font-weight: 700;
+}}
+
+/* GALERÍA */
+
+.gallery-title {{
+    color: #28366e;
+    font-size: 30px;
+    font-weight: 900;
+    margin-bottom: 8px;
+}}
+
+.gallery-description {{
+    color: #496b82;
+    font-size: 15px;
+    line-height: 1.8;
+    margin-bottom: 25px;
+}}
+
+/* CUADRÍCULA DE PROYECTOS */
+
+.projects-grid {{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+}}
+
+/* CADA TARJETA TIENE SU PROPIO FONDO BLANCO */
+
+.project-card {{
     background: #ffffff !important;
     background-color: #ffffff !important;
-    border: 2px solid #e8f3f8 !important;
-    border-radius: 22px !important;
-    padding: 18px !important;
-    box-shadow: 0 6px 18px rgba(50, 90, 120, 0.10) !important;
+    border: 2px solid #e7f0f5;
+    border-radius: 23px;
+    padding: 17px;
+    box-shadow: 0 6px 20px rgba(43, 86, 115, 0.10);
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
     transition: transform .2s ease, box-shadow .2s ease;
 }}
 
-[data-testid="stVerticalBlockBorderWrapper"] 
-[data-testid="stVerticalBlockBorderWrapper"]:hover {{
-    transform: translateY(-4px);
-    box-shadow: 0 10px 25px rgba(50, 90, 120, 0.16) !important;
+.project-card:hover {{
+    transform: translateY(-5px);
+    box-shadow: 0 12px 26px rgba(43, 86, 115, 0.17);
 }}
 
-/* NUMERACIÓN Y CATEGORÍAS */
+/* IMÁGENES DE LOS PROYECTOS */
+
+.project-image {{
+    width: 100%;
+    height: 155px;
+    object-fit: cover;
+    border-radius: 15px;
+    display: block;
+    margin-bottom: 15px;
+}}
+
+.image-placeholder {{
+    width: 100%;
+    height: 155px;
+    border-radius: 15px;
+    background: linear-gradient(135deg, #dceef8, #eee8f8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #547b99;
+    font-size: 17px;
+    font-weight: 800;
+    margin-bottom: 15px;
+    text-align: center;
+}}
+
+/* NÚMERO Y CATEGORÍA */
+
+.project-meta {{
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}}
 
 .project-number {{
     display: inline-block;
     background: #478eaf;
     color: #ffffff;
-    border-radius: 20px;
-    padding: 5px 12px;
-    font-size: 13px;
+    padding: 5px 11px;
+    border-radius: 30px;
+    font-size: 12px;
     font-weight: 900;
 }}
 
 .project-category {{
     color: #3e7595;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 800;
     text-transform: uppercase;
 }}
 
-/* DESCRIPCIONES */
+/* TÍTULOS Y DESCRIPCIONES */
+
+.project-title {{
+    color: #26366e;
+    font-size: 19px;
+    font-weight: 800;
+    line-height: 1.4;
+    margin: 0 0 10px;
+    min-height: 54px;
+}}
 
 .project-description {{
-    color: #344f65;
-    font-size: 15px;
+    color: #435c70;
+    font-size: 14px;
     line-height: 1.8;
+    margin: 0 0 18px;
+    flex-grow: 1;
     min-height: 100px;
 }}
 
-/* IMÁGENES */
+/* BOTONES CON LETRAS BLANCAS */
 
-[data-testid="stImage"] img {{
-    border-radius: 16px !important;
-    object-fit: cover;
-}}
-
-/* BOTONES */
-
-div.stLinkButton > a {{
-    background: linear-gradient(
-        110deg,
-        #378eae,
-        #777db5
-    ) !important;
-    border: none !important;
-    border-radius: 13px !important;
+.project-button {{
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    text-decoration: none !important;
     color: #ffffff !important;
-    font-family: 'Poppins', sans-serif !important;
-    font-size: 15px !important;
-    font-weight: 800 !important;
-    padding: 14px 12px !important;
-    text-align: center !important;
+    background: linear-gradient(110deg, #378eae, #777db5);
+    border-radius: 12px;
+    padding: 13px 9px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
     transition: .2s ease;
+    margin-top: auto;
 }}
 
-div.stLinkButton > a:hover {{
-    background: linear-gradient(
-        110deg,
-        #267b9b,
-        #5f66a3
-    ) !important;
+.project-button:hover {{
     color: #ffffff !important;
-    transform: translateY(-3px);
+    background: linear-gradient(110deg, #267b9b, #5f66a3);
+    transform: translateY(-2px);
 }}
 
-/* MÉTRICAS */
+/* HABILIDADES */
 
-[data-testid="stMetric"] {{
-    background: #ffffff !important;
-    border: 1px solid #e8f3f8;
-    padding: 18px;
-    border-radius: 17px;
+.skills-panel {{
+    margin-top: 28px;
 }}
 
-[data-testid="stMetricLabel"] {{
-    color: #365f7c !important;
-    font-size: 15px !important;
+.skills-grid {{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    margin-top: 20px;
 }}
 
-[data-testid="stMetricValue"] {{
-    color: #287b9d !important;
-    font-size: 36px !important;
-    font-weight: 800 !important;
+.skill-card {{
+    background: #ffffff;
+    border: 2px solid #e7f0f5;
+    border-radius: 20px;
+    padding: 20px;
 }}
 
-/* DIVISORES */
+.skill-card h3 {{
+    color: #287da3;
+    font-size: 18px;
+    font-weight: 800;
+    margin: 0 0 10px;
+}}
 
-hr {{
-    border-color: #c9e5f0 !important;
-    margin: 30px 0 !important;
+.skill-card p {{
+    color: #435c70;
+    font-size: 14px !important;
+    line-height: 1.8 !important;
+    margin: 0;
 }}
 
 /* PIE DE PÁGINA */
 
 .footer {{
+    text-align: center;
     color: #345c79;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 800;
     letter-spacing: 2px;
-    text-align: center;
-    padding: 30px 0 15px;
+    padding: 35px 10px 15px;
+    line-height: 2;
 }}
 
-/* RESPONSIVE */
+/* TABLET Y MÓVIL */
 
-@media (max-width: 850px) {{
+@media (max-width: 1050px) {{
+    .portfolio-layout {{
+        grid-template-columns: 1fr;
+    }}
+
+    .about-panel {{
+        position: static;
+    }}
+
+    .projects-grid {{
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }}
+}}
+
+@media (max-width: 650px) {{
     .block-container {{
-        padding: 1rem;
+        padding: 1rem !important;
     }}
 
-    h1 {{
-        font-size: 65px !important;
+    .hero-title {{
+        font-size: 65px;
     }}
 
-    h2 {{
-        font-size: 26px !important;
+    .hero-subtitle {{
+        font-size: 22px;
     }}
 
-    h3 {{
-        font-size: 20px !important;
+    .projects-grid,
+    .skills-grid {{
+        grid-template-columns: 1fr;
+    }}
+
+    .white-panel {{
+        padding: 18px;
+    }}
+
+    .project-description {{
+        min-height: auto;
     }}
 }}
 
 </style>
-""")
+""", unsafe_allow_html=True)
 
-# =====================================================
-# INFORMACIÓN DE LOS PROYECTOS
-# =====================================================
+
+# =========================================================
+# INFORMACIÓN DE LOS 19 PROYECTOS
+# =========================================================
 
 apps = [
-
-    ("01", "Mi primera App", "Inicio",
-     "Primera aplicación desarrollada para explorar Streamlit y GitHub.",
-     "https://clase6-mwpnbk3fsbkennu2xxv2rr.streamlit.app/", "app_01.jpg"),
-
-    ("02", "Texto a voz", "Voz",
-     "Convierte contenido escrito en audio mediante síntesis de voz.",
-     "https://s273ggysgxrvjc5xqcjjih.streamlit.app/", "app_02.JPG"),
-
-    ("03", "Voz a texto", "Audio",
-     "Transforma una entrada de voz en texto para facilitar la transcripción.",
-     "https://traductor-7ggtnhxykyspqhtk6cypby.streamlit.app/", "app_03.JPG"),
-
-    ("04", "Lector de texto", "Lectura",
-     "Herramienta para trabajar con contenido textual mediante lectura por audio.",
-     "https://e2vymapp8w22ojrpsuvqc2e.streamlit.app/", "app_04.JPG"),
-
-    ("05", "OCR · Texto a audio", "OCR",
-     "Extrae texto desde imágenes y permite convertir el contenido en audio.",
-     "https://ocr-audio-ybjvud89srveyxujheuglj.streamlit.app/", "app_05.JPG"),
-
-    ("06", "Análisis de sentimientos", "Texto",
-     "Analiza contenido escrito para identificar el sentimiento presente.",
-     "https://sentimenta-yvw8kjjhc3k5ahfm2bvbbk.streamlit.app/", "app_06.JPG"),
-
-    ("07", "Nube de palabras", "NLP",
-     "Genera una representación visual de las palabras más relevantes.",
-     "https://wordcloud-twmeornb88bu5daiohmzth.streamlit.app/", "app_07.JPG"),
-
-    ("08", "TF-IDF", "NLP",
-     "Compara documentos y preguntas mediante TF-IDF y similitud de coseno.",
-     "https://tdfesp-mmsucjw6w26aff34fpsenn.streamlit.app/", "app_08.JPG"),
-
-    ("09", "Detector de objetos", "Visión",
-     "Detecta objetos presentes en imágenes mediante visión por computador.",
-     "https://yolov5-3qhk7h6k3kr9tjfgepuekf.streamlit.app/", "app_09.JPG"),
-
-    ("10", "Detector de gestos", "Visión",
-     "Analiza imágenes para identificar gestos y personas con Teachable Machine.",
-     "https://zb8fhzc4q6vjd726eqkviy.streamlit.app/", "app_10.JPG"),
-
-    ("11", "Evalua Pro", "Lenguaje",
-     "Aplicación de procesamiento de lenguaje para trabajar con documentos.",
-     "https://chatpdf-wajopxwdovw7vz87rbnfhe.streamlit.app/", "app_11.JPG"),
-
-    ("12", "Vision Lab", "Imagen",
-     "Herramienta para explorar el análisis y procesamiento de imágenes.",
-     "https://visionapp-zvhnrjnesqyqvadmnjrmc9.streamlit.app/", "app_12.JPG"),
-
-    ("13", "Detección de dígitos", "Visión artificial",
-     "Aplicación para reconocer números escritos a mano.",
-     "https://mnistpred-hrccjfx4k2uhhhk7gcyz8u.streamlit.app/", "app_13.JPG"),
-
-    ("14", "Tablero personalizado", "Dashboard",
-     "Tablero interactivo y personalizado para visualizar información.",
-     "https://tablero-personalizado-xjfuqgnb5qihv88yjjozpv.streamlit.app/", "app_14.JPG"),
-
-    ("15", "Tablero inteligente", "Dashboard",
-     "Panel inteligente para consultar y visualizar información.",
-     "https://histinf-eru35yru5ruy67cr7gqgts.streamlit.app/", "app_15.JPG"),
-
-    ("16", "Lienzo interactivo: Habla Trazo", "Interacción",
-     "Experiencia interactiva que conecta la voz y el dibujo.",
-     "https://hablatrazo-kxusb3ttrzyctfph4gktmz.streamlit.app/", "app_16.JPG"),
-
-    ("17", "De Wokwi a Streamlit", "IoT · MQTT",
-     "Conecta datos de un dispositivo simulado en Wokwi con Streamlit.",
-     "https://recepmqtt-dudyrincxvdsvf8rxrfb55.streamlit.app/", "app_17.JPG"),
-
-    ("18", "De Streamlit a Wokwi", "IoT · MQTT",
-     "Comunicación desde Streamlit hacia un dispositivo mediante MQTT.",
-     "https://sendcmqtt-ddtw2ekzvyfjngaamhbkra.streamlit.app/", "app_18.JPG"),
-
-    ("19", "Control por Voz", "Voz",
-     "Permite interactuar y controlar funciones mediante comandos de voz.",
-     "https://ctrlvoice-9pedwjpvfprq6xjcdzaptz.streamlit.app/", "app_19.JPG")
-
+    {
+        "numero": "01",
+        "titulo": "Mi primera App",
+        "categoria": "Inicio",
+        "descripcion": "Primera aplicación desarrollada para explorar Streamlit y GitHub.",
+        "url": "https://clase6-mwpnbk3fsbkennu2xxv2rr.streamlit.app/",
+        "imagen": "app_01.jpg"
+    },
+    {
+        "numero": "02",
+        "titulo": "Texto a voz",
+        "categoria": "Voz",
+        "descripcion": "Convierte contenido escrito en audio mediante síntesis de voz.",
+        "url": "https://s273ggysgxrvjc5xqcjjih.streamlit.app/",
+        "imagen": "app_02.JPG"
+    },
+    {
+        "numero": "03",
+        "titulo": "Voz a texto",
+        "categoria": "Audio",
+        "descripcion": "Transforma una entrada de voz en texto para facilitar la transcripción.",
+        "url": "https://traductor-7ggtnhxykyspqhtk6cypby.streamlit.app/",
+        "imagen": "app_03.JPG"
+    },
+    {
+        "numero": "04",
+        "titulo": "Lector de texto",
+        "categoria": "Lectura",
+        "descripcion": "Herramienta para trabajar con contenido textual mediante lectura por audio.",
+        "url": "https://e2vymapp8w22ojrpsuvqc2e.streamlit.app/",
+        "imagen": "app_04.JPG"
+    },
+    {
+        "numero": "05",
+        "titulo": "OCR · Texto a audio",
+        "categoria": "OCR",
+        "descripcion": "Extrae texto desde imágenes y permite convertir el contenido en audio.",
+        "url": "https://ocr-audio-ybjvud89srveyxujheuglj.streamlit.app/",
+        "imagen": "app_05.JPG"
+    },
+    {
+        "numero": "06",
+        "titulo": "Análisis de sentimientos",
+        "categoria": "Texto",
+        "descripcion": "Analiza contenido escrito para identificar el sentimiento presente.",
+        "url": "https://sentimenta-yvw8kjjhc3k5ahfm2bvbbk.streamlit.app/",
+        "imagen": "app_06.JPG"
+    },
+    {
+        "numero": "07",
+        "titulo": "Nube de palabras",
+        "categoria": "NLP",
+        "descripcion": "Genera una representación visual de las palabras más relevantes.",
+        "url": "https://wordcloud-twmeornb88bu5daiohmzth.streamlit.app/",
+        "imagen": "app_07.JPG"
+    },
+    {
+        "numero": "08",
+        "titulo": "TF-IDF",
+        "categoria": "NLP",
+        "descripcion": "Compara documentos y preguntas mediante TF-IDF y similitud de coseno.",
+        "url": "https://tdfesp-mmsucjw6w26aff34fpsenn.streamlit.app/",
+        "imagen": "app_08.JPG"
+    },
+    {
+        "numero": "09",
+        "titulo": "Detector de objetos",
+        "categoria": "Visión",
+        "descripcion": "Detecta objetos presentes en imágenes mediante visión por computador.",
+        "url": "https://yolov5-3qhk7h6k3kr9tjfgepuekf.streamlit.app/",
+        "imagen": "app_09.JPG"
+    },
+    {
+        "numero": "10",
+        "titulo": "Detector de gestos",
+        "categoria": "Visión",
+        "descripcion": "Analiza imágenes para identificar gestos y personas con Teachable Machine.",
+        "url": "https://zb8fhzc4q6vjd726eqkviy.streamlit.app/",
+        "imagen": "app_10.JPG"
+    },
+    {
+        "numero": "11",
+        "titulo": "Evalua Pro",
+        "categoria": "Lenguaje",
+        "descripcion": "Aplicación de procesamiento de lenguaje para trabajar con documentos.",
+        "url": "https://chatpdf-wajopxwdovw7vz87rbnfhe.streamlit.app/",
+        "imagen": "app_11.JPG"
+    },
+    {
+        "numero": "12",
+        "titulo": "Vision Lab",
+        "categoria": "Imagen",
+        "descripcion": "Herramienta para explorar el análisis y procesamiento de imágenes.",
+        "url": "https://visionapp-zvhnrjnesqyqvadmnjrmc9.streamlit.app/",
+        "imagen": "app_12.JPG"
+    },
+    {
+        "numero": "13",
+        "titulo": "Detección de dígitos",
+        "categoria": "Visión artificial",
+        "descripcion": "Aplicación para reconocer números escritos a mano.",
+        "url": "https://mnistpred-hrccjfx4k2uhhhk7gcyz8u.streamlit.app/",
+        "imagen": "app_13.JPG"
+    },
+    {
+        "numero": "14",
+        "titulo": "Tablero personalizado",
+        "categoria": "Dashboard",
+        "descripcion": "Tablero interactivo y personalizado para visualizar información.",
+        "url": "https://tablero-personalizado-xjfuqgnb5qihv88yjjozpv.streamlit.app/",
+        "imagen": "app_14.JPG"
+    },
+    {
+        "numero": "15",
+        "titulo": "Tablero inteligente",
+        "categoria": "Dashboard",
+        "descripcion": "Panel inteligente para consultar y visualizar información.",
+        "url": "https://histinf-eru35yru5ruy67cr7gqgts.streamlit.app/",
+        "imagen": "app_15.JPG"
+    },
+    {
+        "numero": "16",
+        "titulo": "Lienzo interactivo: Habla Trazo",
+        "categoria": "Interacción",
+        "descripcion": "Experiencia interactiva que conecta la voz y el dibujo.",
+        "url": "https://hablatrazo-kxusb3ttrzyctfph4gktmz.streamlit.app/",
+        "imagen": "app_16.JPG"
+    },
+    {
+        "numero": "17",
+        "titulo": "De Wokwi a Streamlit",
+        "categoria": "IoT · MQTT",
+        "descripcion": "Conecta datos de un dispositivo simulado en Wokwi con Streamlit.",
+        "url": "https://recepmqtt-dudyrincxvdsvf8rxrfb55.streamlit.app/",
+        "imagen": "app_17.JPG"
+    },
+    {
+        "numero": "18",
+        "titulo": "De Streamlit a Wokwi",
+        "categoria": "IoT · MQTT",
+        "descripcion": "Comunicación desde Streamlit hacia un dispositivo mediante MQTT.",
+        "url": "https://sendcmqtt-ddtw2ekzvyfjngaamhbkra.streamlit.app/",
+        "imagen": "app_18.JPG"
+    },
+    {
+        "numero": "19",
+        "titulo": "Control por Voz",
+        "categoria": "Voz",
+        "descripcion": "Permite interactuar y controlar funciones mediante comandos de voz.",
+        "url": "https://ctrlvoice-9pedwjpvfprq6xjcdzaptz.streamlit.app/",
+        "imagen": "app_19.JPG"
+    }
 ]
 
-# =====================================================
-# ENCABEZADO DEL PORTAFOLIO
-# =====================================================
 
-st.markdown(
-    '<div class="top-label">PORTAFOLIO ACADÉMICO · 2026</div>',
-    unsafe_allow_html=True
-)
+# =========================================================
+# CONSTRUIR TARJETAS
+# =========================================================
 
-st.title("Mi portafolio")
+tarjetas = []
 
-st.subheader("de Interfaces Multimodales 2026")
+for app in apps:
 
-st.markdown(
-    '<div class="name-label">Belen Cajahuaman</div>',
-    unsafe_allow_html=True
-)
+    numero = html.escape(app["numero"])
+    titulo = html.escape(app["titulo"])
+    categoria = html.escape(app["categoria"])
+    descripcion = html.escape(app["descripcion"])
+    url = html.escape(app["url"], quote=True)
 
-st.write(
-    "Un espacio donde la creatividad, el diseño y la tecnología "
-    "se encuentran. En este portafolio presento los proyectos "
-    "que he desarrollado durante mi aprendizaje en Interfaces "
-    "Multimodales."
-)
+    imagen = imagen_base64(app["imagen"])
 
-st.write(
-    "Explora mis experiencias con procesamiento de lenguaje, "
-    "reconocimiento de voz, visión artificial, inteligencia "
-    "artificial, visualización de datos y comunicación IoT."
-)
+    if imagen:
+        imagen_html = f"""
+        <img
+            class="project-image"
+            src="{imagen}"
+            alt="{titulo}"
+        >
+        """
+    else:
+        imagen_html = f"""
+        <div class="image-placeholder">
+            Proyecto {numero}
+        </div>
+        """
 
-st.divider()
+    tarjeta = f"""
+    <article class="project-card">
 
-# =====================================================
+        {imagen_html}
+
+        <div class="project-meta">
+            <span class="project-number">{numero}</span>
+            <span class="project-category">{categoria}</span>
+        </div>
+
+        <h3 class="project-title">{titulo}</h3>
+
+        <p class="project-description">
+            {descripcion}
+        </p>
+
+        <a
+            class="project-button"
+            href="{url}"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            EXPLORAR PROYECTO ↗
+        </a>
+
+    </article>
+    """
+
+    tarjetas.append(tarjeta)
+
+
+# =========================================================
+# ENCABEZADO
+# =========================================================
+
+st.markdown("""
+<div class="hero">
+
+    <div class="hero-label">
+        PORTAFOLIO ACADÉMICO · 2026
+    </div>
+
+    <h1 class="hero-title">
+        Mi portafolio
+    </h1>
+
+    <div class="hero-subtitle">
+        de Interfaces Multimodales 2026
+    </div>
+
+    <div class="hero-name">
+        Belen Cajahuaman
+    </div>
+
+    <div class="hero-description">
+        Un espacio donde la creatividad, el diseño y la tecnología
+        se encuentran. En este portafolio presento los proyectos
+        que he desarrollado durante mi aprendizaje en Interfaces
+        Multimodales.
+
+        <br><br>
+
+        Explora mis experiencias con procesamiento de lenguaje,
+        reconocimiento de voz, visión artificial, inteligencia
+        artificial, visualización de datos y comunicación IoT.
+    </div>
+
+</div>
+""", unsafe_allow_html=True)
+
+
+# =========================================================
+# PANEL PERSONAL
+# =========================================================
+
+panel_personal = """
+<section class="white-panel about-panel">
+
+    <h2 class="panel-title">Sobre mí</h2>
+
+    <p class="panel-text">
+        Soy Belen Cajahuaman, estudiante apasionada por la
+        tecnología, la inteligencia artificial y las interfaces
+        multimodales.
+    </p>
+
+    <p class="panel-text">
+        Aquí comparto 19 proyectos desarrollados durante mi
+        aprendizaje, combinando creatividad, programación
+        y soluciones digitales.
+    </p>
+
+    <div class="panel-section">
+
+        <h3>Mi formación</h3>
+
+        <p class="panel-text">
+            Interfaces Multimodales · 2026
+        </p>
+
+    </div>
+
+    <div class="panel-section">
+
+        <h3>Tecnologías</h3>
+
+        <p class="panel-text">
+            Python · Streamlit · Inteligencia Artificial ·
+            Procesamiento de Lenguaje · Visión Artificial ·
+            IoT · MQTT
+        </p>
+
+    </div>
+
+    <div class="panel-section">
+
+        <h3>Mi objetivo</h3>
+
+        <p class="panel-text">
+            Crear experiencias digitales que conecten a las
+            personas con la tecnología mediante diferentes
+            formas de interacción.
+        </p>
+
+    </div>
+
+    <div class="project-count">
+        <strong>19</strong>
+        <span>PROYECTOS DESARROLLADOS</span>
+    </div>
+
+</section>
+"""
+
+
+# =========================================================
+# PANEL DE PROYECTOS
+# =========================================================
+
+panel_proyectos = f"""
+<section class="white-panel">
+
+    <h2 class="gallery-title">
+        ✦ Mis proyectos
+    </h2>
+
+    <p class="gallery-description">
+        Explora cada aplicación, conoce su propósito
+        y accede a ella mediante el botón.
+    </p>
+
+    <div class="projects-grid">
+        {''.join(tarjetas)}
+    </div>
+
+</section>
+"""
+
+
+# =========================================================
 # DISTRIBUCIÓN PRINCIPAL
-# =====================================================
-
-col_info, col_projects = st.columns(
-    [0.85, 2.4],
-    gap="large"
-)
-
-# =====================================================
-# PANEL IZQUIERDO: INFORMACIÓN PERSONAL
-# =====================================================
-
-with col_info:
-
-    with st.container(border=True):
-
-        st.subheader("Sobre mí")
-
-        st.write(
-            "Soy Belen Cajahuaman, estudiante apasionada por "
-            "la tecnología, la inteligencia artificial y las "
-            "interfaces multimodales."
-        )
-
-        st.write(
-            "Aquí comparto 19 proyectos desarrollados durante "
-            "mi aprendizaje, combinando creatividad, programación "
-            "y soluciones digitales."
-        )
-
-        st.divider()
-
-        st.subheader("Mi formación")
-
-        st.write("Interfaces Multimodales · 2026")
-
-        st.divider()
-
-        st.subheader("Tecnologías")
-
-        st.write(
-            "Python · Streamlit · Inteligencia Artificial · "
-            "Procesamiento de Lenguaje · Visión Artificial · "
-            "IoT · MQTT"
-        )
-
-        st.divider()
-
-        st.subheader("Mi objetivo")
-
-        st.write(
-            "Crear experiencias digitales que conecten a las "
-            "personas con la tecnología mediante diferentes "
-            "formas de interacción."
-        )
-
-        st.divider()
-
-        st.metric(
-            "Proyectos desarrollados",
-            "19"
-        )
-
-# =====================================================
-# PANEL DERECHO: GALERÍA DE PROYECTOS
-# =====================================================
-
-with col_projects:
-
-    with st.container(border=True):
-
-        st.subheader("✦ Mis proyectos")
-
-        st.write(
-            "Explora cada aplicación, conoce su propósito "
-            "y accede a ella mediante el botón."
-        )
-
-        st.divider()
-
-        for inicio in range(0, len(apps), 3):
-
-            columnas = st.columns(3, gap="large")
-
-            for columna, app in zip(
-                columnas,
-                apps[inicio:inicio + 3]
-            ):
-
-                numero, titulo, categoria, descripcion, url, imagen = app
-
-                with columna:
-
-                    with st.container(border=True):
-
-                        if os.path.exists(imagen):
-
-                            st.image(
-                                imagen,
-                                use_container_width=True
-                            )
-
-                        else:
-
-                            st.markdown(
-                                f"### Proyecto {numero}"
-                            )
-
-                            st.caption(
-                                f"Agrega la imagen {imagen} a GitHub."
-                            )
-
-                        st.markdown(
-                            f'<span class="project-number">{numero}</span> '
-                            f'<span class="project-category">{categoria}</span>',
-                            unsafe_allow_html=True
-                        )
-
-                        st.subheader(titulo)
-
-                        st.markdown(
-                            f'<div class="project-description">'
-                            f'{descripcion}'
-                            f'</div>',
-                            unsafe_allow_html=True
-                        )
-
-                        st.link_button(
-                            "EXPLORAR PROYECTO ↗",
-                            url,
-                            use_container_width=True
-                        )
-
-# =====================================================
-# HABILIDADES DESARROLLADAS
-# =====================================================
-
-st.divider()
-
-with st.container(border=True):
-
-    st.subheader("✦ Lo que he desarrollado")
-
-    st.write(
-        "A lo largo de estos proyectos he explorado diferentes "
-        "herramientas y tecnologías para crear experiencias digitales."
-    )
-
-    c1, c2, c3 = st.columns(3, gap="large")
-
-    with c1:
-
-        st.markdown("### Procesamiento de información")
-
-        st.write(
-            "NLP · TF-IDF · Análisis de sentimientos · OCR"
-        )
-
-    with c2:
-
-        st.markdown("### Interacción multimodal")
-
-        st.write(
-            "Voz · Audio · Imagen · Dibujo · Visión artificial"
-        )
-
-    with c3:
-
-        st.markdown("### Tecnología y conexión")
-
-        st.write(
-            "Python · Streamlit · MQTT · Wokwi · Dashboards"
-        )
-
-# =====================================================
-# PIE DE PÁGINA
-# =====================================================
+# =========================================================
 
 st.markdown(
-    '<div class="footer">'
-    'BELEN CAJAHUAMAN · INTERFACES MULTIMODALES · 2026'
-    '<br>CREATIVIDAD · TECNOLOGÍA · INNOVACIÓN'
-    '</div>',
+    f"""
+    <div class="portfolio-layout">
+
+        {panel_personal}
+
+        {panel_proyectos}
+
+    </div>
+    """,
     unsafe_allow_html=True
 )
+
+
+# =========================================================
+# HABILIDADES DESARROLLADAS
+# =========================================================
+
+st.markdown("""
+<section class="white-panel skills-panel">
+
+    <h2 class="gallery-title">
+        ✦ Lo que he desarrollado
+    </h2>
+
+    <p class="gallery-description">
+        A lo largo de estos proyectos he explorado diferentes
+        herramientas y tecnologías para crear experiencias digitales.
+    </p>
+
+    <div class="skills-grid">
+
+        <div class="skill-card">
+
+            <h3>Procesamiento de información</h3>
+
+            <p>
+                NLP · TF-IDF · Análisis de sentimientos · OCR
+            </p>
+
+        </div>
+
+        <div class="skill-card">
+
+            <h3>Interacción multimodal</h3>
+
+            <p>
+                Voz · Audio · Imagen · Dibujo · Visión artificial
+            </p>
+
+        </div>
+
+        <div class="skill-card">
+
+            <h3>Tecnología y conexión</h3>
+
+            <p>
+                Python · Streamlit · MQTT · Wokwi · Dashboards
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+""", unsafe_allow_html=True)
+
+
+# =========================================================
+# PIE DE PÁGINA
+# =========================================================
+
+st.markdown("""
+<div class="footer">
+
+    BELEN CAJAHUAMAN · INTERFACES MULTIMODALES · 2026
+
+    <br>
+
+    CREATIVIDAD · TECNOLOGÍA · INNOVACIÓN
+
+</div>
+""", unsafe_allow_html=True)
