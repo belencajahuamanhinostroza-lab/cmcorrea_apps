@@ -17,7 +17,7 @@ st.set_page_config(
 )
 
 # =========================================================
-# FUNCIONES PARA CARGAR IMÁGENES
+# CARGA DE IMÁGENES
 # =========================================================
 
 def imagen_base64(ruta):
@@ -30,7 +30,9 @@ def imagen_base64(ruta):
         mime = "image/jpeg"
 
     with open(ruta, "rb") as archivo:
-        contenido = base64.b64encode(archivo.read()).decode("utf-8")
+        contenido = base64.b64encode(
+            archivo.read()
+        ).decode("utf-8")
 
     return f"data:{mime};base64,{contenido}"
 
@@ -47,122 +49,112 @@ else:
 # ESTILOS GENERALES
 # =========================================================
 
-st.markdown(f"""
+css = """
 <style>
-
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Caveat:wght@600;700&display=swap');
 
-:root {{
+:root {
     --azul: #378eae;
     --azul-oscuro: #26366e;
     --azul-texto: #344f65;
-    --celeste: #dff2fa;
-    --blanco: #ffffff;
-}}
+}
 
-/* OCULTAR ELEMENTOS DE STREAMLIT */
-
-#MainMenu,
-footer,
-[data-testid="stHeader"] {{
+#MainMenu, footer, [data-testid="stHeader"] {
     visibility: hidden;
     height: 0;
-}}
+}
 
-.stApp {{
-    background-image: {fondo_css} !important;
+.stApp {
+    background-image: BACKGROUND_IMAGE !important;
     background-size: cover !important;
     background-position: center center !important;
     background-attachment: fixed !important;
     background-repeat: no-repeat !important;
     font-family: 'Poppins', sans-serif !important;
-}}
+}
 
-html, body, [class*="css"] {{
+html, body, [class*="css"] {
     font-family: 'Poppins', sans-serif !important;
-}}
+}
 
-.block-container {{
+.block-container {
     max-width: 1600px !important;
-    padding: 2rem 2.5rem 2rem !important;
-}}
+    padding: 2rem 2.5rem !important;
+}
 
-/* TEXTOS GENERALES */
-
-p {{
+p {
     color: var(--azul-texto);
     font-size: 16px !important;
     line-height: 1.85 !important;
-}}
+}
 
-h1, h2, h3 {{
+h1, h2, h3 {
     font-family: 'Poppins', sans-serif !important;
-}}
+}
 
 /* ENCABEZADO */
 
-.hero {{
+.hero {
     padding: 30px 10px 35px;
     text-align: left;
-}}
+}
 
-.hero-label {{
+.hero-label {
     color: #355d7a;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 800;
     letter-spacing: 4px;
     text-transform: uppercase;
     margin-bottom: 8px;
-}}
+}
 
-.hero-title {{
+.hero-title {
     font-family: 'Caveat', cursive !important;
     color: #26366e;
     font-size: 100px;
     line-height: 1.05;
     font-weight: 700;
     margin: 0;
-}}
+}
 
-.hero-subtitle {{
+.hero-subtitle {
     color: #287da3;
-    font-size: 28px;
+    font-size: 30px;
     font-weight: 800;
     margin-top: 5px;
-}}
+}
 
-.hero-name {{
+.hero-name {
     display: inline-block;
     color: white;
     background: linear-gradient(100deg, #489ab7, #8c83bb);
     padding: 12px 30px;
     border-radius: 40px;
-    font-size: 19px;
+    font-size: 20px;
     font-weight: 800;
     margin-top: 18px;
-}}
+}
 
-.hero-description {{
+.hero-description {
     max-width: 950px;
     color: #344f65;
-    font-size: 17px;
+    font-size: 18px;
     line-height: 1.9;
     margin-top: 20px;
-}}
+}
 
-/* DISTRIBUCIÓN PRINCIPAL */
+/* DISTRIBUCIÓN */
 
-.portfolio-layout {{
+.portfolio-layout {
     display: grid;
     grid-template-columns: minmax(250px, 0.85fr) minmax(0, 2.4fr);
     gap: 28px;
     align-items: start;
-}}
+}
 
-/* TODOS LOS PANELES: BLANCO SÓLIDO */
+/* PANELES BLANCOS */
 
-.white-panel {{
-    background-color: #ffffff !important;
+.white-panel {
     background: #ffffff !important;
     border: 2px solid #ffffff;
     border-radius: 28px;
@@ -170,93 +162,87 @@ h1, h2, h3 {{
     box-shadow: 0 10px 30px rgba(42, 78, 110, 0.15);
     opacity: 1 !important;
     color: #344f65;
-}}
+}
 
-/* PANEL PERSONAL */
-
-.about-panel {{
+.about-panel {
     position: sticky;
     top: 20px;
-}}
+}
 
-.panel-title {{
+.panel-title {
     color: #28366e;
-    font-family: 'Poppins', sans-serif;
     font-size: 27px;
     font-weight: 800;
     margin: 0 0 18px;
-}}
+}
 
-.panel-text {{
+.panel-text {
     color: #344f65;
-    font-size: 15px;
+    font-size: 16px;
     line-height: 1.9;
     margin-bottom: 17px;
-}}
+}
 
-.panel-section {{
+.panel-section {
     border-top: 1px solid #e4edf3;
     padding-top: 17px;
     margin-top: 18px;
-}}
+}
 
-.panel-section h3 {{
+.panel-section h3 {
     color: #287da3;
-    font-size: 19px;
+    font-size: 20px;
     font-weight: 800;
     margin-bottom: 8px;
-}}
+}
 
-.project-count {{
+.project-count {
     background: #e8f5fa;
     border-radius: 18px;
     padding: 16px;
     margin-top: 20px;
     text-align: center;
-}}
+}
 
-.project-count strong {{
+.project-count strong {
     display: block;
     color: #287da3;
     font-size: 42px;
     font-weight: 900;
-}}
+}
 
-.project-count span {{
+.project-count span {
     color: #496b82;
     font-size: 14px;
     font-weight: 700;
-}}
+}
 
 /* GALERÍA */
 
-.gallery-title {{
+.gallery-title {
     color: #28366e;
     font-size: 30px;
     font-weight: 900;
     margin-bottom: 8px;
-}}
+}
 
-.gallery-description {{
+.gallery-description {
     color: #496b82;
-    font-size: 15px;
+    font-size: 16px;
     line-height: 1.8;
     margin-bottom: 25px;
-}}
+}
 
-/* CUADRÍCULA DE PROYECTOS */
+/* TARJETAS */
 
-.projects-grid {{
+.projects-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 24px;
-}}
+}
 
-/* CADA TARJETA TIENE SU PROPIO FONDO BLANCO */
-
-.project-card {{
+.project-card {
     background: #ffffff !important;
-    background-color: #ffffff !important;
     border: 2px solid #e7f0f5;
     border-radius: 23px;
     padding: 17px;
@@ -265,25 +251,23 @@ h1, h2, h3 {{
     flex-direction: column;
     min-width: 0;
     transition: transform .2s ease, box-shadow .2s ease;
-}}
+}
 
-.project-card:hover {{
+.project-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 12px 26px rgba(43, 86, 115, 0.17);
-}}
+}
 
-/* IMÁGENES DE LOS PROYECTOS */
-
-.project-image {{
+.project-image {
     width: 100%;
     height: 155px;
     object-fit: cover;
     border-radius: 15px;
     display: block;
     margin-bottom: 15px;
-}}
+}
 
-.image-placeholder {{
+.image-placeholder {
     width: 100%;
     height: 155px;
     border-radius: 15px;
@@ -296,58 +280,53 @@ h1, h2, h3 {{
     font-weight: 800;
     margin-bottom: 15px;
     text-align: center;
-}}
+}
 
-/* NÚMERO Y CATEGORÍA */
-
-.project-meta {{
+.project-meta {
     display: flex;
     align-items: center;
     gap: 9px;
     margin-bottom: 12px;
     flex-wrap: wrap;
-}}
+}
 
-.project-number {{
-    display: inline-block;
+.project-number {
     background: #478eaf;
     color: #ffffff;
     padding: 5px 11px;
     border-radius: 30px;
     font-size: 12px;
     font-weight: 900;
-}}
+}
 
-.project-category {{
+.project-category {
     color: #3e7595;
     font-size: 12px;
     font-weight: 800;
     text-transform: uppercase;
-}}
+}
 
-/* TÍTULOS Y DESCRIPCIONES */
-
-.project-title {{
+.project-title {
     color: #26366e;
     font-size: 19px;
     font-weight: 800;
     line-height: 1.4;
     margin: 0 0 10px;
     min-height: 54px;
-}}
+}
 
-.project-description {{
+.project-description {
     color: #435c70;
-    font-size: 14px;
+    font-size: 15px;
     line-height: 1.8;
     margin: 0 0 18px;
     flex-grow: 1;
     min-height: 100px;
-}}
+}
 
-/* BOTONES CON LETRAS BLANCAS */
+/* BOTONES */
 
-.project-button {{
+.project-button {
     display: block;
     width: 100%;
     box-sizing: border-box;
@@ -356,111 +335,113 @@ h1, h2, h3 {{
     color: #ffffff !important;
     background: linear-gradient(110deg, #378eae, #777db5);
     border-radius: 12px;
-    padding: 13px 9px;
+    padding: 14px 9px;
     font-family: 'Poppins', sans-serif;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 800;
     transition: .2s ease;
     margin-top: auto;
-}}
+}
 
-.project-button:hover {{
+.project-button:hover {
     color: #ffffff !important;
     background: linear-gradient(110deg, #267b9b, #5f66a3);
     transform: translateY(-2px);
-}}
+}
 
 /* HABILIDADES */
 
-.skills-panel {{
+.skills-panel {
     margin-top: 28px;
-}}
+}
 
-.skills-grid {{
+.skills-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 20px;
     margin-top: 20px;
-}}
+}
 
-.skill-card {{
+.skill-card {
     background: #ffffff;
     border: 2px solid #e7f0f5;
     border-radius: 20px;
     padding: 20px;
-}}
+}
 
-.skill-card h3 {{
+.skill-card h3 {
     color: #287da3;
-    font-size: 18px;
+    font-size: 19px;
     font-weight: 800;
     margin: 0 0 10px;
-}}
+}
 
-.skill-card p {{
+.skill-card p {
     color: #435c70;
-    font-size: 14px !important;
+    font-size: 15px !important;
     line-height: 1.8 !important;
     margin: 0;
-}}
+}
 
 /* PIE DE PÁGINA */
 
-.footer {{
+.footer {
     text-align: center;
     color: #345c79;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 800;
     letter-spacing: 2px;
     padding: 35px 10px 15px;
     line-height: 2;
-}}
+}
 
-/* TABLET Y MÓVIL */
+/* RESPONSIVE */
 
-@media (max-width: 1050px) {{
-    .portfolio-layout {{
+@media (max-width: 1050px) {
+    .portfolio-layout {
         grid-template-columns: 1fr;
-    }}
+    }
 
-    .about-panel {{
+    .about-panel {
         position: static;
-    }}
+    }
 
-    .projects-grid {{
+    .projects-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
-    }}
-}}
+    }
+}
 
-@media (max-width: 650px) {{
-    .block-container {{
+@media (max-width: 650px) {
+    .block-container {
         padding: 1rem !important;
-    }}
+    }
 
-    .hero-title {{
+    .hero-title {
         font-size: 65px;
-    }}
+    }
 
-    .hero-subtitle {{
+    .hero-subtitle {
         font-size: 22px;
-    }}
+    }
 
     .projects-grid,
-    .skills-grid {{
+    .skills-grid {
         grid-template-columns: 1fr;
-    }}
+    }
 
-    .white-panel {{
+    .white-panel {
         padding: 18px;
-    }}
+    }
 
-    .project-description {{
+    .project-description {
         min-height: auto;
-    }}
-}}
-
+    }
+}
 </style>
-""", unsafe_allow_html=True)
+"""
+
+css = css.replace("BACKGROUND_IMAGE", fondo_css)
+st.html(css)
 
 
 # =========================================================
@@ -624,7 +605,7 @@ apps = [
 
 
 # =========================================================
-# CONSTRUIR TARJETAS
+# CREAR TARJETAS
 # =========================================================
 
 tarjetas = []
@@ -641,11 +622,9 @@ for app in apps:
 
     if imagen:
         imagen_html = f"""
-        <img
-            class="project-image"
-            src="{imagen}"
-            alt="{titulo}"
-        >
+        <img class="project-image"
+             src="{imagen}"
+             alt="{titulo}">
         """
     else:
         imagen_html = f"""
@@ -670,12 +649,10 @@ for app in apps:
             {descripcion}
         </p>
 
-        <a
-            class="project-button"
-            href="{url}"
-            target="_blank"
-            rel="noopener noreferrer"
-        >
+        <a class="project-button"
+           href="{url}"
+           target="_blank"
+           rel="noopener noreferrer">
             EXPLORAR PROYECTO ↗
         </a>
 
@@ -689,7 +666,7 @@ for app in apps:
 # ENCABEZADO
 # =========================================================
 
-st.markdown("""
+st.html("""
 <div class="hero">
 
     <div class="hero-label">
@@ -722,11 +699,11 @@ st.markdown("""
     </div>
 
 </div>
-""", unsafe_allow_html=True)
+""")
 
 
 # =========================================================
-# PANEL PERSONAL
+# PANEL PERSONAL Y PANEL DE PROYECTOS
 # =========================================================
 
 panel_personal = """
@@ -747,37 +724,28 @@ panel_personal = """
     </p>
 
     <div class="panel-section">
-
         <h3>Mi formación</h3>
-
         <p class="panel-text">
             Interfaces Multimodales · 2026
         </p>
-
     </div>
 
     <div class="panel-section">
-
         <h3>Tecnologías</h3>
-
         <p class="panel-text">
             Python · Streamlit · Inteligencia Artificial ·
             Procesamiento de Lenguaje · Visión Artificial ·
             IoT · MQTT
         </p>
-
     </div>
 
     <div class="panel-section">
-
         <h3>Mi objetivo</h3>
-
         <p class="panel-text">
             Crear experiencias digitales que conecten a las
             personas con la tecnología mediante diferentes
             formas de interacción.
         </p>
-
     </div>
 
     <div class="project-count">
@@ -787,11 +755,6 @@ panel_personal = """
 
 </section>
 """
-
-
-# =========================================================
-# PANEL DE PROYECTOS
-# =========================================================
 
 panel_proyectos = f"""
 <section class="white-panel">
@@ -812,30 +775,19 @@ panel_proyectos = f"""
 </section>
 """
 
-
-# =========================================================
-# DISTRIBUCIÓN PRINCIPAL
-# =========================================================
-
-st.markdown(
-    f"""
-    <div class="portfolio-layout">
-
-        {panel_personal}
-
-        {panel_proyectos}
-
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+st.html(f"""
+<div class="portfolio-layout">
+    {panel_personal}
+    {panel_proyectos}
+</div>
+""")
 
 
 # =========================================================
-# HABILIDADES DESARROLLADAS
+# HABILIDADES
 # =========================================================
 
-st.markdown("""
+st.html("""
 <section class="white-panel skills-panel">
 
     <h2 class="gallery-title">
@@ -850,46 +802,37 @@ st.markdown("""
     <div class="skills-grid">
 
         <div class="skill-card">
-
             <h3>Procesamiento de información</h3>
-
             <p>
                 NLP · TF-IDF · Análisis de sentimientos · OCR
             </p>
-
         </div>
 
         <div class="skill-card">
-
             <h3>Interacción multimodal</h3>
-
             <p>
                 Voz · Audio · Imagen · Dibujo · Visión artificial
             </p>
-
         </div>
 
         <div class="skill-card">
-
             <h3>Tecnología y conexión</h3>
-
             <p>
                 Python · Streamlit · MQTT · Wokwi · Dashboards
             </p>
-
         </div>
 
     </div>
 
 </section>
-""", unsafe_allow_html=True)
+""")
 
 
 # =========================================================
 # PIE DE PÁGINA
 # =========================================================
 
-st.markdown("""
+st.html("""
 <div class="footer">
 
     BELEN CAJAHUAMAN · INTERFACES MULTIMODALES · 2026
@@ -899,4 +842,4 @@ st.markdown("""
     CREATIVIDAD · TECNOLOGÍA · INNOVACIÓN
 
 </div>
-""", unsafe_allow_html=True)
+""")
