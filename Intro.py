@@ -1,436 +1,522 @@
-import os
-import streamlit as st
 
+import streamlit as st
+import os
 
 # ============================================================
 # CONFIGURACIÓN
 # ============================================================
 
 st.set_page_config(
-    page_title="Portafolio 2026 | Belen Cajahuaman",
-    page_icon="✦",
+    page_title="Mi Portafolio 2026",
+    page_icon="🌤️",
     layout="wide",
-    initial_sidebar_state="collapsed",
+    initial_sidebar_state="collapsed"
 )
 
-
 # ============================================================
-# ESTILOS
+# DISEÑO Y ESTILOS
 # ============================================================
 
-st.markdown(
-    """
+st.markdown("""
 <style>
 
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Amatic+SC:wght@700&display=swap');
 
 html, body, [class*="css"] {
-    font-family: "DM Sans", sans-serif;
+    font-family: 'Nunito', sans-serif;
 }
 
 .stApp {
-    background:
-        radial-gradient(circle at 8% 4%, rgba(255, 198, 220, .32), transparent 25%),
-        radial-gradient(circle at 92% 10%, rgba(200, 197, 255, .28), transparent 25%),
-        radial-gradient(circle at 76% 92%, rgba(220, 250, 183, .23), transparent 25%),
-        #f4f2f5;
-    color: #1d1d22;
+    background: #ffffff;
+    color: #24485a;
 }
 
-#MainMenu,
-footer {
+#MainMenu, footer {
     visibility: hidden;
 }
 
 header[data-testid="stHeader"] {
-    background: transparent !important;
+    background: transparent;
 }
 
 .block-container {
-    max-width: 1240px !important;
-    padding-top: 1.2rem !important;
-    padding-bottom: 3rem !important;
+    max-width: 1200px;
+    padding-top: 1rem;
+    padding-bottom: 0;
 }
 
-
-/* ============================================================
-   BARRA SUPERIOR
-   ============================================================ */
-
-.top-line {
-    width: 100%;
-    height: 3px;
-    background: #1d1d22;
-    margin-bottom: 10px;
-}
+/* NAVEGACIÓN */
 
 .top-nav {
-    padding: 4px 2px 18px;
-    color: #817c84;
-    font-size: .68rem;
-    font-weight: 500;
-    letter-spacing: 1px;
-    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px 22px;
 }
 
-.brand-text {
-    color: #58535c !important;
-    font-family: "Space Grotesk", sans-serif;
-    font-size: .86rem;
-    font-weight: 500;
+.logo {
+    color: #08799b;
+    font-size: 23px;
+    font-weight: 900;
+    line-height: .85;
+    letter-spacing: -2px;
 }
 
+.nav-links {
+    display: flex;
+    gap: 22px;
+    font-size: 12px;
+    font-weight: 800;
+}
 
-/* ============================================================
-   HERO
-   ============================================================ */
+.nav-links a {
+    color: #34758b !important;
+    text-decoration: none;
+}
 
-.st-key-hero {
+/* HERO */
+
+.hero {
     position: relative;
     overflow: hidden;
-    min-height: 390px;
-
-    padding: 48px 50px;
-
-    border: 1px solid rgba(255,255,255,.82) !important;
-
-    background:
-        radial-gradient(
-            circle at 88% 14%,
-            rgba(255,255,255,.62),
-            transparent 17%
-        ),
-        linear-gradient(
-            115deg,
-            rgba(255, 220, 232, .82) 0%,
-            rgba(226, 221, 255, .80) 52%,
-            rgba(224, 249, 190, .74) 100%
-        ) !important;
-
-    box-shadow:
-        0 20px 45px rgba(51, 42, 59, .08),
-        inset 0 1px 0 rgba(255,255,255,.9);
-
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-
-    margin-bottom: 34px;
+    min-height: 530px;
+    padding: 35px 35px 65px;
+    text-align: center;
+    background: linear-gradient(
+        180deg,
+        #08719a 0%,
+        #16a3c3 48%,
+        #a8e9e9 100%
+    );
+    border-radius: 3px;
 }
 
-.st-key-hero:before {
+.hero:before {
     content: "";
     position: absolute;
-    width: 350px;
-    height: 190px;
-    top: -72px;
-    right: -82px;
-    background: rgba(166, 176, 255, .45);
-    border-radius: 50%;
-    transform: rotate(-12deg);
-}
-
-.st-key-hero:after {
-    content: "";
-    position: absolute;
-    width: 240px;
+    width: 135px;
     height: 135px;
-    right: 85px;
-    bottom: -55px;
-    background: rgba(255, 176, 210, .48);
+    background: #ffd66e;
     border-radius: 50%;
-    transform: rotate(-15deg);
+    top: 85px;
+    right: 12%;
+    box-shadow: 0 0 50px rgba(255,226,127,.55);
 }
 
-.st-key-hero > div {
+.cloud {
+    position: absolute;
+    background: #ffffff;
+    height: 36px;
+    width: 135px;
+    border-radius: 50px;
+    opacity: .95;
+}
+
+.cloud:before,
+.cloud:after {
+    content: "";
+    position: absolute;
+    background: #ffffff;
+    border-radius: 50%;
+}
+
+.cloud:before {
+    width: 65px;
+    height: 65px;
+    top: -35px;
+    left: 20px;
+}
+
+.cloud:after {
+    width: 55px;
+    height: 55px;
+    top: -24px;
+    right: 15px;
+}
+
+.cloud-one {
+    top: 190px;
+    left: 5%;
+}
+
+.cloud-two {
+    top: 260px;
+    right: 5%;
+    transform: scale(1.3);
+}
+
+.cloud-three {
+    top: 380px;
+    left: 16%;
+    transform: scale(.8);
+}
+
+.hero-content {
     position: relative;
-    z-index: 5;
+    z-index: 3;
 }
 
-.st-key-hero h1 {
-    font-family: "Space Grotesk", sans-serif !important;
-    font-size: clamp(3.4rem, 7vw, 6.6rem) !important;
-    font-weight: 500 !important;
-    line-height: .9 !important;
-    letter-spacing: -4px !important;
-    color: #202026 !important;
-    margin: 4px 0 0 0 !important;
+.hero-label {
+    color: #d9ffff;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    margin-top: 30px;
 }
 
-.hero-small {
-    color: #77717b !important;
-    font-size: .72rem !important;
-    font-weight: 500 !important;
-    text-transform: uppercase;
-    letter-spacing: 1.4px;
+.hero h1 {
+    color: white !important;
+    font-size: clamp(45px, 8vw, 82px) !important;
+    font-weight: 900 !important;
+    letter-spacing: -4px;
+    line-height: 1;
+    margin: 20px 0 5px;
+    text-shadow: 0 5px 12px rgba(0,54,83,.17);
 }
 
 .hero-name {
-    color: #5b5660 !important;
-    font-family: "DM Sans", sans-serif !important;
-    font-size: 1.05rem !important;
-    font-weight: 400 !important;
-    margin: 5px 0 0 0 !important;
+    color: #fff1c4;
+    font-size: 21px;
+    font-weight: 800;
+    margin-top: 8px;
 }
 
 .hero-subtitle {
-    color: #55505a !important;
-    font-family: "Space Grotesk", sans-serif !important;
-    font-size: 1.12rem !important;
-    font-weight: 400 !important;
-    margin-top: 10px !important;
+    color: #ffffff;
+    font-size: 19px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-top: 12px;
 }
 
-.hero-copy {
-    max-width: 670px;
-    color: #6c6670 !important;
-    font-size: .87rem !important;
-    font-weight: 400 !important;
-    line-height: 1.6 !important;
+.hero-description {
+    max-width: 600px;
+    margin: 14px auto;
+    color: #e8ffff;
+    font-size: 15px;
+    line-height: 1.7;
 }
 
 .hero-tag {
     display: inline-block;
-    padding: 7px 11px;
-    margin-top: 10px;
-    border: 1px solid rgba(255,255,255,.75);
-    background: rgba(255,255,255,.42);
-    color: #56515a !important;
-    font-size: .63rem !important;
-    font-weight: 600 !important;
-    letter-spacing: .7px;
-    text-transform: uppercase;
+    margin-top: 15px;
+    padding: 9px 18px;
+    color: #27637a;
+    background: #ffffff;
+    border-radius: 30px;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 1px;
 }
 
-
-/* ============================================================
-   SECCIÓN
-   ============================================================ */
-
-.section-title {
-    font-family: "Space Grotesk", sans-serif !important;
-    font-size: 1.75rem !important;
-    font-weight: 500 !important;
-    letter-spacing: -1px !important;
-    color: #222229 !important;
-    margin-bottom: 2px !important;
+.hero-bottom {
+    position: absolute;
+    z-index: 2;
+    height: 95px;
+    bottom: -42px;
+    left: -3%;
+    width: 106%;
+    background: white;
+    border-radius: 50% 50% 0 0;
 }
 
-.section-subtitle {
-    color: #7e7880 !important;
-    font-size: .78rem !important;
-    font-weight: 400 !important;
-    margin-bottom: 18px !important;
+/* PRESENTACIÓN */
+
+.intro {
+    text-align: center;
+    padding: 35px 15px 25px;
 }
 
+.intro-title {
+    font-family: 'Amatic SC', cursive;
+    font-size: 43px;
+    color: #34758b;
+    font-weight: 700;
+}
 
-/* ============================================================
-   TARJETAS
-   ============================================================ */
+.intro-text {
+    color: #7b929b;
+    font-size: 14px;
+    line-height: 1.7;
+    max-width: 650px;
+    margin: 5px auto;
+}
+
+/* PROYECTOS */
+
+.projects-title {
+    text-align: center;
+    color: #34758b;
+    font-family: 'Amatic SC', cursive;
+    font-size: 48px;
+    margin-top: 15px;
+}
+
+.projects-subtitle {
+    text-align: center;
+    color: #849ba3;
+    font-size: 13px;
+    margin-bottom: 30px;
+}
 
 div[data-testid="stVerticalBlockBorderWrapper"] {
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.96),
-            rgba(252,250,253,.91)
-        ) !important;
-
-    border: 1px solid rgba(215,211,220,.88) !important;
-    border-radius: 5px !important;
-
-    box-shadow:
-        0 9px 24px rgba(41, 34, 48, .06) !important;
-
+    background: #ffffff !important;
+    border: 1px solid #e1eeee !important;
+    border-radius: 13px !important;
     padding: 10px !important;
+    box-shadow: 0 5px 18px rgba(30,91,111,.08);
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+div[data-testid="stVerticalBlockBorderWrapper"]:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(30,91,111,.15);
 }
 
 [data-testid="stImage"] img {
-    border-radius: 3px !important;
-}
-
-.app-meta {
-    margin-top: 10px;
+    border-radius: 8px;
+    object-fit: cover;
 }
 
 .app-number {
-    color: #7770d9 !important;
-    font-size: .63rem !important;
-    font-weight: 600 !important;
-    letter-spacing: .7px;
+    color: #e99b38;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 1px;
 }
 
 .app-category {
-    color: #9a969e !important;
-    font-size: .60rem !important;
-    font-weight: 500 !important;
-    letter-spacing: .8px;
+    color: #4b9eb2;
+    font-size: 10px;
+    font-weight: 900;
     text-transform: uppercase;
+    text-align: right;
 }
 
 .app-title {
-    color: #24232a !important;
-    font-family: "Space Grotesk", sans-serif !important;
-    font-size: 1.08rem !important;
-    font-weight: 500 !important;
-    line-height: 1.15 !important;
-    margin-top: 6px !important;
+    color: #34758b;
+    font-size: 19px;
+    font-weight: 900;
+    margin-top: 8px;
+    line-height: 1.2;
 }
 
 .app-description {
-    min-height: 50px;
-    color: #747079 !important;
-    font-size: .74rem !important;
-    font-weight: 400 !important;
-    line-height: 1.5 !important;
-    margin-top: 6px !important;
+    color: #83969c;
+    font-size: 12px;
+    line-height: 1.6;
+    min-height: 58px;
+    margin-top: 8px;
 }
 
 div.stLinkButton > a {
-    width: 100% !important;
-    min-height: 40px !important;
-    background: #242329 !important;
-    border: 0 !important;
-    border-radius: 3px !important;
+    width: 100%;
+    background: #f3a137 !important;
+    border: none !important;
+    border-radius: 7px !important;
     color: #ffffff !important;
-    font-family: "DM Sans", sans-serif !important;
-    font-size: .63rem !important;
-    font-weight: 600 !important;
-    letter-spacing: .6px !important;
-    text-transform: uppercase !important;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: .7px;
+    transition: .2s;
 }
 
 div.stLinkButton > a:hover {
-    background: #7770d9 !important;
+    background: #df8125 !important;
     color: white !important;
 }
 
+/* CONTACTO */
 
-/* ============================================================
-   PIE
-   ============================================================ */
-
-.st-key-footer {
-    margin-top: 14px;
-    padding: 22px 24px;
-
-    background:
-        linear-gradient(
-            110deg,
-            rgba(222, 216, 255, .78),
-            rgba(255, 216, 232, .75),
-            rgba(225, 250, 198, .72)
-        ) !important;
-
-    border: 1px solid rgba(255,255,255,.75) !important;
-    box-shadow: 0 10px 24px rgba(40, 32, 49, .06);
+.contact-section {
+    text-align: center;
+    padding: 45px 20px 55px;
+    margin-top: 55px;
+    background: linear-gradient(
+        180deg,
+        #e6f8f5,
+        #c9f0e9
+    );
+    border-radius: 15px 15px 0 0;
 }
 
-.st-key-footer .footer-title {
-    font-family: "Space Grotesk", sans-serif;
-    font-size: 1rem;
-    font-weight: 500;
-    color: #2a2830;
+.contact-title {
+    font-family: 'Amatic SC', cursive;
+    color: #34758b;
+    font-size: 43px;
 }
 
-.st-key-footer .footer-text {
-    margin-top: 4px;
-    color: #746f77;
-    font-size: .73rem;
+.contact-text {
+    color: #728d96;
+    font-size: 13px;
+    line-height: 1.8;
 }
 
+.contact-tag {
+    display: inline-block;
+    margin-top: 12px;
+    color: #ffffff;
+    background: #328ca1;
+    padding: 10px 22px;
+    border-radius: 30px;
+    font-size: 11px;
+    font-weight: 900;
+}
+
+.footer {
+    text-align: center;
+    padding: 20px;
+    background: #bce9df;
+    color: #4c8490;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+/* RESPONSIVE */
 
 @media (max-width: 700px) {
 
-    .st-key-hero {
-        min-height: 340px;
-        padding: 32px 25px;
+    .top-nav {
+        padding: 10px 5px;
     }
 
-    .st-key-hero h1 {
-        font-size: 3.4rem !important;
-        letter-spacing: -2.5px !important;
+    .nav-links {
+        gap: 9px;
+        font-size: 9px;
     }
 
-    .st-key-hero:before {
-        width: 260px;
+    .hero {
+        min-height: 480px;
+        padding: 25px 15px 55px;
     }
 
-    .st-key-hero:after {
-        width: 180px;
-        right: 15px;
+    .hero h1 {
+        font-size: 48px !important;
+        letter-spacing: -2px;
     }
 
+    .hero-name {
+        font-size: 17px;
+    }
+
+    .hero-subtitle {
+        font-size: 15px;
+    }
+
+    .hero-description {
+        font-size: 13px;
+    }
+
+    .projects-title {
+        font-size: 39px;
+    }
 }
 
 </style>
-""",
-    unsafe_allow_html=True,
-)
+""", unsafe_allow_html=True)
 
 
 # ============================================================
-# CABECERA
+# NAVEGACIÓN
 # ============================================================
 
-st.markdown(
-    '<div class="top-line"></div>',
-    unsafe_allow_html=True,
-)
+st.markdown("""
+<div class="top-nav">
+    <div class="logo">B.<br>CAJAHUAMAN</div>
 
-st.markdown(
-    '<div class="top-nav"><span class="brand-text">✦ BELEN CAJAHUAMAN</span> &nbsp;&nbsp; PORTAFOLIO 2026 · INTERFACES MULTIMODALES</div>',
-    unsafe_allow_html=True,
-)
-
-
-# ============================================================
-# HERO
-# ============================================================
-
-with st.container(key="hero"):
-
-    st.caption("PORTAFOLIO ACADÉMICO · 2026")
-
-    st.markdown(
-        '<div class="hero-name">Belen Cajahuaman</div>',
-        unsafe_allow_html=True,
-    )
-
-    st.title("Mi Portafolio")
-
-    st.markdown(
-        '<div class="hero-subtitle">Interfaces Multimodales</div>',
-        unsafe_allow_html=True,
-    )
-
-    st.markdown(
-        '<div class="hero-copy">Primera colección de aplicaciones y proyectos desarrollados durante 2026 para explorar la interacción entre texto, voz, imagen y diferentes tecnologías.</div>',
-        unsafe_allow_html=True,
-    )
-
-    st.markdown(
-        '<div class="hero-tag">2026 · Interfaces Multimodales · 10 aplicaciones</div>',
-        unsafe_allow_html=True,
-    )
+    <div class="nav-links">
+        <a href="#inicio">INICIO</a>
+        <a href="#proyectos">PROYECTOS</a>
+        <a href="#contacto">CONTACTO</a>
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
 
 # ============================================================
-# SECCIÓN
+# ENCABEZADO PRINCIPAL
 # ============================================================
 
-st.markdown(
-    '<div class="section-title">Mis aplicaciones</div>',
-    unsafe_allow_html=True,
-)
+st.markdown("""
+<div class="hero" id="inicio">
 
-st.markdown(
-    '<div class="section-subtitle">Proyectos desarrollados para Interfaces Multimodales durante 2026.</div>',
-    unsafe_allow_html=True,
-)
+    <div class="cloud cloud-one"></div>
+    <div class="cloud cloud-two"></div>
+    <div class="cloud cloud-three"></div>
+
+    <div class="hero-content">
+
+        <div class="hero-label">
+            PORTAFOLIO ACADÉMICO · 2026
+        </div>
+
+        <h1>MI PORTAFOLIO</h1>
+
+        <div class="hero-name">
+            Belen Cajahuaman
+        </div>
+
+        <div class="hero-subtitle">
+            INTERFACES MULTIMODALES
+        </div>
+
+        <div class="hero-description">
+            Un espacio donde la creatividad, la tecnología y la
+            interacción se unen. Explora mis aplicaciones y proyectos
+            desarrollados durante el año 2026.
+        </div>
+
+        <div class="hero-tag">
+            19 PROYECTOS · TECNOLOGÍA · CREATIVIDAD
+        </div>
+
+    </div>
+
+    <div class="hero-bottom"></div>
+
+</div>
+""", unsafe_allow_html=True)
 
 
 # ============================================================
-# APLICACIONES
+# PRESENTACIÓN
+# ============================================================
+
+st.markdown("""
+<div class="intro">
+
+    <div class="intro-title">
+        ¡Bienvenido a mi mundo creativo!
+    </div>
+
+    <div class="intro-text">
+        Cada proyecto representa una nueva experiencia de aprendizaje.
+        He explorado herramientas para trabajar con texto, voz,
+        imágenes, inteligencia artificial y diferentes formas de
+        interacción digital.
+    </div>
+
+</div>
+""", unsafe_allow_html=True)
+
+
+# ============================================================
+# TÍTULO DE PROYECTOS
+# ============================================================
+
+st.markdown("""
+<div id="proyectos" class="projects-title">
+    Mis aplicaciones
+</div>
+
+<div class="projects-subtitle">
+    Explora los 19 proyectos que he desarrollado.
+</div>
+""", unsafe_allow_html=True)
+
+
+# ============================================================
+# LISTA COMPLETA DE 19 PROYECTOS
 # ============================================================
 
 apps = [
@@ -440,15 +526,15 @@ apps = [
         "categoria": "Inicio",
         "descripcion": "Primera aplicación del portafolio para explorar Streamlit y Github.",
         "url": "https://clase6-mwpnbk3fsbkennu2xxv2rr.streamlit.app/",
-        "imagen": "app_01.jpg",
+        "imagen": "app_01.jpg"
     },
     {
         "numero": "02",
         "titulo": "Texto a voz",
         "categoria": "Voz",
-        "descripcion": "Convierte contenido escrito en audio mediante una aplicación de síntesis de voz.",
+        "descripcion": "Convierte contenido escrito en audio mediante síntesis de voz.",
         "url": "https://s273ggysgxrvjc5xqcjjih.streamlit.app/",
-        "imagen": "app_02.JPG",
+        "imagen": "app_02.JPG"
     },
     {
         "numero": "03",
@@ -456,7 +542,7 @@ apps = [
         "categoria": "Audio",
         "descripcion": "Transforma una entrada de voz en texto para facilitar la transcripción.",
         "url": "https://traductor-7ggtnhxykyspqhtk6cypby.streamlit.app/",
-        "imagen": "app_03.JPG",
+        "imagen": "app_03.JPG"
     },
     {
         "numero": "04",
@@ -464,7 +550,7 @@ apps = [
         "categoria": "Lectura",
         "descripcion": "Herramienta para trabajar con contenido textual mediante lectura por audio.",
         "url": "https://e2vymapp8w22ojrpsuvqc2e.streamlit.app/",
-        "imagen": "app_04.JPG",
+        "imagen": "app_04.JPG"
     },
     {
         "numero": "05",
@@ -472,7 +558,7 @@ apps = [
         "categoria": "OCR",
         "descripcion": "Extrae texto desde imágenes y permite convertir el contenido en audio.",
         "url": "https://ocr-audio-ybjvud89srveyxujheuglj.streamlit.app/",
-        "imagen": "app_05.JPG",
+        "imagen": "app_05.JPG"
     },
     {
         "numero": "06",
@@ -480,7 +566,7 @@ apps = [
         "categoria": "Texto",
         "descripcion": "Analiza contenido escrito para identificar el sentimiento presente en el texto.",
         "url": "https://sentimenta-yvw8kjjhc3k5ahfm2bvbbk.streamlit.app/",
-        "imagen": "app_06.JPG",
+        "imagen": "app_06.JPG"
     },
     {
         "numero": "07",
@@ -488,7 +574,7 @@ apps = [
         "categoria": "NLP",
         "descripcion": "Genera una representación visual de las palabras más relevantes de un texto.",
         "url": "https://wordcloud-twmeornb88bu5daiohmzth.streamlit.app/",
-        "imagen": "app_07.JPG",
+        "imagen": "app_07.JPG"
     },
     {
         "numero": "08",
@@ -496,7 +582,7 @@ apps = [
         "categoria": "NLP",
         "descripcion": "Compara documentos y preguntas mediante TF-IDF y similitud de coseno.",
         "url": "https://tdfesp-mmsucjw6w26aff34fpsenn.streamlit.app/",
-        "imagen": "app_08.JPG",
+        "imagen": "app_08.JPG"
     },
     {
         "numero": "09",
@@ -504,7 +590,7 @@ apps = [
         "categoria": "Visión",
         "descripcion": "Detecta objetos presentes en imágenes mediante visión por computador.",
         "url": "https://yolov5-3qhk7h6k3kr9tjfgepuekf.streamlit.app/",
-        "imagen": "app_09.JPG",
+        "imagen": "app_09.JPG"
     },
     {
         "numero": "10",
@@ -512,13 +598,85 @@ apps = [
         "categoria": "Visión",
         "descripcion": "Analiza imágenes para identificar expresiones y personas con Teachable Machine.",
         "url": "https://zb8fhzc4q6vjd726eqkviy.streamlit.app/",
-        "imagen": "app_10.JPG",
+        "imagen": "app_10.JPG"
     },
+    {
+        "numero": "11",
+        "titulo": "Evalua Pro",
+        "categoria": "Lenguaje",
+        "descripcion": "Aplicación de procesamiento de lenguaje natural para trabajar con documentos y evaluaciones.",
+        "url": "https://chatpdf-wajopxwdovw7vz87rbnfhe.streamlit.app/",
+        "imagen": "app_11.JPG"
+    },
+    {
+        "numero": "12",
+        "titulo": "Vision Lab",
+        "categoria": "Imagen",
+        "descripcion": "Herramienta para explorar el análisis y procesamiento de imágenes.",
+        "url": "https://visionapp-zvhnrjnesqyqvadmnjrmc9.streamlit.app/",
+        "imagen": "app_12.JPG"
+    },
+    {
+        "numero": "13",
+        "titulo": "Detección de dígitos",
+        "categoria": "Visión artificial",
+        "descripcion": "Aplicación para reconocer y detectar números escritos a mano.",
+        "url": "https://mnistpred-hrccjfx4k2uhhhk7gcyz8u.streamlit.app/",
+        "imagen": "app_13.JPG"
+    },
+    {
+        "numero": "14",
+        "titulo": "Tablero personalizado",
+        "categoria": "Dashboard",
+        "descripcion": "Tablero interactivo y personalizado para visualizar información.",
+        "url": "https://tablero-personalizado-xjfuqgnb5qihv88yjjozpv.streamlit.app/",
+        "imagen": "app_14.JPG"
+    },
+    {
+        "numero": "15",
+        "titulo": "Tablero inteligente",
+        "categoria": "Dashboard",
+        "descripcion": "Panel inteligente para consultar y visualizar información.",
+        "url": "https://histinf-eru35yru5ruy67cr7gqgts.streamlit.app/",
+        "imagen": "app_15.JPG"
+    },
+    {
+        "numero": "16",
+        "titulo": "Lienzo interactivo: Habla Trazo",
+        "categoria": "Interacción",
+        "descripcion": "Experiencia interactiva que conecta la voz y el dibujo.",
+        "url": "https://hablatrazo-kxusb3ttrzyctfph4gktmz.streamlit.app/",
+        "imagen": "app_16.JPG"
+    },
+    {
+        "numero": "17",
+        "titulo": "De Wokwi a Streamlit",
+        "categoria": "IoT · MQTT",
+        "descripcion": "Conecta datos de un dispositivo simulado en Wokwi con una interfaz en Streamlit.",
+        "url": "https://recepmqtt-dudyrincxvdsvf8rxrfb55.streamlit.app/",
+        "imagen": "app_17.JPG"
+    },
+    {
+        "numero": "18",
+        "titulo": "De Streamlit a Wokwi",
+        "categoria": "IoT · MQTT",
+        "descripcion": "Comunicación desde una interfaz Streamlit hacia un dispositivo mediante MQTT.",
+        "url": "https://sendcmqtt-ddtw2ekzvyfjngaamhbkra.streamlit.app/",
+        "imagen": "app_18.JPG"
+    },
+    {
+        "numero": "19",
+        "titulo": "Control por Voz",
+        "categoria": "Voz",
+        "descripcion": "Aplicación que permite interactuar y controlar funciones mediante comandos de voz.",
+        "url": "https://ctrlvoice-9pedwjpvfprq6xjcdzaptz.streamlit.app/",
+        "imagen": "app_19.JPG"
+    }
 ]
 
 
 # ============================================================
-# TARJETAS — 3 POR FILA
+# GENERAR TARJETAS AUTOMÁTICAMENTE
 # ============================================================
 
 for inicio in range(0, len(apps), 3):
@@ -527,72 +685,80 @@ for inicio in range(0, len(apps), 3):
 
     for columna, app_data in zip(
         columnas,
-        apps[inicio:inicio + 3],
+        apps[inicio:inicio + 3]
     ):
 
         with columna:
 
             with st.container(border=True):
 
-                if os.path.exists(app_data["imagen"]):
+                imagen = app_data["imagen"]
 
+                if os.path.exists(imagen):
                     st.image(
-                        app_data["imagen"],
-                        use_container_width=True,
+                        imagen,
+                        use_container_width=True
                     )
-
                 else:
-
-                    st.warning(
-                        f"No se encontró la imagen: {app_data['imagen']}"
+                    st.info(
+                        f"Imagen pendiente: {imagen}"
                     )
 
-                meta_col1, meta_col2 = st.columns(
-                    [1, 1],
-                    gap="small",
-                )
+                meta_col1, meta_col2 = st.columns(2)
 
                 with meta_col1:
                     st.markdown(
-                        f'<div class="app-number">APP {app_data["numero"]}</div>',
-                        unsafe_allow_html=True,
+                        f'<div class="app-number">PROYECTO {app_data["numero"]}</div>',
+                        unsafe_allow_html=True
                     )
 
                 with meta_col2:
                     st.markdown(
                         f'<div class="app-category">{app_data["categoria"]}</div>',
-                        unsafe_allow_html=True,
+                        unsafe_allow_html=True
                     )
 
                 st.markdown(
                     f'<div class="app-title">{app_data["titulo"]}</div>',
-                    unsafe_allow_html=True,
+                    unsafe_allow_html=True
                 )
 
                 st.markdown(
                     f'<div class="app-description">{app_data["descripcion"]}</div>',
-                    unsafe_allow_html=True,
+                    unsafe_allow_html=True
                 )
 
                 st.link_button(
-                    "ABRIR APLICACIÓN ↗",
+                    "EXPLORAR PROYECTO ↗",
                     app_data["url"],
-                    use_container_width=True,
+                    use_container_width=True
                 )
 
 
 # ============================================================
-# PIE
+# CONTACTO Y PIE DE PÁGINA
 # ============================================================
 
-with st.container(key="footer"):
+st.markdown("""
+<div class="contact-section" id="contacto">
 
-    st.markdown(
-        '<div class="footer-title">✦ Belen Cajahuaman · Portafolio 2026</div>',
-        unsafe_allow_html=True,
-    )
+    <div class="contact-title">
+        ¡Gracias por visitar mi portafolio!
+    </div>
 
-    st.markdown(
-        '<div class="footer-text">Interfaces Multimodales · Aplicaciones · Streamlit · Github </div>',
-        unsafe_allow_html=True,
-    )
+    <div class="contact-text">
+        Este es un recorrido por mis proyectos, ideas y aprendizajes.
+        <br>
+        La tecnología es una herramienta para imaginar y crear nuevas experiencias.
+    </div>
+
+    <div class="contact-tag">
+        BELEN CAJAHUAMAN · PORTAFOLIO 2026
+    </div>
+
+</div>
+
+<div class="footer">
+    ✦ INTERFACES MULTIMODALES · STREAMLIT · GITHUB · 2026
+</div>
+""", unsafe_allow_html=True)
