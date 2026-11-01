@@ -678,7 +678,7 @@ st.html("""
     </h1>
 
     <div class="hero-subtitle">
-        de Interfaces Multimodales 2026
+        Interfaces Multimodales 2026
     </div>
 
     <div class="hero-name">
@@ -712,15 +712,9 @@ panel_personal = """
     <h2 class="panel-title">Sobre mí</h2>
 
     <p class="panel-text">
-        Soy Belen Cajahuaman, estudiante apasionada por la
-        tecnología, la inteligencia artificial y las interfaces
-        multimodales.
-    </p>
-
-    <p class="panel-text">
-        Aquí comparto 19 proyectos desarrollados durante mi
-        aprendizaje, combinando creatividad, programación
-        y soluciones digitales.
+        Soy Belen Cajahuaman, Aquí comparto 19 proyectos 
+        desarrollados durante mi aprendizaje, combinando
+        creatividad, programación y soluciones digitales.
     </p>
 
     <div class="panel-section">
