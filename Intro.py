@@ -1,9 +1,10 @@
 
 import streamlit as st
 import os
+import base64
 
 # ============================================================
-# CONFIGURACIÓN GENERAL
+# CONFIGURACIÓN
 # ============================================================
 
 st.set_page_config(
@@ -14,177 +15,285 @@ st.set_page_config(
 )
 
 # ============================================================
-# ESTILOS VISUALES
+# CARGAR IMAGEN DE FONDO
 # ============================================================
 
-st.html("""
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Caveat:wght@500;600;700&display=swap');
+def cargar_fondo(ruta):
+    if os.path.exists(ruta):
+        with open(ruta, "rb") as archivo:
+            imagen = base64.b64encode(archivo.read()).decode()
 
-/* FONDO PASTEL COMPLETO */
+        return f"data:image/jpeg;base64,{imagen}"
 
-.stApp {
+    return None
+
+
+fondo = cargar_fondo("fondo.jpg")
+
+if fondo:
+    fondo_css = f"""
+    background-image:
+        linear-gradient(
+            rgba(225, 244, 250, 0.30),
+            rgba(240, 232, 249, 0.30)
+        ),
+        url("{fondo}");
+    """
+else:
+    fondo_css = """
     background: linear-gradient(
         135deg,
-        #dff3f8 0%,
-        #e9edfa 35%,
-        #f0eafa 68%,
-        #f9eaf0 100%
-    ) !important;
-    font-family: 'Poppins', sans-serif !important;
-}
+        #dff3f8,
+        #e9edfa,
+        #f0eafa,
+        #f9eaf0
+    );
+    """
 
-html, body, [class*="css"] {
-    font-family: 'Poppins', sans-serif !important;
-}
+# ============================================================
+# DISEÑO GENERAL
+# ============================================================
 
-[data-testid="stHeader"] {
+st.html(f"""
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Caveat:wght@500;600;700&display=swap');
+
+/* FONDO DE TODA LA PÁGINA */
+
+.stApp {{
+    {fondo_css}
+    background-size: cover !important;
+    background-position: center center !important;
+    background-attachment: fixed !important;
+    background-repeat: no-repeat !important;
+    font-family: 'Poppins', sans-serif !important;
+}}
+
+html, body, [class*="css"] {{
+    font-family: 'Poppins', sans-serif !important;
+    font-size: 14px !important;
+}}
+
+[data-testid="stHeader"] {{
     background: transparent !important;
-}
+}}
 
-#MainMenu, footer {
+#MainMenu,
+footer {{
     visibility: hidden;
-}
+}}
 
-.block-container {
-    max-width: 1450px;
-    padding: 2rem 3rem 2rem;
-}
+.block-container {{
+    max-width: 1550px;
+    padding: 2rem 2.5rem 2rem;
+}}
 
-/* ENCABEZADO */
+/* TEXTOS GENERALES */
 
-h1 {
+p {{
+    color: #496b82;
+    font-size: 14px !important;
+    line-height: 1.8 !important;
+}}
+
+h1 {{
     font-family: 'Caveat', cursive !important;
-    color: #3985a5 !important;
-    font-size: 76px !important;
+    color: #28799d !important;
+    font-size: 82px !important;
     font-weight: 700 !important;
-    line-height: 1 !important;
+    line-height: 1.05 !important;
     margin-bottom: 0 !important;
-}
+}}
 
-h2, h3 {
+h2, h3 {{
     font-family: 'Poppins', sans-serif !important;
-    color: #527b98 !important;
-    font-weight: 700 !important;
-}
+    color: #386d8b !important;
+    font-weight: 800 !important;
+}}
 
-p {
-    color: #71899b;
+h2 {{
+    font-size: 27px !important;
+}}
+
+h3 {{
+    font-size: 20px !important;
+}}
+
+small {{
+    font-size: 13px !important;
+}}
+
+/* ETIQUETAS */
+
+.top-label {{
+    color: #537f9a;
     font-size: 13px;
-    line-height: 1.8;
-}
-
-/* ETIQUETA SUPERIOR */
-
-.top-label {
-    color: #8a9bb4;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 4px;
+    font-weight: 800;
+    letter-spacing: 3px;
     text-transform: uppercase;
-}
+}}
 
-/* PANEL PRINCIPAL */
+.name-label {{
+    color: #ffffff;
+    background: linear-gradient(90deg, #a58cc8, #83bad1);
+    display: inline-block;
+    padding: 9px 25px;
+    border-radius: 30px;
+    font-size: 17px;
+    font-weight: 800;
+    margin: 8px 0 15px;
+}}
 
-[data-testid="stVerticalBlockBorderWrapper"] {
-    background: rgba(255,255,255,.87) !important;
-    border: 1px solid rgba(255,255,255,.95) !important;
-    border-radius: 25px !important;
-    box-shadow: 0 12px 38px rgba(91,125,155,.12) !important;
+.section-description {{
+    color: #496b82;
+    font-size: 14px;
+    line-height: 1.8;
+}}
+
+.project-number {{
+    color: #ffffff;
+    background: #5c9eb9;
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 900;
+    display: inline-block;
+}}
+
+.project-category {{
+    color: #5687a4;
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+}}
+
+.project-description {{
+    color: #54748a;
+    font-size: 13px;
+    line-height: 1.7;
+    min-height: 75px;
+}}
+
+/* CUADRADOS Y PANELES CELESTES */
+
+[data-testid="stVerticalBlockBorderWrapper"] {{
+    background: rgba(219, 244, 251, 0.94) !important;
+    border: 2px solid rgba(255, 255, 255, 0.95) !important;
+    border-radius: 24px !important;
+    box-shadow: 0 9px 25px rgba(60, 119, 153, 0.14) !important;
     padding: 18px !important;
-}
+}}
 
-/* TARJETAS DE PROYECTOS */
+/* TARJETAS INDIVIDUALES */
 
-.project-card [data-testid="stVerticalBlockBorderWrapper"] {
-    background: #ffffff !important;
-    border: 1px solid #e7edf3 !important;
-    border-radius: 17px !important;
-    box-shadow: 0 5px 18px rgba(90,125,155,.09) !important;
-}
+[data-testid="stVerticalBlockBorderWrapper"] [data-testid="stVerticalBlockBorderWrapper"] {{
+    background: rgba(239, 250, 253, 0.98) !important;
+    border: 1px solid #ffffff !important;
+    border-radius: 19px !important;
+    box-shadow: 0 5px 17px rgba(65, 130, 160, 0.12) !important;
+    padding: 13px !important;
+    transition: transform .2s ease, box-shadow .2s ease;
+}}
 
-[data-testid="stImage"] img {
-    border-radius: 12px;
+[data-testid="stVerticalBlockBorderWrapper"] [data-testid="stVerticalBlockBorderWrapper"]:hover {{
+    transform: translateY(-4px);
+    box-shadow: 0 10px 23px rgba(65, 130, 160, 0.20) !important;
+}}
+
+/* IMÁGENES */
+
+[data-testid="stImage"] img {{
+    border-radius: 15px !important;
     object-fit: cover;
-}
+}}
 
-/* BOTONES */
+/* BOTONES CON TEXTO BLANCO */
 
-div.stLinkButton > a {
+div.stLinkButton > a {{
     background: linear-gradient(
         100deg,
-        #65b9d0,
-        #9994ca
+        #3997b5,
+        #777fba
     ) !important;
     border: none !important;
-    border-radius: 10px !important;
+    border-radius: 11px !important;
     color: #ffffff !important;
     font-family: 'Poppins', sans-serif !important;
-    font-size: 11px !important;
-    font-weight: 700 !important;
-    letter-spacing: .5px;
+    font-size: 13px !important;
+    font-weight: 800 !important;
+    letter-spacing: .3px;
+    padding: 10px 12px !important;
     transition: .2s ease;
-}
+}}
 
-div.stLinkButton > a:hover {
+div.stLinkButton > a:hover {{
     background: linear-gradient(
         100deg,
-        #4da5bd,
-        #817bb6
+        #287f9f,
+        #656ba7
     ) !important;
-    color: white !important;
+    color: #ffffff !important;
     transform: translateY(-2px);
-}
+}}
 
-/* TEXTOS DE LAS TARJETAS */
+/* MÉTRICAS */
 
-.project-number {
-    color: #d39db6;
-    font-size: 10px;
-    font-weight: 800;
-    letter-spacing: 1.5px;
-}
+[data-testid="stMetric"] {{
+    background: rgba(224, 246, 252, .9);
+    padding: 14px;
+    border-radius: 15px;
+}}
 
-.project-category {
-    color: #8d9db8;
-    font-size: 10px;
+[data-testid="stMetricLabel"] {{
+    color: #527a94 !important;
+    font-size: 13px !important;
+}}
+
+[data-testid="stMetricValue"] {{
+    color: #317b9d !important;
+    font-size: 30px !important;
+}}
+
+/* DIVISORES */
+
+hr {{
+    border-color: rgba(255,255,255,.8) !important;
+    margin: 25px 0 !important;
+}}
+
+/* PIE */
+
+.footer {{
+    color: #416f8a;
+    font-size: 12px;
     font-weight: 700;
-    text-transform: uppercase;
-}
-
-.project-description {
-    min-height: 75px;
-    color: #8294a3;
-    font-size: 11px;
-    line-height: 1.7;
-}
-
-/* PIE DE PÁGINA */
-
-.footer {
-    color: #8a9bad;
-    font-size: 11px;
     letter-spacing: 1.5px;
     text-align: center;
     padding: 25px 0 10px;
-}
+}}
 
 /* RESPONSIVE */
 
-@media (max-width: 800px) {
-    .block-container {
+@media (max-width: 850px) {{
+    .block-container {{
         padding: 1rem;
-    }
+    }}
 
-    h1 {
-        font-size: 55px !important;
-    }
-}
+    h1 {{
+        font-size: 58px !important;
+    }}
+
+    h2 {{
+        font-size: 23px !important;
+    }}
+}}
+
 </style>
 """)
 
 # ============================================================
-# DATOS DE LOS PROYECTOS
+# INFORMACIÓN DE LOS 19 PROYECTOS
 # ============================================================
 
 apps = [
@@ -231,7 +340,7 @@ apps = [
     {
         "numero": "06",
         "titulo": "Análisis de sentimientos",
-        "categoria": "Procesamiento de texto",
+        "categoria": "Texto",
         "descripcion": "Analiza contenido escrito para identificar el sentimiento presente en el texto.",
         "url": "https://sentimenta-yvw8kjjhc3k5ahfm2bvbbk.streamlit.app/",
         "imagen": "app_06.JPG"
@@ -255,7 +364,7 @@ apps = [
     {
         "numero": "09",
         "titulo": "Detector de objetos",
-        "categoria": "Visión artificial",
+        "categoria": "Visión",
         "descripcion": "Detecta objetos presentes en imágenes mediante visión por computador.",
         "url": "https://yolov5-3qhk7h6k3kr9tjfgepuekf.streamlit.app/",
         "imagen": "app_09.JPG"
@@ -263,7 +372,7 @@ apps = [
     {
         "numero": "10",
         "titulo": "Detector de gestos",
-        "categoria": "Visión artificial",
+        "categoria": "Visión",
         "descripcion": "Analiza imágenes para identificar gestos y personas con Teachable Machine.",
         "url": "https://zb8fhzc4q6vjd726eqkviy.streamlit.app/",
         "imagen": "app_10.JPG"
@@ -343,7 +452,7 @@ apps = [
 ]
 
 # ============================================================
-# ENCABEZADO PRINCIPAL
+# ENCABEZADO
 # ============================================================
 
 st.markdown(
@@ -353,123 +462,212 @@ st.markdown(
 
 st.title("Mi portafolio")
 
-st.subheader("Interfaces Multimodales 2026")
+st.subheader("de Interfaces Multimodales 2026")
 
-st.markdown("### Belen Cajahuaman")
-
-st.write(
-    "Un espacio donde la creatividad, el diseño y la tecnología "
-    "se encuentran. En este portafolio presento los proyectos que "
-    "he desarrollado durante mi aprendizaje en Interfaces "
-    "Multimodales, explorando distintas formas de interacción "
-    "entre las personas y los sistemas digitales."
+st.markdown(
+    '<div class="name-label">Belen Cajahuaman</div>',
+    unsafe_allow_html=True
 )
 
 st.write(
-    "A través de estas experiencias he trabajado con procesamiento "
-    "de lenguaje, reconocimiento de voz, visión artificial, "
+    "Un espacio donde la creatividad, el diseño y la tecnología "
+    "se encuentran. Explora mis proyectos y descubre cómo la "
+    "innovación transforma la interacción digital."
+)
+
+st.write(
+    "Durante este proceso he desarrollado aplicaciones que integran "
+    "procesamiento de lenguaje, reconocimiento de voz, visión artificial, "
     "inteligencia artificial, visualización de datos y comunicación IoT."
 )
 
 st.divider()
 
 # ============================================================
-# PANEL PRINCIPAL CON TODOS LOS PROYECTOS
+# PANEL DE INFORMACIÓN Y PROYECTOS
 # ============================================================
 
-st.markdown("## ✦ Mis proyectos")
-
-st.caption(
-    "Explora cada aplicación, conoce su propósito y accede a ella "
-    "mediante el botón correspondiente."
+col_info, col_projects = st.columns(
+    [0.85, 2.4],
+    gap="large"
 )
 
-with st.container(border=True):
+# ============================================================
+# PANEL IZQUIERDO
+# ============================================================
 
-    st.markdown(
-        "### Galería de aplicaciones"
-    )
+with col_info:
 
-    st.caption(
-        "19 proyectos · Interfaces multimodales · 2026"
-    )
+    with st.container(border=True):
 
-    # Tres tarjetas por fila
-    for inicio in range(0, len(apps), 3):
+        st.subheader("Sobre mí")
 
-        columnas = st.columns(3, gap="large")
+        st.write(
+            "Soy Belen Cajahuaman, estudiante apasionada por la "
+            "tecnología, la inteligencia artificial y las interfaces "
+            "multimodales."
+        )
 
-        for columna, app in zip(
-            columnas,
-            apps[inicio:inicio + 3]
-        ):
+        st.write(
+            "En este portafolio comparto 19 proyectos desarrollados "
+            "durante mi aprendizaje, donde combino creatividad, "
+            "programación y soluciones innovadoras."
+        )
 
-            with columna:
+        st.divider()
 
-                with st.container(border=True):
+        st.subheader("Mi formación")
 
-                    # Imagen
-                    if os.path.exists(app["imagen"]):
-                        st.image(
-                            app["imagen"],
-                            use_container_width=True
-                        )
-                    else:
-                        st.markdown(
-                            f"**Proyecto {app['numero']}**"
-                        )
-                        st.caption(
-                            "Agrega la captura del proyecto para mostrarla aquí."
-                        )
+        st.write("Interfaces Multimodales")
 
-                    # Número y categoría
-                    st.caption(
-                        f"PROYECTO {app['numero']}  ·  {app['categoria']}"
-                    )
+        st.divider()
 
-                    # Título
-                    st.subheader(app["titulo"])
+        st.subheader("Tecnologías")
 
-                    # Descripción
-                    st.write(app["descripcion"])
+        st.write(
+            "Python · Streamlit · Inteligencia Artificial · "
+            "Procesamiento de Lenguaje · Visión Artificial · "
+            "IoT · MQTT"
+        )
 
-                    # Enlace
-                    st.link_button(
-                        "EXPLORAR PROYECTO ↗",
-                        app["url"],
-                        use_container_width=True
-                    )
+        st.divider()
+
+        st.subheader("Mi objetivo")
+
+        st.write(
+            "Crear experiencias digitales que conecten a las "
+            "personas con la tecnología mediante diferentes "
+            "formas de interacción."
+        )
+
+        st.divider()
+
+        st.metric(
+            label="Proyectos desarrollados",
+            value="19"
+        )
+
+        st.caption("Año académico: 2026")
 
 # ============================================================
-# INFORMACIÓN FINAL
+# PANEL DERECHO: GALERÍA DE PROYECTOS
+# ============================================================
+
+with col_projects:
+
+    with st.container(border=True):
+
+        st.subheader("✦ Mis proyectos")
+
+        st.caption(
+            "Explora cada aplicación y accede a ella mediante su botón."
+        )
+
+        st.divider()
+
+        # Tres proyectos por fila
+        for inicio in range(0, len(apps), 3):
+
+            columnas = st.columns(3, gap="large")
+
+            for columna, app in zip(
+                columnas,
+                apps[inicio:inicio + 3]
+            ):
+
+                with columna:
+
+                    with st.container(border=True):
+
+                        # IMAGEN DEL PROYECTO
+                        if os.path.exists(app["imagen"]):
+
+                            st.image(
+                                app["imagen"],
+                                use_container_width=True
+                            )
+
+                        else:
+
+                            st.markdown(
+                                f"### Proyecto {app['numero']}"
+                            )
+
+                            st.caption(
+                                "Agrega la captura correspondiente "
+                                "con el nombre indicado."
+                            )
+
+                        # NÚMERO Y CATEGORÍA
+                        st.markdown(
+                            f'<span class="project-number">'
+                            f'{app["numero"]}</span> '
+                            f'<span class="project-category">'
+                            f'{app["categoria"]}</span>',
+                            unsafe_allow_html=True
+                        )
+
+                        # TÍTULO
+                        st.subheader(app["titulo"])
+
+                        # DESCRIPCIÓN
+                        st.markdown(
+                            f'<div class="project-description">'
+                            f'{app["descripcion"]}'
+                            f'</div>',
+                            unsafe_allow_html=True
+                        )
+
+                        # BOTÓN
+                        st.link_button(
+                            "EXPLORAR PROYECTO ↗",
+                            app["url"],
+                            use_container_width=True
+                        )
+
+# ============================================================
+# HABILIDADES DESARROLLADAS
 # ============================================================
 
 st.divider()
 
-st.markdown("### ✦ Lo que he desarrollado")
+with st.container(border=True):
 
-st.write(
-    "Durante este proceso he creado experiencias que integran "
-    "diferentes tecnologías y herramientas digitales."
-)
+    st.subheader("✦ Lo que he desarrollado")
 
-skills = st.columns(3)
+    st.write(
+        "A lo largo de estos proyectos he explorado diferentes "
+        "herramientas y tecnologías para crear experiencias digitales."
+    )
 
-with skills[0]:
-    st.markdown("**Procesamiento de información**")
-    st.caption("NLP · TF-IDF · Análisis de sentimientos · OCR")
+    habilidad1, habilidad2, habilidad3 = st.columns(3)
 
-with skills[1]:
-    st.markdown("**Interacción multimodal**")
-    st.caption("Voz · Audio · Imagen · Dibujo · Visión artificial")
+    with habilidad1:
+        st.markdown("### Procesamiento de información")
+        st.write(
+            "NLP · TF-IDF · Análisis de sentimientos · OCR"
+        )
 
-with skills[2]:
-    st.markdown("**Tecnologías y conexión**")
-    st.caption("Python · Streamlit · MQTT · Wokwi · Dashboards")
+    with habilidad2:
+        st.markdown("### Interacción multimodal")
+        st.write(
+            "Voz · Audio · Imagen · Dibujo · Visión artificial"
+        )
+
+    with habilidad3:
+        st.markdown("### Tecnología y conexión")
+        st.write(
+            "Python · Streamlit · MQTT · Wokwi · Dashboards"
+        )
+
+# ============================================================
+# PIE DE PÁGINA
+# ============================================================
 
 st.markdown(
     '<div class="footer">'
     'BELEN CAJAHUAMAN · INTERFACES MULTIMODALES · 2026'
+    '<br>CREATIVIDAD · TECNOLOGÍA · INNOVACIÓN'
     '</div>',
     unsafe_allow_html=True
 )
